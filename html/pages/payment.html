@@ -24,7 +24,29 @@
 		</header>
 		
 		<h1>Payment Page</h1>
-		<a href="confirmation.html">Confirm Payment</a>
+
+		<form action="../corepages/accountdetail.html" method="post">
+            <fieldset>
+                <legend>View your transactions:</legend>
+                Select your account:
+                <select>
+  					<option value="004-366766-001">004-366766-001</option>
+  					<option value="004-366766-002">004-366766-002</option>
+  					<option value="004-366766-003">004-366766-003</option>
+  					<option value="004-366766-004">004-366766-004</option>
+				</select>
+				<br>
+                From:<br>
+                <input type="date" name="from">
+                <br>
+                To:<br>
+                <input type="date" name="to">
+                <input type="submit" value="Go!">
+            </fieldset>
+        </form>
+
+        <a href="confirmation.html" class="button">Confirm Payment</a>
+        <a href="viewcart.html" class="button">Return to Cart</a>
 		<br>
 
 		<footer>
