@@ -27,26 +27,42 @@
 
 		<form action="../corepages/accountdetail.html" method="post">
             <fieldset>
-                <legend>View your transactions:</legend>
-                Select your account:
+                <legend>Pay for transaction</legend>
+                <label>Select payment method:</label>
                 <select>
-  					<option value="004-366766-001">004-366766-001</option>
-  					<option value="004-366766-002">004-366766-002</option>
-  					<option value="004-366766-003">004-366766-003</option>
-  					<option value="004-366766-004">004-366766-004</option>
+  					<option value="pointsPayment">Pay by Points</option>
+  					<option value="cardPayment">Pay by Card</option>
 				</select>
-				<br>
-                From:<br>
-                <input type="date" name="from">
-                <br>
-                To:<br>
-                <input type="date" name="to">
-                <input type="submit" value="Go!">
+				<h3><br></h3>
+				<h3>Enter your card details</h3>
+				<label>Card Name:</label>
+				<input type="name" name="cardName">
+                <label>Card Number:</label>
+                <input type="name" name="cardNo">
+                <label>Expiry Date:</label>
+                <input type="date" name="expiryDate">
+                <label>Security Code:</label>
+                <input type="name" name="securityCode">
+                <h3><br></h3>
+                <h3>Enter delivery address</h3>
+                <label>Address Line 1:</label>
+				<input type="name" name="addr1">
+                <label>Address Line 2:</label>
+                <input type="name" name="addr2">
+                <label>City:</label>
+				<input type="name" name="city">
+                <label>Country:</label>
+                <input type="name" name="country">
+                <label>Post Code (if any):</label>
+                <input type="name" name="postcode">
+                <h3><br></h3>
+                <a href="confirmation.html" class="button">Confirm Payment</a>
+        		<a href="viewcart.html" class="button">Return to Cart</a>
+                <!-- <input type="submit" value="Go!"> -->
             </fieldset>
         </form>
 
-        <a href="confirmation.html" class="button">Confirm Payment</a>
-        <a href="viewcart.html" class="button">Return to Cart</a>
+
 		<br>
 
 		<footer>

@@ -80,3 +80,18 @@ tfoot td{
     color: red;
     font-weight: bold;
 }
+
+/* Form Elements */
+form h3 {
+    clear: left;
+}
+label{
+
+    float: left;
+    clear: left;
+    width: 150px;
+
+}
+input {
+  float: left;
+}
