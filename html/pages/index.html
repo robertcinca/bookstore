@@ -16,6 +16,7 @@
                                     
                                     <!-- JS Pages -->
                                     <script type="text/javascript" src="../../js/basicFunctions.js"></script>
+                                    <script type="text/javascript" src="../../js/login.js"></script>
                                     
                                     </head>
     <body>
@@ -42,11 +43,11 @@
         <h1>Welcome to our Online Bookstore!</h1>
         <p>Please select one of the following options:</p>
         
-        <button onclick="document.getElementById('id01').style.display='block'" class="button">Login</button>
+        <button onclick="document.getElementById('id01').style.display='block'" class="button">Login or Sign Up</button>
         
         <div id="id01" class="modal">
             
-            <form class="modal-content animate" action="browse.html">
+            <form id="Form" name="Form" class="modal-content animate" onsubmit="return validateForm()" action="browse.html" method="get">
                 <div class="imgcontainer">
                     <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
                     <img src="../../img/welcome.png" alt="welcome" class="avatar">
@@ -60,13 +61,43 @@
                         <input type="password" placeholder="Enter Password" name="psw" required>
                             
                             <button style="width:100%" type="submit">Login</button>
+                            <input type="checkbox" checked="checked"> Remember me
                             </div>
                 <div class="container" style="background-color:#f1f1f1">
                     <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
-                    <span class="psw">Forgot <a href="#">password?</a></span>
+                    <button type="button" onclick="document.getElementById('id01').style.display='none';document.getElementById('id02').style.display='block'" class="signup">Sign Up</button>
+                    <!-- <span class="signup"><a href="browse.html">Sign Up</a></span> -->
                 </div>
             </form>
         </div>
+
+        <!-- To create -->
+        <div id="id02" class="modal">
+            
+            <form id="Form" name="Form" class="modal-content animate" onsubmit="return validateForm()" action="browse.html" method="get">
+                <div class="imgcontainer">
+                    <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span>
+                    <img src="../../img/welcome.png" alt="welcome" class="avatar">
+                        </div>
+                
+                <div class="container">
+                    <label><b>Username</b></label>
+                    <input type="text" placeholder="Enter Username" name="uname" required>
+                        
+                        <label><b>Password</b></label>
+                        <input type="password" placeholder="Enter Password" name="psw" required>
+                            
+                            <button style="width:100%" type="submit">Sign Up</button>
+                            <input type="checkbox" checked="checked"> Remember me
+                            </div>
+                <div class="container" style="background-color:#f1f1f1">
+                    <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">DDCancel</button>
+                    <button type="button" onclick="document.getElementById('id02').style.display='block'" class="signup">Sign Up</button>
+                    <!-- <span class="signup"><a href="browse.html">Sign Up</a></span> -->
+                </div>
+            </form>
+        </div>
+
         <a href="browse.html" class="button">Continue without logging in >>></a>
         <br>
         
