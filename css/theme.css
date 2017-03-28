@@ -43,6 +43,8 @@ a:hover {
     text-align: center;
     display: inline-block;
     font-size: 16px;
+    cursor: pointer;
+
 }
 
 /* Table Elements */
@@ -99,12 +101,13 @@ input {
 /*Menu navigation elements*/
 /* Menu Button */
 .dropbtn {
-    background-color: #4CAF50;
+    background-color: blue;
     color: white;
     padding: 16px;
     font-size: 16px;
     border: none;
     cursor: pointer;
+    border-radius: 15px;
 }
 /* Positioning of Menu */
 .dropdown {
