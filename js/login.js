@@ -14,6 +14,10 @@ localstorage=window.sessionStorage;
 function validateLogin(){
     var user=document.forms["Form"]["uname"].value;
     var pw=document.forms["Form"]["psw"].value;
+    if (checkLoginSyntax(user, pw) == false)
+        return false;
+
+    //TODO: create check with DB
     if (Math.floor(Math.random()*3) == 0) {   
             localstorage.clear();     
             pageOpacity(); //call Opacity function
@@ -26,6 +30,7 @@ function validateLogin(){
     }
 }
 
+//Check user signup (fake)
 function validateSignUp(){
     var user=document.forms["Form2"]["uname"].value;
     var pw=document.forms["Form2"]["psw"].value;
@@ -33,6 +38,29 @@ function validateSignUp(){
     for (var i = 0; i < pw.length; i++) {
         if (pw[i] != pw2[i]) {
           window.alert("Error: Passwords do not match.");
+          return false;
+        }
+    }
+    if (checkLoginSyntax(user, pw) == false)
+        return false;
+
+    //TODO: create user in DB
+    localstorage.setItem('user', user);
+    return true;
+}
+
+function checkLoginSyntax(user, pw) {
+    if (user.length < 5) {
+        window.alert("Error: Username is too short: minimum length is 5 characters.");
+        return false;
+    }
+    if (pw.length < 5) {
+        window.alert("Error: Password is too short: minimum length is 5 characters.");
+        return false;
+    }
+    for (var i = 0; i < user.length; i++) {
+        if (user[i] == " ") {
+          alert("Error: There is an intervening space in the Username. Please try again.");
           return false;
         }
     }

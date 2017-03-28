@@ -45,6 +45,7 @@
         
         <button onclick="document.getElementById('id01').style.display='block'" class="button">Login or Sign Up</button>
         
+        <!-- Login Form -->
         <div id="id01" class="modal">
             
             <form id="Form" name="Form" class="modal-content animate" onsubmit="return validateLogin()" action="browse.html" method="get">
@@ -70,7 +71,7 @@
             </form>
         </div>
 
-        <!-- To create -->
+		<!-- SignUp Form -->
         <div id="id02" class="modal">
             
             <form id="Form2" name="Form2" class="modal-content animate" onsubmit="return validateSignUp()" action="browse.html" method="get">
@@ -94,7 +95,6 @@
                 <div class="container" style="background-color:#f1f1f1">
                     <button type="button" onclick="document.getElementById('id02').style.display='none'" class="cancelbtn">Cancel</button>
                     <button type="button" onclick="document.getElementById('id02').style.display='none';document.getElementById('id01').style.display='block'" class="signup">Login</button>
-                    <!-- <span class="signup"><a href="browse.html">Sign Up</a></span> -->
                 </div>
             </form>
         </div>
