@@ -35,7 +35,7 @@
                     <li><a href="../pages/browse.html">Browse</a></li>
                     <li><a href="../pages/viewcart.html">View Cart</a></li>
                     <li><a href="../pages/payment.html">Pay Now</a></li>
-                    
+
                 </ul>
             </div>
         </div>
@@ -47,7 +47,7 @@
         
         <div id="id01" class="modal">
             
-            <form id="Form" name="Form" class="modal-content animate" onsubmit="return validateForm()" action="browse.html" method="get">
+            <form id="Form" name="Form" class="modal-content animate" onsubmit="return validateLogin()" action="browse.html" method="get">
                 <div class="imgcontainer">
                     <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
                     <img src="../../img/welcome.png" alt="welcome" class="avatar">
@@ -66,7 +66,6 @@
                 <div class="container" style="background-color:#f1f1f1">
                     <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
                     <button type="button" onclick="document.getElementById('id01').style.display='none';document.getElementById('id02').style.display='block'" class="signup">Sign Up</button>
-                    <!-- <span class="signup"><a href="browse.html">Sign Up</a></span> -->
                 </div>
             </form>
         </div>
@@ -74,25 +73,27 @@
         <!-- To create -->
         <div id="id02" class="modal">
             
-            <form id="Form" name="Form" class="modal-content animate" onsubmit="return validateForm()" action="browse.html" method="get">
+            <form id="Form2" name="Form2" class="modal-content animate" onsubmit="return validateSignUp()" action="browse.html" method="get">
                 <div class="imgcontainer">
                     <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span>
-                    <img src="../../img/welcome.png" alt="welcome" class="avatar">
+                    <img src="../../img/newuser.png" alt="sign up!" class="avatar">
                         </div>
                 
                 <div class="container">
-                    <label><b>Username</b></label>
-                    <input type="text" placeholder="Enter Username" name="uname" required>
+                    <label><b>Enter a Username:</b></label>
+                    <input type="text" placeholder="New Username" name="uname" required>
                         
-                        <label><b>Password</b></label>
-                        <input type="password" placeholder="Enter Password" name="psw" required>
+                        <label><b>Enter a Password:</b></label>
+                        <input type="password" placeholder="New Password" name="psw" required>
+                        <label><b>Re-enter password:</b></label>
+                        <input type="password" placeholder="New Password" name="psw2" required>
                             
                             <button style="width:100%" type="submit">Sign Up</button>
                             <input type="checkbox" checked="checked"> Remember me
                             </div>
                 <div class="container" style="background-color:#f1f1f1">
-                    <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">DDCancel</button>
-                    <button type="button" onclick="document.getElementById('id02').style.display='block'" class="signup">Sign Up</button>
+                    <button type="button" onclick="document.getElementById('id02').style.display='none'" class="cancelbtn">Cancel</button>
+                    <button type="button" onclick="document.getElementById('id02').style.display='none';document.getElementById('id01').style.display='block'" class="signup">Login</button>
                     <!-- <span class="signup"><a href="browse.html">Sign Up</a></span> -->
                 </div>
             </form>

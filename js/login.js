@@ -9,23 +9,32 @@ window.onclick = function(event) {
     }
 }
 
-function validateForm(){
-    var a=document.forms["Form"]["uname"].value;
-    var b=document.forms["Form"]["psw"].value;
-    return (checkLogin(a, b));
-}
-
 // Check user login (fake)
 localstorage=window.sessionStorage;
-function checkLogin(user, pw) {
-        if (Math.floor(Math.random()*3) == 0) {   
+function validateLogin(){
+    var user=document.forms["Form"]["uname"].value;
+    var pw=document.forms["Form"]["psw"].value;
+    if (Math.floor(Math.random()*3) == 0) {   
             localstorage.clear();     
             pageOpacity(); //call Opacity function
             window.alert("Username and/or password are wrong. Please try again.");
             return false;    
         }
-        else {
+    else {
             localstorage.setItem('user', user);
             return true;
+    }
+}
+
+function validateSignUp(){
+    var user=document.forms["Form2"]["uname"].value;
+    var pw=document.forms["Form2"]["psw"].value;
+    var pw2=document.forms["Form2"]["psw2"].value;
+    for (var i = 0; i < pw.length; i++) {
+        if (pw[i] != pw2[i]) {
+          window.alert("Error: Passwords do not match.");
+          return false;
         }
+    }
+    return true;
 }

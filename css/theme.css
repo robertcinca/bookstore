@@ -45,7 +45,6 @@ a:hover {
     font-size: 16px;
     cursor: pointer;
     width: auto;
-
 }
 
 /* Table Elements */
@@ -109,6 +108,7 @@ input {
     border: none;
     cursor: pointer;
     border-radius: 15px;
+    width: auto;
 }
 /* Positioning of Menu */
 .dropdown {
