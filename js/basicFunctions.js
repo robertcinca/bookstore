@@ -16,10 +16,8 @@ function getParameterByName(name, url) {
 //Personal greeting with username (TODO: get uname from DataBase not from URL)
 function formDataUsername() {
     var x = getParameterByName('uname');
-    
     //use to redirect/display certain pages depending on if user is signed in or not
-    if (x == null)
-    {
+    if (x == null){
     	document.getElementById("welcomeMessage").innerHTML = " Guest";
     	// x = checkLogin();
     	// if (x == "false")

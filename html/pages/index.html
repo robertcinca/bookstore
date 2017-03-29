@@ -48,7 +48,7 @@
         <!-- Login Form -->
         <div id="id01" class="modal">
             
-            <form id="Form" name="Form" class="modal-content animate" onsubmit="return validateLogin()" action="browse.html" method="get">
+            <form id="Form" name="Form" class="modal-content animate" onsubmit="return validateLogin()" action="browse.html" method="post">
                 <div class="imgcontainer">
                     <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
                     <img src="../../img/welcome.png" alt="welcome" class="avatar">
@@ -56,7 +56,7 @@
                 
                 <div class="container">
                     <label><b>Username</b></label>
-                    <input type="text" placeholder="Enter Username" name="uname" required>
+                    <input type="text" placeholder="Enter Username (Use manager for manager login)" name="uname" required>
                         
                         <label><b>Password</b></label>
                         <input type="password" placeholder="Enter Password" name="psw" required>
@@ -74,7 +74,7 @@
 		<!-- SignUp Form -->
         <div id="id02" class="modal">
             
-            <form id="Form2" name="Form2" class="modal-content animate" onsubmit="return validateSignUp()" action="browse.html" method="get">
+            <form id="Form2" name="Form2" class="modal-content animate" onsubmit="return validateSignUp()" action="browse.html" method="post">
                 <div class="imgcontainer">
                     <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span>
                     <img src="../../img/newuser.png" alt="sign up!" class="avatar">

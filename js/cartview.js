@@ -1,3 +1,5 @@
+//Viewcart.html specific functions
+
 //Function that extracts cart data from JSON format and converts it into a table display
 function getShoppingCart() {
     var x = getParameterByName('username'); //get username
@@ -17,7 +19,6 @@ function getShoppingCart() {
             }
         }
     }
-    // col++; //creating total price column
     
     // Create table
     var table = document.createElement("table");
@@ -40,10 +41,7 @@ function getShoppingCart() {
     for (var i = 0; i < cartInfo.length; i++) {
         tr = table.insertRow(-1);
         
-        // for (var j = 0; j < 1; j++) {
-        //     var tabCell = tr.insertCell(-1);
-        //     tabCell.innerHTML = (cartInfo[i][col[j]]).link("accountdetail.html" + "?accNo=" + (cartInfo[i][col[j]]));
-        // }
+    //tabCell.innerHTML = (cartInfo[i][col[j]]).link("accountdetail.html" + "?accNo=" + (cartInfo[i][col[j]]));
 
         for (var j = 0; j < 2; j++) {
             var tabCell = tr.insertCell(-1);
@@ -53,8 +51,6 @@ function getShoppingCart() {
         for (var j = 2; j < 3; j++) {
             var x = cartInfo[i][col[j]];
             tr.insertCell(-1).innerHTML = '<select name="quantity" onchange="javascript:quantityChange()"><option value=' + eval('x') + '>' + eval('x') + '</option><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><<option value="5">5</option>/select>';
-            // alert(document.querySelector('#quantity option:checked').value);
-
         }
 
         for (var j = 3; j < col.length - 1; j++) {
@@ -81,7 +77,6 @@ function getShoppingCart() {
         if (j == col.length - 1)
             tabCell.innerHTML = totalAmount + ".00";
     }
-
     
     // Add table with JSON data to a container
     var divContainer = document.getElementById("showData");
@@ -93,7 +88,6 @@ function getShoppingCart() {
 function quantityChange() {
     alert("quantity has changed!");
 }
-
 
 //Fake JSON data, need to link to a DB with real data
 function getAccounts(user) {
