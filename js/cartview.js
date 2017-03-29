@@ -52,7 +52,9 @@ function getShoppingCart() {
 
         for (var j = 2; j < 3; j++) {
             var x = cartInfo[i][col[j]];
-            tr.insertCell(-1).innerHTML = '<select name="quantity"><option value=' + eval('x') + '>' + eval('x') + '</option><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><<option value="5">5</option>/select>';
+            tr.insertCell(-1).innerHTML = '<select name="quantity" onchange="javascript:quantityChange()"><option value=' + eval('x') + '>' + eval('x') + '</option><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><<option value="5">5</option>/select>';
+            // alert(document.querySelector('#quantity option:checked').value);
+
         }
 
         for (var j = 3; j < col.length - 1; j++) {
@@ -85,6 +87,11 @@ function getShoppingCart() {
     var divContainer = document.getElementById("showData");
     divContainer.innerHTML = "";
     divContainer.appendChild(table);
+}
+
+//TODO: handle quantity change
+function quantityChange() {
+    alert("quantity has changed!");
 }
 
 

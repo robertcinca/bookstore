@@ -83,6 +83,19 @@ tfoot td{
     font-weight: bold;
 }
 
+/*Select design for table/form */
+select {
+    background-color: blue;
+    color: white;
+    margin: 0% 0% 0% 25%;
+    border: 1px dotted black;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    cursor: copy;
+    width: auto;
+}
+
 /* Form Elements */
 form h3 {
     clear: left;
