@@ -38,50 +38,55 @@
             </div>
         </div>
 
-		<h1>Page to browse books (Customer)</h1>
-		<a href="mbrowse.html" class="button">Manager View</a>
-		<a href="viewcart.html" class="button">View Cart</a>
-		<a href="viewDetail.html" class="button">View Account Detail</a>
+		<h1>Account Detail</h1>
+		<a href="viewDetail.html" class="button">View Detail</a>
 		<br>
 
-		<!-- Book List  -->
-		<table class="bookList">
-			<col width="20%">
-  		<col width="80%">
-		  <tr>
-		    <th>Books</th>
-		    <th>Detail</th>
+		<!--user detail-->
 
-		  </tr>
-		  <tr>
-		    <td style="text-align: center; vertical-align: middle;"><img alt="Picture of a book" src="../../img/bookCover.png"></td>
-		    <td >
-					<h3>Book Title</h3>
-					<p>by Author</p>
-					<p>Price: HKD 100</p>
-					<p>Loyalty Point: 50</p>
-					<form class="addToCart">
-						<label for="Quantity">Quantity:</label>
-						<input type="text" name="quantity" value="1" size="5">
-						<input type="submit" value="Add to Cart">
-					</form>
-				</td>
-		  </tr>
-		  <tr>
-		    <td style="text-align: center; vertical-align: middle;"><img alt="Picture of a book" src="../../img/bookCover.png"></td>
-		    <td >
-					<h3>Book Title</h3>
-					<p>by Author</p>
-					<p>Price: HKD 100</p>
-					<p>Loyalty Point: 50</p>
-					<form class="addToCart">
-						<label for="Quantity">Quantity:</label>
-						<input type="text" name="quantity" value="1" size="5">
-						<input type="submit" value="Add to Cart">
-					</form>
-				</td>
-		  </tr>
-		</table>
+		<h2>Account Detail</h2>
+
+<fieldset>
+
+	<form>
+		<h3>User Info</h3>
+		<label for="username">Username:</label>
+		<input type="text" name="username" >
+		<label for="password">Password:</label>
+		<input type="text" name="password" >
+		<label for="password2">Confirm Password:</label>
+		<input type="text" name="password2" >
+		<h3><br></h3>
+
+		<h3>Credit Card Info</h3>
+		<label for="cardname">Card name:</label>
+		<input type="text" name="cardname" >
+		<label for="cardNumber">Card Number:</label>
+		<input type="text" name="cardNumber" >
+		<label for="cardDate">Expiry Date:</label>
+		<input type="date" name="cardDate" >
+		<h3><br></h3>
+
+		<h3>Address</h3>
+		<label for="address1">Address Line 1:</label>
+		<input type="text" name="address1" >
+		<label for="address2">Address Line 2:</label>
+		<input type="text" name="address2" >
+		<label for="city">City:</label>
+		<input type="text" name="city" >
+		<label for="country">Country:</label>
+		<input type="text" name="country" >
+		<label for="postCode">Post Code (if any):</label>
+		<input type="text" name="postCode" >
+		<h3><br></h3>
+
+		<a href="viewDetail.html" class="button">Back to View Detail</a>
+		<a href="viewDetail.html" class="button">Confirm</a>
+
+
+	</form>
+</fieldset>
+
 
 
 

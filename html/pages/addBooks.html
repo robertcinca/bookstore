@@ -12,7 +12,7 @@
 
 	<!-- CSS Pages -->
 	<link href="../../css/theme.css" rel="stylesheet">
-	<link href="../../css/browse.css" rel="stylesheet">
+	<link href="../../css/mbrowse.css" rel="stylesheet">
 
 	<!-- JS Pages -->
 
@@ -38,50 +38,28 @@
             </div>
         </div>
 
-		<h1>Page to browse books (Customer)</h1>
-		<a href="mbrowse.html" class="button">Manager View</a>
-		<a href="viewcart.html" class="button">View Cart</a>
-		<a href="viewDetail.html" class="button">View Account Detail</a>
+		<h1>Page to browse books (Manager)</h1>
+		<a href="mbrowse.html" class="button">Back to Browse</a>
+
 		<br>
 
-		<!-- Book List  -->
-		<table class="bookList">
-			<col width="20%">
-  		<col width="80%">
-		  <tr>
-		    <th>Books</th>
-		    <th>Detail</th>
+		<!--Add Book Detail form-->
 
-		  </tr>
-		  <tr>
-		    <td style="text-align: center; vertical-align: middle;"><img alt="Picture of a book" src="../../img/bookCover.png"></td>
-		    <td >
-					<h3>Book Title</h3>
-					<p>by Author</p>
-					<p>Price: HKD 100</p>
-					<p>Loyalty Point: 50</p>
-					<form class="addToCart">
-						<label for="Quantity">Quantity:</label>
-						<input type="text" name="quantity" value="1" size="5">
-						<input type="submit" value="Add to Cart">
-					</form>
-				</td>
-		  </tr>
-		  <tr>
-		    <td style="text-align: center; vertical-align: middle;"><img alt="Picture of a book" src="../../img/bookCover.png"></td>
-		    <td >
-					<h3>Book Title</h3>
-					<p>by Author</p>
-					<p>Price: HKD 100</p>
-					<p>Loyalty Point: 50</p>
-					<form class="addToCart">
-						<label for="Quantity">Quantity:</label>
-						<input type="text" name="quantity" value="1" size="5">
-						<input type="submit" value="Add to Cart">
-					</form>
-				</td>
-		  </tr>
-		</table>
+		<fieldset>
+			<legend>Add New Books</legend>
+			<h3>Fill in book detail</h3>
+			<form class="addBooks">
+				<label for="title">Book Title:</label>
+				<input type="text" name="title" >
+				<label for="author">Author:</label>
+				<input type="text" name="author" >
+				<label for="price">Price:</label>
+				<input type="text" name="price" >
+				<label for="point">Loyalty Points:</label>
+				<input type="text" name="point" >
+				<input style="float:right;" type="submit" value="Add book">
+			</form>
+		</fieldset>
 
 
 
