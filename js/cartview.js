@@ -5,7 +5,12 @@ function getShoppingCart() {
     var totalAmount = 0; //Calculate total price of all purchased books
     //Extracting Table headings
     var col = [];
-    for (var i = 0; i < cartInfo.length; i++) {
+    for (var i = 0; i <= cartInfo.length; i++) {
+        if (i == cartInfo.length) {
+             col.push(key);
+             break;
+        }
+
         for (var key in cartInfo[i]) {
             if (col.indexOf(key) === -1) {
                 col.push(key);
@@ -58,7 +63,7 @@ function getShoppingCart() {
         for (var j = col.length - 1; j < col.length; j++) {
             var tabCell = tr.insertCell(-1);
                 tabCell.innerHTML = parseInt(cartInfo[i][col[col.length -2]]) * parseInt(cartInfo[i][col[col.length -4]]);
-                totalAmount += parseInt(cartInfo[i][col[col.length -1]]);
+                totalAmount += parseInt(cartInfo[i][col[col.length -2]]) * parseInt(cartInfo[i][col[col.length -4]]);
         }
     }
 
@@ -92,7 +97,6 @@ function getAccounts(user) {
             "Quantity": 1,
             "Unit Point": 20,
             "Unit Price": 130,
-            "Total Price": 20
          },
          {
             "Book Name":"Pride and Prejudice",
@@ -100,7 +104,6 @@ function getAccounts(user) {
             "Quantity": 4,
             "Unit Point": 10,
             "Unit Price": 140,
-            "Total Price": 560
          },
          {
             "Book Name":"Harry Potter and the Philosopher's Stone",
@@ -108,7 +111,6 @@ function getAccounts(user) {
             "Quantity": 1,
             "Unit Point": 20,
             "Unit Price": 20,
-            "Total Price": 20
          },
          {
             "Book Name":"Pride and Prejudice",
@@ -116,7 +118,6 @@ function getAccounts(user) {
             "Quantity": 4,
             "Unit Point": 10,
             "Unit Price": 140,
-            "Total Price": 560
          },
          {
             "Book Name":"Harry Potter and the Philosopher's Stone",
@@ -124,7 +125,6 @@ function getAccounts(user) {
             "Quantity": 1,
             "Unit Point": 20,
             "Unit Price": 20,
-            "Total Price": 20
          },
          {
             "Book Name":"Pride and Prejudice",
@@ -132,7 +132,6 @@ function getAccounts(user) {
             "Quantity": 4,
             "Unit Point": 10,
             "Unit Price": 140,
-            "Total Price": 560
          }      
         ];
         from=Math.floor(Math.random()*6);
