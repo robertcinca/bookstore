@@ -38,24 +38,26 @@ function getShoppingCart() {
     
     // Add JSON to table
     for (var i = 0; i < cartInfo.length; i++) {
-        
         tr = table.insertRow(-1);
         
         // for (var j = 0; j < 1; j++) {
         //     var tabCell = tr.insertCell(-1);
         //     tabCell.innerHTML = (cartInfo[i][col[j]]).link("accountdetail.html" + "?accNo=" + (cartInfo[i][col[j]]));
         // }
-        for (var j = 0; j < col.length - 1; j++) {
+
+        for (var j = 0; j < 2; j++) {
             var tabCell = tr.insertCell(-1);
-            // tabCell.innerHTML = cartInfo[i][col[j]];
-            // if (cartInfo[i][col[col.length - 1]]) {
-            //     tabCell.innerHTML = cartInfo[i][col[j]];
-            //     totalAmount += parseInt(cartInfo[i][col[col.length -1]]);
-            //     // alert(parseInt(cartInfo[i][col[col.length -1]]));
-            //     alert(j);
-            // }
-            // else
                 tabCell.innerHTML = cartInfo[i][col[j]];
+        }
+
+        for (var j = 2; j < 3; j++) {
+            var x = cartInfo[i][col[j]];
+            tr.insertCell(-1).innerHTML = '<select name="quantity"><option value=' + eval('x') + '>' + eval('x') + '</option><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><<option value="5">5</option>/select>';
+        }
+
+        for (var j = 3; j < col.length - 1; j++) {
+            var tabCell = tr.insertCell(-1);
+            tabCell.innerHTML = cartInfo[i][col[j]];
         }
 
         //Multiply Quantity with Price to get Total Price per row
@@ -94,44 +96,44 @@ function getAccounts(user) {
          {
             "Book Name":"Harry Potter and the Philosopher's Stone",
             "Author":"J. K. Rowling",
-            "Quantity": 1,
-            "Unit Point": 20,
+            "Quantity": 3,
+            "Unit Points": 20,
             "Unit Price": 130,
          },
          {
             "Book Name":"Pride and Prejudice",
             "Author":"Jane Austen",
             "Quantity": 4,
-            "Unit Point": 10,
+            "Unit Points": 10,
             "Unit Price": 140,
          },
          {
-            "Book Name":"Harry Potter and the Philosopher's Stone",
-            "Author":"J. K. Rowling",
+            "Book Name":"Enchantment",
+            "Author":"Guy Kawasaki",
+            "Quantity": 2,
+            "Unit Points": 50,
+            "Unit Price": 100,
+         },
+         {
+            "Book Name":"An Introduction to Social Psychology",
+            "Author":"Miles Hewstone",
             "Quantity": 1,
-            "Unit Point": 20,
-            "Unit Price": 20,
+            "Unit Points": 100,
+            "Unit Price": 860,
          },
          {
-            "Book Name":"Pride and Prejudice",
-            "Author":"Jane Austen",
-            "Quantity": 4,
-            "Unit Point": 10,
-            "Unit Price": 140,
-         },
-         {
-            "Book Name":"Harry Potter and the Philosopher's Stone",
-            "Author":"J. K. Rowling",
+            "Book Name":"The Lord of the Rings",
+            "Author":"J.R.R. Tolkien",
             "Quantity": 1,
-            "Unit Point": 20,
-            "Unit Price": 20,
+            "Unit Points": 15,
+            "Unit Price": 250,
          },
          {
-            "Book Name":"Pride and Prejudice",
-            "Author":"Jane Austen",
-            "Quantity": 4,
-            "Unit Point": 10,
-            "Unit Price": 140,
+            "Book Name":"Never Let Me Go",
+            "Author":"Kazuo Ishiguro",
+            "Quantity": 2,
+            "Unit Points": 10,
+            "Unit Price": 70,
          }      
         ];
         from=Math.floor(Math.random()*6);
