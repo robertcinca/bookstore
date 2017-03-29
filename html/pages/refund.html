@@ -12,7 +12,6 @@
 
 	<!-- CSS Pages -->
 	<link href="../../css/theme.css" rel="stylesheet">
-	<link href="../../css/browse.css" rel="stylesheet">
 
 	<!-- JS Pages -->
 
@@ -38,52 +37,53 @@
             </div>
         </div>
 
-		<h1>Page to browse books (Customer)</h1>
-		<a href="mbrowse.html" class="button">Manager View</a>
-		<a href="viewcart.html" class="button">View Cart</a>
-		<a href="viewDetail.html" class="button">View Account Detail</a>
+		<h1>Refund Requests</h1>
+
+		<a href="mbrowse.html" class="button">Back to browse</a>
 		<br>
 
-		<!-- Book List  -->
-		<table class="bookList">
+		<!--Refund Requests-->
+
+		<table class="refundRequest">
 			<col width="20%">
-  		<col width="80%">
+  		<col width="40%">
+			<col width="15%">
+  		<col width="10%">
+			<col width="15%">
+
 		  <tr>
-		    <th>Books</th>
-		    <th>Detail</th>
+				<th>User</th>
+		    <th>Book Title</th>
+		    <th>Price</th>
+				<th>Quantity</th>
+				<th></th>
 
 		  </tr>
 		  <tr>
-		    <td style="text-align: center; vertical-align: middle;"><img alt="Picture of a book" src="../../img/bookCover.png"></td>
-		    <td >
-					<h3>Book Title</h3>
-					<p>by Author</p>
-					<p>Price: HKD 100</p>
-					<p>Loyalty Point: 50</p>
-					<form class="addToCart">
-						<label for="Quantity">Quantity:</label>
-						<input type="text" name="quantity" value="1" size="5">
-						<input type="submit" value="Add to Cart">
+		    <td >Username</td>
+		    <td >Book Title</td>
+				<td >HKD 100</td>
+				<td >1</td>
+				<td >
+					<form class="refundButton" style="float:right">
+						<input type="button" value="Accept">
+						<input type="button" value="Decline">
 					</form>
 				</td>
 		  </tr>
 		  <tr>
-		    <td style="text-align: center; vertical-align: middle;"><img alt="Picture of a book" src="../../img/bookCover.png"></td>
-		    <td >
-					<h3>Book Title</h3>
-					<p>by Author</p>
-					<p>Price: HKD 100</p>
-					<p>Loyalty Point: 50</p>
-					<form class="addToCart">
-						<label for="Quantity">Quantity:</label>
-						<input type="text" name="quantity" value="1" size="5">
-						<input type="submit" value="Add to Cart">
+				<td >Username</td>
+		    <td >Book Title</td>
+				<td >HKD 100</td>
+				<td >1</td>
+				<td >
+					<form class="refundButton" style="float:right">
+						<input type="button" value="Accept">
+						<input type="button" value="Decline">
 					</form>
 				</td>
 		  </tr>
 		</table>
-
-
 
 
 		<footer>
