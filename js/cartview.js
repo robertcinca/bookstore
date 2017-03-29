@@ -50,7 +50,7 @@ function getShoppingCart() {
 
         for (var j = 2; j < 3; j++) {
             var x = cartInfo[i][col[j]];
-            tr.insertCell(-1).innerHTML = '<select name="quantity" onchange="javascript:quantityChange()"><option value=' + eval('x') + '>' + eval('x') + '</option><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><<option value="5">5</option>/select>';
+            tr.insertCell(-1).innerHTML = '<select name="quantitySelector" id="quantitySelector" onchange="javascript:quantityChange(this)"><option value=' + eval('x') + '>' + eval('x') + '</option><option name="0" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><<option value="5">5</option>/select>';
         }
 
         for (var j = 3; j < col.length - 1; j++) {
@@ -85,8 +85,9 @@ function getShoppingCart() {
 }
 
 //TODO: handle quantity change
-function quantityChange() {
-    alert("quantity has changed!");
+function quantityChange(selectObject) {
+    var value = selectObject.value;  
+    alert(value);
 }
 
 //Fake JSON data, need to link to a DB with real data
