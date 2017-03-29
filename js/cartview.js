@@ -3,7 +3,6 @@ function getShoppingCart() {
     var x = getParameterByName('username'); //get username
     var cartInfo = getAccounts(x); //get JSON from function
     var totalAmount = 0; //Calculate total price of all purchased books
-    
     //Extracting Table headings
     var col = [];
     for (var i = 0; i < cartInfo.length; i++) {
@@ -13,6 +12,7 @@ function getShoppingCart() {
             }
         }
     }
+    col++; //creating total price column
     
     // Create table
     var table = document.createElement("table");
@@ -22,12 +22,17 @@ function getShoppingCart() {
     
     for (var i = 0; i < col.length; i++) {
         var th = document.createElement("th");     
-        th.innerHTML = col[i];
+        if (i == col.length - 1) {
+            th.innerHTML = "Total Price"; //create extra column here
+        }
+        else {
+            th.innerHTML = col[i];
+        }
         tr.appendChild(th);
     }
     
     // Add JSON to table
-    for (var i = 0; i < cartInfo.length; i++) {
+    for (var i = 0; i < cartInfo.length + 1; i++) {
         
         tr = table.insertRow(-1);
         
@@ -35,13 +40,25 @@ function getShoppingCart() {
         //     var tabCell = tr.insertCell(-1);
         //     tabCell.innerHTML = (cartInfo[i][col[j]]).link("accountdetail.html" + "?accNo=" + (cartInfo[i][col[j]]));
         // }
-        for (var j = 0; j < col.length; j++) {
+        for (var j = 0; j < col.length - 1; j++) {
             var tabCell = tr.insertCell(-1);
-            tabCell.innerHTML = cartInfo[i][col[j]];
-            if (cartInfo[i][col[col.length - 1]]) {
+            // tabCell.innerHTML = cartInfo[i][col[j]];
+            // if (cartInfo[i][col[col.length - 1]]) {
+            //     tabCell.innerHTML = cartInfo[i][col[j]];
+            //     totalAmount += parseInt(cartInfo[i][col[col.length -1]]);
+            //     // alert(parseInt(cartInfo[i][col[col.length -1]]));
+            //     alert(j);
+            // }
+            // else
+                tabCell.innerHTML = cartInfo[i][col[j]];
+        }
+
+        //Multiply Quantity with Price to get Total Price per row
+        //Add to Total Amount to get Total Overall Price
+        for (var j = col.length - 1; j < col.length; j++) {
+            var tabCell = tr.insertCell(-1);
+                tabCell.innerHTML = parseInt(cartInfo[i][col[col.length -2]]) * parseInt(cartInfo[i][col[col.length -4]]);
                 totalAmount += parseInt(cartInfo[i][col[col.length -1]]);
-                alert(parseInt(cartInfo[i][col[col.length -1]]));
-            }
         }
     }
 
@@ -53,7 +70,7 @@ function getShoppingCart() {
         if (j == col.length - 2)
             tabCell.innerHTML = "Total Price (HKD):";
         if (j == col.length - 1)
-            tabCell.innerHTML = totalAmount;
+            tabCell.innerHTML = totalAmount + ".00";
     }
 
     
@@ -75,7 +92,6 @@ function getAccounts(user) {
             "Quantity": 1,
             "Unit Point": 20,
             "Unit Price": 130,
-            "Total Price": 20
          },
          {
             "Book Name":"Pride and Prejudice",
@@ -83,7 +99,6 @@ function getAccounts(user) {
             "Quantity": 4,
             "Unit Point": 10,
             "Unit Price": 140,
-            "Total Price": 560
          },
          {
             "Book Name":"Harry Potter and the Philosopher's Stone",
@@ -91,7 +106,6 @@ function getAccounts(user) {
             "Quantity": 1,
             "Unit Point": 20,
             "Unit Price": 20,
-            "Total Price": 20
          },
          {
             "Book Name":"Pride and Prejudice",
@@ -99,7 +113,6 @@ function getAccounts(user) {
             "Quantity": 4,
             "Unit Point": 10,
             "Unit Price": 140,
-            "Total Price": 560
          },
          {
             "Book Name":"Harry Potter and the Philosopher's Stone",
@@ -107,7 +120,6 @@ function getAccounts(user) {
             "Quantity": 1,
             "Unit Point": 20,
             "Unit Price": 20,
-            "Total Price": 20
          },
          {
             "Book Name":"Pride and Prejudice",
@@ -115,7 +127,6 @@ function getAccounts(user) {
             "Quantity": 4,
             "Unit Point": 10,
             "Unit Price": 140,
-            "Total Price": 560
          }      
         ];
         from=Math.floor(Math.random()*6);
