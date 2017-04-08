@@ -27,10 +27,17 @@
     </head>
     <body>
         <p>List of all the web pages in the site (with links):</p>
-        <li><a href="/bookstore/pages/index.jsp">Login</a></li>
+        <li><a href="/bookstore/pages/index.jsp">Login (Index Page)</a></li>
+        <br>
+        <li><a href="/bookstore/pages/addbooks.jsp">Add Books</a></li>
         <li><a href="/bookstore/pages/browse.jsp">Browse</a></li>
-        <li><a href="/bookstore/pages/viewcart.jsp">View Cart</a></li>
+        <li><a href="/bookstore/pages/confirmation.jsp">Confirmation</a></li>
+        <li><a href="/bookstore/pages/editAccount.jsp">Edit Account</a></li>
+        <li><a href="/bookstore/pages/mbrowse.jsp">MBrowse</a></li>
         <li><a href="/bookstore/pages/payment.jsp">Pay Now</a></li>
+        <li><a href="/bookstore/pages/refund.jsp">Refund</a></li>
+        <li><a href="/bookstore/pages/viewcart.jsp">View Cart</a></li>
+        <li><a href="/bookstore/pages/viewdetail.jsp">View Details</a></li>
 
         <p>List of all iframes used:</p>
         <a href="/bookstore/ifrmaes/disclaimer.jsp">Disclaimer</a>
