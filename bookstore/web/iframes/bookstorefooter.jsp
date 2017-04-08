@@ -16,8 +16,8 @@
     <meta name="description" content="An online marketplace for buying books.">
 
     <!-- CSS Pages -->
-    <link href="../../css/theme.css" rel="stylesheet">
-    <link href="../../css/bookstore.css" rel="stylesheet">
+    <link href="/bookstore/CSS/theme.css" rel="stylesheet">
+    <link href="/bookstore/CSS/bookstore.css" rel="stylesheet">
 
     <!-- JS Pages -->
 
@@ -27,14 +27,13 @@
     </head>
     <body>
         <p>List of all the web pages in the site (with links):</p>
-        <a href="../pages/index.html">Login/Sign Up Page</a>
-        <a href="../pages/browse.html">Browse Books</a>
-        <a href="../pages/viewcart.html">View Cart</a>
-        <a href="../pages/payment.html">Payment</a>
-        <a href="../pages/confirmation.html">Confirmation</a>
+        <li><a href="/bookstore/pages/index.jsp">Login</a></li>
+        <li><a href="/bookstore/pages/browse.jsp">Browse</a></li>
+        <li><a href="/bookstore/pages/viewcart.jsp">View Cart</a></li>
+        <li><a href="/bookstore/pages/payment.jsp">Pay Now</a></li>
 
         <p>List of all iframes used:</p>
-        <a href="disclaimer.html">Disclaimer</a>
-        <a href="bookstorefooter.html">Book Store Footer</a>
+        <a href="/bookstore/ifrmaes/disclaimer.jsp">Disclaimer</a>
+        <a href="/bookstore/iframes/bookstorefooter.jsp">Book Store Footer</a>
     </body>
 </html>

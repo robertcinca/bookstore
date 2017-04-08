@@ -7,47 +7,44 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-	<!-- Meta attributes -->
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="robots" content="noindex, nofollow">
-	<meta name="title" content="Online Bookstore">
-	<meta name="description" content="An online marketplace for buying books.">
-
-	<title>Welcome to our Online Bookstore!</title>
-
-	<!-- CSS Pages -->
-	<link href="../../css/theme.css" rel="stylesheet">
-	<link href="../../css/browse.css" rel="stylesheet">
-
-	<!-- JS Pages -->
-
-	</head>
-	<body>
-		<header>
-			<iframe id="disclaimer" name="disclaimer" src="../iframes/disclaimer.html" width="100%">
-            [Your user agent does not support frames or is currently configured not to display frames.]
-        	</iframe>
-		</header>
-
-		<!-- Navigation -->
+    <head>
+        <!-- Meta attributes -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noindex, nofollow">
+        <meta name="title" content="Online Bookstore">
+        <meta name="description" content="An online marketplace for buying books.">
+                            
+        <title>Welcome to our Online Bookstore!</title>
+                            
+        <!-- CSS Pages -->
+        <link href="/bookstore/CSS/theme.css" rel="stylesheet" type="text/css"/>
+        <link href="/bookstore/CSS/browse.css" rel="stylesheet" type="text/css"/>
+        <!-- JS Pages -->
+    </head>
+    <body>
+        <header>
+            <iframe id="disclaimer" name="disclaimer" src="/bookstore/iframes/disclaimer.jsp" width="100%">
+                [Your user agent does not support frames or is currently configured not to display frames.]
+            </iframe>
+        </header>
+        
+        <!-- Navigation -->
         <div class="dropdown">
             <button class="dropbtn">MENU</button>
             <div class="dropdown-content">
                 <ul class="nav">
-                    <li><a href="../pages/index.html">Login</a></li>
-                    <li><a href="../pages/browse.html">Browse</a></li>
-                    <li><a href="../pages/viewcart.html">View Cart</a></li>
-                    <li><a href="../pages/payment.html">Pay Now</a></li>
-
+                    <li><a href="/bookstore/pages/index.jsp">Login</a></li>
+                    <li><a href="/bookstore/pages/browse.jsp">Browse</a></li>
+                    <li><a href="/bookstore/pages/viewcart.jsp">View Cart</a></li>
+                    <li><a href="/bookstore/pages/payment.jsp">Pay Now</a></li>
                 </ul>
             </div>
         </div>
 
 		<h1>Account Detail</h1>
-		<a href="browse.html" class="button">Back to Browse</a>
-		<a href="viewcart.html" class="button">View Cart</a>
+		<a href="/bookstore/pages/browse.jsp" class="button">Back to Browse</a>
+		<a href="/bookstore/pages/viewcart.jsp" class="button">View Cart</a>
 		<br>
 
 		<!--Purchased book-->
@@ -116,7 +113,7 @@
 		<p>Post Code (if any): </p>
 		<br>
 
-		<a href="editAccount.html" class="button">Edit Account</a>
+		<a href="/bookstore/pages/editAccount.jsp" class="button">Edit Account</a>
 </fieldset>
 
 
@@ -124,10 +121,10 @@
 
 
 		<footer>
-			<iframe id="disclaimer" name="disclaimer" src="../iframes/disclaimer.html" width="100%">
+			<iframe id="disclaimer" name="disclaimer" src="/bookstore/iframes/disclaimer.jsp" width="100%">
             [Your user agent does not support frames or is currently configured not to display frames.]
         	</iframe>
-        	<iframe id="bookstorefooter" name="bookstorefooter" src="../iframes/bookstorefooter.html" width="100%" height="400px">
+        	<iframe id="bookstorefooter" name="bookstorefooter" src="/bookstore/iframes/bookstorefooter.jsp" width="100%" height="400px">
             [Your user agent does not support frames or is currently configured not to display frames.]
         	</iframe>
 		</footer>
