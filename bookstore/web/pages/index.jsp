@@ -1,27 +1,32 @@
+<%-- 
+    Document   : index
+    Created on : 08-Apr-2017, 20:44:53
+    Author     : robertcinca
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <!-- Meta attributes -->
         <meta charset="utf-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1">
-                <meta name="robots" content="noindex, nofollow">
-                    <meta name="title" content="Online Bookstore">
-                        <meta name="description" content="An online marketplace for buying books.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noindex, nofollow">
+        <meta name="title" content="Online Bookstore">
+        <meta name="description" content="An online marketplace for buying books.">
                             
-                            <title>Welcome to our Online Bookstore!</title>
+        <title>Welcome to our Online Bookstore!</title>
                             
-                            <!-- CSS Pages -->
-                            <link href="../../css/theme.css" rel="stylesheet">
-                                <link href="../../css/login.css" rel="stylesheet">
-                                    
-                                    <!-- JS Pages -->
-                                    <script type="text/javascript" src="../../js/basicFunctions.js"></script>
-                                    <script type="text/javascript" src="../../js/login.js"></script>
-                                    
-                                    </head>
+        <!-- CSS Pages -->
+        <link href="/bookstore/CSS/theme.css" rel="stylesheet" type="text/css"/>
+        <link href="/bookstore/CSS/login.css" rel="stylesheet" type="text/css"/>
+        <!-- JS Pages -->
+        <script src="/bookstore/JS/basicFunctions.js" type="text/javascript"></script>
+        <script src="/bookstore/JS/login.js" type="text/javascript"></script>
+    </head>
     <body>
         <header>
-            <iframe id="disclaimer" name="disclaimer" src="../iframes/disclaimer.html" width="100%">
+            <iframe id="disclaimer" name="disclaimer" src="/bookstore/iframes/disclaimer.jsp" width="100%">
                 [Your user agent does not support frames or is currently configured not to display frames.]
             </iframe>
         </header>
@@ -31,11 +36,10 @@
             <button class="dropbtn">MENU</button>
             <div class="dropdown-content">
                 <ul class="nav">
-                    <li><a href="../pages/index.html">Login</a></li>
-                    <li><a href="../pages/browse.html">Browse</a></li>
-                    <li><a href="../pages/viewcart.html">View Cart</a></li>
-                    <li><a href="../pages/payment.html">Pay Now</a></li>
-
+                    <li><a href="/bookstore/pages/index.jsp">Login</a></li>
+                    <li><a href="/bookstore/pages/browse.jsp">Browse</a></li>
+                    <li><a href="/bookstore/pages/viewcart.jsp">View Cart</a></li>
+                    <li><a href="/bookstore/pages/payment.jsp">Pay Now</a></li>
                 </ul>
             </div>
         </div>
@@ -47,16 +51,16 @@
         
         <!-- Login Form -->
         <div id="id01" class="modal">
-            
-            <form id="Form" name="Form" class="modal-content animate" onsubmit="return validateLogin()" action="browse.html" method="get">
+            <%--<jsp:include page="../../src/java/authentication/LoginServlet.java" />--%>
+            <form id="Form" name="Form" class="modal-content animate" onsubmit="return validateLogin()" action="/bookstore/pages/browse.jsp" method="post">
                 <div class="imgcontainer">
                     <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
-                    <img src="../../img/welcome.png" alt="welcome" class="avatar">
+                    <img src="/bookstore/IMG/welcome.png" alt="welcome" class="avatar">
                         </div>
                 
                 <div class="container">
                     <label><b>Username</b></label>
-                    <input type="text" placeholder="Enter Username" name="uname" required>
+                    <input type="text" placeholder="Enter Username (Use manager for manager login)" name="uname" required>
                         
                         <label><b>Password</b></label>
                         <input type="password" placeholder="Enter Password" name="psw" required>
@@ -74,10 +78,10 @@
 		<!-- SignUp Form -->
         <div id="id02" class="modal">
             
-            <form id="Form2" name="Form2" class="modal-content animate" onsubmit="return validateSignUp()" action="browse.html" method="get">
+            <form id="Form2" name="Form2" class="modal-content animate" onsubmit="return validateSignUp()" action="/bookstore/pages/browse.jsp" method="post">
                 <div class="imgcontainer">
                     <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span>
-                    <img src="../../img/newuser.png" alt="sign up!" class="avatar">
+                    <img src="/bookstore/IMG/newuser.png" alt="sign up!" class="avatar">
                         </div>
                 
                 <div class="container">
@@ -99,14 +103,14 @@
             </form>
         </div>
 
-        <a href="browse.html" class="button">Continue without logging in >>></a>
+        <a href="/bookstore/pages/browse.jsp" class="button">Continue without logging in >>></a>
         <br>
         
         <footer>
-            <iframe id="disclaimer" name="disclaimer" src="../iframes/disclaimer.html" width="100%">
+            <iframe id="disclaimer" name="disclaimer" src="/bookstore/iframes/disclaimer.jsp" width="100%">
                 [Your user agent does not support frames or is currently configured not to display frames.]
             </iframe>
-            <iframe id="bookstorefooter" name="bookstorefooter" src="../iframes/bookstorefooter.html" width="100%" height="400px">
+            <iframe id="bookstorefooter" name="bookstorefooter" src="/bookstore/iframes/bookstorefooter.jsp" width="100%" height="400px">
                 [Your user agent does not support frames or is currently configured not to display frames.]
             </iframe>
         </footer>

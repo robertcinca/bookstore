@@ -19,13 +19,14 @@ function validateLogin(){
 
     //TODO: create check with DB
     if (Math.floor(Math.random()*3) == 0) {   
-            localstorage.clear();     
-            pageOpacity(); //call Opacity function
+            localstorage.clear();  
             window.alert("Username and/or password are wrong. Please try again.");
             return false;    
         }
     else {
             localstorage.setItem('user', user);
+            if (user == "manager")
+                document.Form.action ="mbrowse.html"; //give manager right of access to manager page
             return true;
     }
 }
@@ -60,9 +61,14 @@ function checkLoginSyntax(user, pw) {
     }
     for (var i = 0; i < user.length; i++) {
         if (user[i] == " ") {
-          alert("Error: There is an intervening space in the Username. Please try again.");
+          window.alert("Error: There is an intervening space in the Username. Please try again.");
           return false;
         }
     }
     return true;
+}
+
+//redirect manager to right page
+function pageDirect() {
+    window.open("browse.html","_self")
 }
