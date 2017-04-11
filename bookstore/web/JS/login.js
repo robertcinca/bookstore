@@ -6,7 +6,6 @@
 
 // Get the modal
 var modal = document.getElementById('id01');
-var modal = document.getElementById('id02');
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
@@ -18,23 +17,10 @@ window.onclick = function(event) {
 // Check user login (fake)
 localstorage=window.sessionStorage;
 function validateLogin(){
-    var user=document.forms["Form"]["uname"].value;
-    var pw=document.forms["Form"]["psw"].value;
+    var user=document.forms["Form"]["j_username"].value;
+    var pw=document.forms["Form"]["j_password"].value;
     if (checkLoginSyntax(user, pw) == false)
         return false;
-
-    //TODO: create check with DB
-    if (Math.floor(Math.random()*3) == 0) {   
-            localstorage.clear();  
-            window.alert("Username and/or password are wrong. Please try again.");
-            return false;    
-        }
-    else {
-            localstorage.setItem('user', user);
-            if (user == "manager")
-                document.Form.action ="mbrowse.html"; //give manager right of access to manager page
-            return true;
-    }
 }
 
 //Check user signup (fake)
@@ -53,16 +39,18 @@ function validateSignUp(){
 
     //TODO: create user in DB
     localstorage.setItem('user', user);
+    
+    window.alert("Registration successful. Please login with the new details.");
     return true;
 }
 
 function checkLoginSyntax(user, pw) {
-    if (user.length < 5) {
-        window.alert("Error: Username is too short: minimum length is 5 characters.");
+    if (user.length < 4) {
+        window.alert("Error: Username is too short: minimum length is 4 characters.");
         return false;
     }
-    if (pw.length < 5) {
-        window.alert("Error: Password is too short: minimum length is 5 characters.");
+    if (pw.length < 3) {
+        window.alert("Error: Password is too short: minimum length is 3 characters.");
         return false;
     }
     for (var i = 0; i < user.length; i++) {

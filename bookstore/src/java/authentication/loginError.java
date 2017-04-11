@@ -19,10 +19,9 @@ import javax.servlet.http.HttpServletResponse;
 public class loginError extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        try {
+        try (PrintWriter out = response.getWriter()) {
             out.println(" <!DOCTYPE html>\n"
                     + "<html lang=\"en\">\n"
                     + "    <head>\n"
@@ -54,7 +53,6 @@ public class loginError extends HttpServlet {
                     + "            <button class=\"dropbtn\">MENU</button>\n"
                     + "            <div class=\"dropdown-content\">\n"
                     + "                <ul class=\"nav\">\n"
-                    + "                    <li><a href=\"/bookstore/login.do\">Login</a></li>\n"
                     + "                    <li><a href=\"/bookstore/browse.do\">Browse</a></li>\n"
                     + "                    <li><a href=\"/bookstore/viewcart.do\">View Cart</a></li>\n"
                     + "                    <li><a href=\"/bookstore/payment.do\">Pay Now</a></li>\n"
@@ -67,31 +65,28 @@ public class loginError extends HttpServlet {
             out.println("<p>User name: " + this.htmlEncode(request.getParameter("j_username")) + "</p>");
             out.println("<p>Password: " + this.htmlEncode(request.getParameter("j_password")) + "</p>");
             out.println("<p><a href='javascript:history.back(1)'>Try again!</a></p>");
-            out.println("<footer>\n" +
-"            <iframe id=\"disclaimer\" name=\"disclaimer\" src=\"/bookstore/iframes/disclaimer.jsp\" width=\"100%\">\n" +
-"                [Your user agent does not support frames or is currently configured not to display frames.]\n" +
-"            </iframe>\n" +
-"            <iframe id=\"bookstorefooter\" name=\"bookstorefooter\" src=\"/bookstore/iframes/bookstorefooter.jsp\" width=\"100%\" height=\"400px\">\n" +
-"                [Your user agent does not support frames or is currently configured not to display frames.]\n" +
-"            </iframe>\n" +
-"        </footer>");
+            out.println("<footer>\n"
+                    + "            <iframe id=\"disclaimer\" name=\"disclaimer\" src=\"/bookstore/iframes/disclaimer.jsp\" width=\"100%\">\n"
+                    + "                [Your user agent does not support frames or is currently configured not to display frames.]\n"
+                    + "            </iframe>\n"
+                    + "            <iframe id=\"bookstorefooter\" name=\"bookstorefooter\" src=\"/bookstore/iframes/bookstorefooter.jsp\" width=\"100%\" height=\"400px\">\n"
+                    + "                [Your user agent does not support frames or is currently configured not to display frames.]\n"
+                    + "            </iframe>\n"
+                    + "        </footer>");
             out.println("</body>");
             out.println("</html>");
-        } finally { 
-            out.close();
         }
     }
 
     private String htmlEncode(String s) {
-        StringBuffer sb = new StringBuffer(s.length() * 2);
+        StringBuilder sb = new StringBuilder(s.length() * 2);
 
         for (int i = 0; i < s.length(); ++i) {
             char ch = s.charAt(i);
             if ((ch >= '?' && ch <= 'Z') || (ch >= 'a' && ch <= 'z') || (ch == ' ') || (ch == '\n')) {
                 sb.append(ch);
-            }
-            else {
-                switch(ch) {
+            } else {
+                switch (ch) {
                     case '>':
                         sb.append("&gt;");
                         break;

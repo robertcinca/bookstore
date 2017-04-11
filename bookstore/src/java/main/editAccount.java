@@ -60,8 +60,13 @@ public class editAccount extends HttpServlet {
                     + "        <div class=\"dropdown\">\n"
                     + "            <button class=\"dropbtn\">MENU</button>\n"
                     + "            <div class=\"dropdown-content\">\n"
-                    + "                <ul class=\"nav\">\n"
-                    + "                    <li><a href=\"/bookstore/login.do\">Login</a></li>\n"
+                    + "                <ul class=\"nav\">\n");
+            if (request.getSession(true) != null) {
+                out.println("  <li><a href=\"/bookstore/logout.do\">Logout</a></li>\n");
+            } else {
+                out.println("  <li><a href=\"/bookstore/login.do\">Login</a></li>\n");
+            }
+            out.println("                    <li><a href=\"/bookstore/browse.do\">Browse</a></li>\n"
                     + "                    <li><a href=\"/bookstore/browse.do\">Browse</a></li>\n"
                     + "                    <li><a href=\"/bookstore/viewcart.do\">View Cart</a></li>\n"
                     + "                    <li><a href=\"/bookstore/payment.do\">Pay Now</a></li>\n"

@@ -16,7 +16,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -35,7 +34,6 @@ public class browse extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session=request.getSession(true);
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
@@ -67,9 +65,13 @@ public class browse extends HttpServlet {
                     + "        <div class=\"dropdown\">\n"
                     + "            <button class=\"dropbtn\">MENU</button>\n"
                     + "            <div class=\"dropdown-content\">\n"
-                    + "                <ul class=\"nav\">\n"
-                    + "                    <li><a href=\"/bookstore/login.do\">Login</a></li>\n"
-                    + "                    <li><a href=\"/bookstore/browse.do\">Browse</a></li>\n"
+                    + "                <ul class=\"nav\">\n");
+            if (request.getSession(true) != null) {
+                out.println("  <li><a href=\"/bookstore/logout.do\">Logout</a></li>\n");
+            } else {
+                out.println("  <li><a href=\"/bookstore/login.do\">Login</a></li>\n");
+            }
+            out.println("                    <li><a href=\"/bookstore/browse.do\">Browse</a></li>\n"
                     + "                    <li><a href=\"/bookstore/viewcart.do\">View Cart</a></li>\n"
                     + "                    <li><a href=\"/bookstore/payment.do\">Pay Now</a></li>\n"
                     + "                </ul>\n"
