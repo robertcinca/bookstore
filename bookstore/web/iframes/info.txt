@@ -7,3 +7,10 @@ To log in, add the following to your tomcat-users.xml file:
 Then use the above details to log in.
 
 Note: you will have to restart your tomcat server.
+
+
+Current security configurations:
+admin has access to all files.
+sprole does not have access to following files:
+- addbooks
+- refund
