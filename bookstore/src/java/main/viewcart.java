@@ -32,68 +32,68 @@ public class viewcart extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>\n" +
-"<html lang=\"en\">\n" +
-"    <head>\n" +
-"        <!-- Meta attributes -->\n" +
-"        <meta charset=\"utf-8\">\n" +
-"        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n" +
-"        <meta name=\"robots\" content=\"noindex, nofollow\">\n" +
-"        <meta name=\"title\" content=\"Online Bookstore\">\n" +
-"        <meta name=\"description\" content=\"An online marketplace for buying books.\">\n" +
-"                            \n" +
-"        <title>Welcome to our Online Bookstore!</title>\n" +
-"                            \n" +
-"        <!-- CSS Pages -->\n" +
-"        <link href=\"/bookstore/CSS/theme.css\" rel=\"stylesheet\" type=\"text/css\"/>\n" +
-"        <!-- JS Pages -->\n" +
-"        <script src=\"/bookstore/JS/basicFunctions.js\" type=\"text/javascript\"></script>\n" +
-"        <script src=\"/bookstore/JS/cartview.js\" type=\"text/javascript\"></script>\n" +
-"    </head>\n" +
-"    <body>\n" +
-"        <header>\n" +
-"            <iframe id=\"disclaimer\" name=\"disclaimer\" src=\"/bookstore/iframes/disclaimer.jsp\" width=\"100%\">\n" +
-"                [Your user agent does not support frames or is currently configured not to display frames.]\n" +
-"            </iframe>\n" +
-"        </header>\n" +
-"        \n" +
-"        <!-- Navigation -->\n" +
-"        <div class=\"dropdown\">\n" +
-"            <button class=\"dropbtn\">MENU</button>\n" +
-"            <div class=\"dropdown-content\">\n" +
-"                <ul class=\"nav\">\n" +
-"                    <li><a href=\"/bookstore/pages/index.jsp\">Login</a></li>\n" +
-"                    <li><a href=\"/bookstore/pages/browse.jsp\">Browse</a></li>\n" +
-"                    <li><a href=\"/bookstore/pages/viewcart.jsp\">View Cart</a></li>\n" +
-"                    <li><a href=\"/bookstore/pages/payment.jsp\">Pay Now</a></li>\n" +
-"                </ul>\n" +
-"            </div>\n" +
-"        </div>\n" +
-"		\n" +
-"		<!-- View Cart Headings-->\n" +
-"		<h1 style=\"text-align:left;float:left;\">Confirm Your Order, </h1>\n" +
-"		<h1 style=\"text-align:left;float:left;\" id=\"welcomeMessage\"><script>javascript:formDataUsername();</script></h1>\n" +
-"		<hr style=\"clear:both;\"/>\n" +
-"		<h2>Your Shopping Cart</h2>\n" +
-"\n" +
-"		 <!-- Get Shopping Cart Information and Display It in a Table -->\n" +
-"        <div align=\"center\" id=\"showData\"><script type=\"text/javascript\">javascript:getShoppingCart()</script></div>\n" +
-"        <br>\n" +
-"\n" +
-"		<a href=\"payment.html\" class=\"button\">Pay Now</a>\n" +
-"		<a href=\"browse.html\" class=\"button\">Browse Books</a>\n" +
-"		<br>\n" +
-"\n" +
-"		<footer>\n" +
-"			<iframe id=\"disclaimer\" name=\"disclaimer\" src=\"/bookstore/iframes/disclaimer.jsp\" width=\"100%\">\n" +
-"            [Your user agent does not support frames or is currently configured not to display frames.]\n" +
-"        	</iframe>\n" +
-"        	<iframe id=\"bookstorefooter\" name=\"bookstorefooter\" src=\"/bookstore/iframes/bookstorefooter.jsp\" width=\"100%\" height=\"400px\">\n" +
-"            [Your user agent does not support frames or is currently configured not to display frames.]\n" +
-"        	</iframe>\n" +
-"		</footer>\n" +
-"	</body>\n" +
-"</html>");
+            out.println("<!DOCTYPE html>\n"
+                    + "<html lang=\"en\">\n"
+                    + "    <head>\n"
+                    + "        <!-- Meta attributes -->\n"
+                    + "        <meta charset=\"utf-8\">\n"
+                    + "        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n"
+                    + "        <meta name=\"robots\" content=\"noindex, nofollow\">\n"
+                    + "        <meta name=\"title\" content=\"Online Bookstore\">\n"
+                    + "        <meta name=\"description\" content=\"An online marketplace for buying books.\">\n"
+                    + "                            \n"
+                    + "        <title>Welcome to our Online Bookstore!</title>\n"
+                    + "                            \n"
+                    + "        <!-- CSS Pages -->\n"
+                    + "        <link href=\"/bookstore/CSS/theme.css\" rel=\"stylesheet\" type=\"text/css\"/>\n"
+                    + "        <!-- JS Pages -->\n"
+                    + "        <script src=\"/bookstore/JS/basicFunctions.js\" type=\"text/javascript\"></script>\n"
+                    + "        <script src=\"/bookstore/JS/cartview.js\" type=\"text/javascript\"></script>\n"
+                    + "    </head>\n"
+                    + "    <body>\n"
+                    + "        <header>\n"
+                    + "            <iframe id=\"disclaimer\" name=\"disclaimer\" src=\"/bookstore/iframes/disclaimer.jsp\" width=\"100%\">\n"
+                    + "                [Your user agent does not support frames or is currently configured not to display frames.]\n"
+                    + "            </iframe>\n"
+                    + "        </header>\n"
+                    + "        \n"
+                    + "        <!-- Navigation -->\n"
+                    + "        <div class=\"dropdown\">\n"
+                    + "            <button class=\"dropbtn\">MENU</button>\n"
+                    + "            <div class=\"dropdown-content\">\n"
+                    + "                <ul class=\"nav\">\n"
+                    + "                    <li><a href=\"/bookstore/login.do\">Login</a></li>\n"
+                    + "                    <li><a href=\"/bookstore/browse.do\">Browse</a></li>\n"
+                    + "                    <li><a href=\"/bookstore/viewcart.do\">View Cart</a></li>\n"
+                    + "                    <li><a href=\"/bookstore/payment.do\">Pay Now</a></li>\n"
+                    + "                </ul>\n"
+                    + "            </div>\n"
+                    + "        </div>\n"
+                    + "		\n"
+                    + "		<!-- View Cart Headings-->\n"
+                    + "		<h1 style=\"text-align:left;float:left;\">Confirm Your Order, </h1>\n"
+                    + "		<h1 style=\"text-align:left;float:left;\" id=\"welcomeMessage\"><script>javascript:formDataUsername();</script></h1>\n"
+                    + "		<hr style=\"clear:both;\"/>\n"
+                    + "		<h2>Your Shopping Cart</h2>\n"
+                    + "\n"
+                    + "		 <!-- Get Shopping Cart Information and Display It in a Table -->\n"
+                    + "        <div align=\"center\" id=\"showData\"><script type=\"text/javascript\">javascript:getShoppingCart()</script></div>\n"
+                    + "        <br>\n"
+                    + "\n"
+                    + "		<a href=\"/bookstore/payment.do\" class=\"button\">Pay Now</a>\n"
+                    + "		<a href=\"/bookstore/browse.do\" class=\"button\">Browse Books</a>\n"
+                    + "		<br>\n"
+                    + "\n"
+                    + "		<footer>\n"
+                    + "			<iframe id=\"disclaimer\" name=\"disclaimer\" src=\"/bookstore/iframes/disclaimer.jsp\" width=\"100%\">\n"
+                    + "            [Your user agent does not support frames or is currently configured not to display frames.]\n"
+                    + "        	</iframe>\n"
+                    + "        	<iframe id=\"bookstorefooter\" name=\"bookstorefooter\" src=\"/bookstore/iframes/bookstorefooter.jsp\" width=\"100%\" height=\"400px\">\n"
+                    + "            [Your user agent does not support frames or is currently configured not to display frames.]\n"
+                    + "        	</iframe>\n"
+                    + "		</footer>\n"
+                    + "	</body>\n"
+                    + "</html>");
         }
     }
 
