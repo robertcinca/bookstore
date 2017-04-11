@@ -51,6 +51,7 @@
         
         <!-- Login Form -->
         <div id="id01" class="modal">
+            <%--<jsp:include page="../../src/java/authentication/LoginServlet.java" />--%>
             <form id="Form" name="Form" class="modal-content animate" onsubmit="return validateLogin()" action="/bookstore/pages/browse.jsp" method="post">
                 <div class="imgcontainer">
                     <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
