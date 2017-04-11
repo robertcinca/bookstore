@@ -70,7 +70,7 @@ public class refund extends HttpServlet {
                     + "\n"
                     + "		<h1>Refund Requests</h1>\n"
                     + "\n"
-                    + "		<a href=\"/bookstore/pages/browse.do\" class=\"button\">Back to browse</a>\n"
+                    + "		<a href=\"/bookstore/browse.do\" class=\"button\">Back to browse</a>\n"
                     + "		<br>\n"
                     + "\n"
                     + "		<!--Refund Requests-->\n"

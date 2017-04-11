@@ -40,7 +40,7 @@
         <li><a href="/bookstore/viewdetail.do">View Details</a></li>
 
         <p>List of all iframes used:</p>
-        <a href="/bookstore/ifrmaes/disclaimer.do">Disclaimer</a>
-        <a href="/bookstore/iframes/bookstorefooter.do">Book Store Footer</a>
+        <a href="/bookstore/iframes/disclaimer.jsp">Disclaimer</a>
+        <a href="/bookstore/iframes/bookstorefooter.jsp">Book Store Footer</a>
     </body>
 </html>
