@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package main;
+package authentication;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -71,8 +71,14 @@ public class login extends HttpServlet {
                     + "            </div>\n"
                     + "        </div>\n"
                     + "        \n"
-                    + "        <h1>Welcome to our Online Bookstore!</h1>\n"
-                    + "        <p>Please select one of the following options:</p>\n"
+                    + "        <h1>Welcome to our Online Bookstore!</h1>\n");
+            out.println("<h1>Login Page: Tutorial 7 Practice Robert Cinca</h1>");
+            out.println("<form action='j_security_check' method='POST'>");
+            out.println("  <p>User name: <input type='text' name='j_username' id='j_username' /></p>");
+            out.println("  <p>Password: <input type='password' name='j_password' id='j_password' /></p>");
+            out.println("  <p><input type='submit' value='Login' /></p>");
+            out.println("</form>");
+            out.println("        <p>Please select one of the following options:</p>\n"
                     + "        \n"
                     + "        <button onclick=\"document.getElementById('id01').style.display='block'\" class=\"button\">Login or Sign Up</button>\n"
                     + "        \n"

@@ -1,5 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+    <security-constraint>
+        <display-name>Security Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>Secret Web Application</web-resource-name>
+            <url-pattern>*.do</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>admin</role-name>
+            <role-name>sprole</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <realm-name>Form-Based Authentication Area</realm-name>
+        <form-login-config>
+            <form-login-page>/login.do</form-login-page>
+            <form-error-page>/error.do</form-error-page>
+        </form-login-config>
+    </login-config>
+    <security-role>
+        <role-name>sprole</role-name>
+    </security-role>
+
     <servlet>
         <servlet-name>addbooks</servlet-name>
         <servlet-class>main.addbooks</servlet-class>
@@ -22,7 +45,7 @@
     </servlet>
     <servlet>
         <servlet-name>login</servlet-name>
-        <servlet-class>main.login</servlet-class>
+        <servlet-class>authentication.login</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>viewcart</servlet-name>
@@ -35,6 +58,14 @@
     <servlet>
         <servlet-name>confirmation</servlet-name>
         <servlet-class>main.confirmation</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>loginError</servlet-name>
+        <servlet-class>authentication.loginError</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>logout</servlet-name>
+        <servlet-class>authentication.logout</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>addbooks</servlet-name>
@@ -72,12 +103,20 @@
         <servlet-name>confirmation</servlet-name>
         <url-pattern>/confirmation.do</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>loginError</servlet-name>
+        <url-pattern>/error.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>logout</servlet-name>
+        <url-pattern>/logout.do</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>login.do</welcome-file>
+        <welcome-file>browse.do</welcome-file>
     </welcome-file-list>
 </web-app>
