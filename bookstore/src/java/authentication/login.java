@@ -72,7 +72,7 @@ public class login extends HttpServlet {
                     + "        </div>\n"
                     + "        \n"
                     + "        <h1>Welcome to our Online Bookstore!</h1>\n");
-            out.println("<h1>Login Page: Tutorial 7 Practice Robert Cinca</h1>");
+            out.println("Please check this document for details on how to log in: <a href=\"/bookstore/iframes/info.txt\">INFO</a>");
             out.println("<form action='j_security_check' method='POST'>");
             out.println("  <p>User name: <input type='text' name='j_username' id='j_username' /></p>");
             out.println("  <p>Password: <input type='password' name='j_password' id='j_password' /></p>");

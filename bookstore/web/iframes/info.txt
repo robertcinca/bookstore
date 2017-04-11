@@ -1,0 +1,9 @@
+To log in, add the following to your tomcat-users.xml file:
+<role rolename="admin"/>
+<role rolename="sprole"/>
+<user password="pwd" roles="admin" username="admin"/>
+<user password="pwd" roles="sprole" username="user"/>
+
+Then use the above details to log in.
+
+Note: you will have to restart your tomcat server.
