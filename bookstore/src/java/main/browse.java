@@ -93,9 +93,13 @@ public class browse extends HttpServlet {
                     + "        <div class=\"dropdown\">\n"
                     + "            <button class=\"dropbtn\">MENU</button>\n"
                     + "            <div class=\"dropdown-content\">\n"
-                    + "                <ul class=\"nav\">\n"
-                    + "                    <li><a href=\"/bookstore/login.do\">Login</a></li>\n"
-                    + "                    <li><a href=\"/bookstore/browse.do\">Browse</a></li>\n"
+                    + "                <ul class=\"nav\">\n");
+            if (request.getSession(true) != null) {
+                out.println("  <li><a href=\"/bookstore/logout.do\">Logout</a></li>\n");
+            } else {
+                out.println("  <li><a href=\"/bookstore/login.do\">Login</a></li>\n");
+            }
+            out.println("                    <li><a href=\"/bookstore/browse.do\">Browse</a></li>\n"
                     + "                    <li><a href=\"/bookstore/viewcart.do\">View Cart</a></li>\n"
                     + "                    <li><a href=\"/bookstore/payment.do\">Pay Now</a></li>\n"
                     + "                </ul>\n"
@@ -120,7 +124,6 @@ public class browse extends HttpServlet {
                 try {
 
                     // make connection to db and retrieve data from the table
-                    /* Uncomment when connecting to DB!! */
                     String url = "jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad034_db";
                     String dbLoginId = "aiad034";
                     String dbPwd = "aiad034";
@@ -137,12 +140,6 @@ public class browse extends HttpServlet {
                         String author =  rs.getString("author");
                         int price = rs.getInt("price");
                         int point = rs.getInt("loyalty");
-                    //comment out
-    /*                String name = "test";
-                    String author = "test2";
-                    int price = 20;
-                    int point = 10;
-                    int id = 0;*/
 
                     out.println("</tr>\n"
                         + "		  <tr>\n"
@@ -160,7 +157,7 @@ public class browse extends HttpServlet {
                         + "					</form>\n"
                         + "				</td>\n"
                         + "		  </tr>\n");
-                    } //uncomment!!
+                    }
                     
                     if (rs != null) {
                         rs.close();
@@ -170,7 +167,7 @@ public class browse extends HttpServlet {
                     }
                     if (con != null) {
                         con.close();
-            }
+                    }
                     out.println("</table>\n");
 
                     out.println("<footer>\n"

@@ -20,6 +20,7 @@ function validateLogin(){
     var user=document.forms["Form"]["j_username"].value;
     var pw=document.forms["Form"]["j_password"].value;
     if (checkLoginSyntax(user, pw) == false)
+        
         return false;
 }
 
