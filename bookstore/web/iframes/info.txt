@@ -1,0 +1,19 @@
+To log in, add the following to your tomcat-users.xml file:
+<role rolename="admin"/>
+<role rolename="sprole"/>
+<user password="pwd" roles="admin" username="admin"/>
+<user password="pwd" roles="sprole" username="user"/>
+<user password="pwd" roles="sprole" username="guest"/>
+
+Then use the above details to log in.
+
+Note: you will have to restart your tomcat server.
+
+
+Current security configurations:
+admin has access to all files.
+sprole does not have access to following files:
+- addbooks
+- refund
+
+Continue without signing in button uses guest username, so we can keep track of the guest.
