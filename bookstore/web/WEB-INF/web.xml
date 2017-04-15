@@ -32,7 +32,7 @@
     </security-constraint>
     <login-config>
         <auth-method>FORM</auth-method>
-        <realm-name>Form-Based</realm-name>
+        <!--<realm-name>Form-Based</realm-name>-->
         <form-login-config>
             <form-login-page>/login.do</form-login-page>
             <form-error-page>/error.do</form-error-page>
