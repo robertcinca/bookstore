@@ -77,8 +77,7 @@ public class login extends HttpServlet {
             out.println("  <p>Password: <input type='password' name='j_password' id='j_password' /></p>");
             out.println("  <p><button style='width:100%;font-size:18px' type='submit'>Login</button></p>");
             out.println("</form>");
-            out.println("<a href='signup'>Singup</a>"
-//            out.println("<button onclick=\"document.getElementById('id01').style.display='block'\" name='signup' value='signup' class=\"button\" style='float:left;'>Sign Up!</button>\n"
+            out.println("<a href=\"/bookstore/signup\" class=\"button\" style='float:left;'>Sign Up!</a>\n"
                     + "  <form action='j_security_check' method='POST'> "
                     + "<input type='hidden' value='guest' name='j_username' id='j_username' />"
                     + "<input type='hidden' value='pwd' name='j_password' id='j_password' />"

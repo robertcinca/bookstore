@@ -76,8 +76,7 @@ public class signup extends HttpServlet {
                     + "            </div>\n"
                     + "        </div>\n"
                     + "        \n"
-                    + "        <h1>Welcome to our Online Bookstore!</h1>\n");
-            out.println("<fieldset>");
+                    + "        <h1>Please sign up here</h1>\n");
 
             String user_name = request.getParameter("uname");
             String password = request.getParameter("psw");
@@ -95,29 +94,35 @@ public class signup extends HttpServlet {
                 Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
                 Connection con = DriverManager.getConnection(url, dbLoginId, dbPwd);
 
+                //Updating the tables
                 // Create a preparedstatement to set the SQL statement			 
                 PreparedStatement pstmt = con.prepareStatement("INSERT INTO [tomcat_users] ([user_name], [password]) VALUES (?, ?)");
                 pstmt.setString(1, user_name);
                 pstmt.setString(2, password);
-                
+
                 PreparedStatement pstmt2 = con.prepareStatement("INSERT INTO [tomcat_users_roles] ([user_name], [role_name]) VALUES (?, ?)");
-                pstmt.setString(1, user_name);
-                pstmt.setString(2, role_name);
-                
+                pstmt2.setString(1, user_name);
+                pstmt2.setString(2, role_name);
+
                 PreparedStatement pstmt3 = con.prepareStatement("INSERT INTO [tomcat_users_loyalty] ([user_name], [loyalty]) VALUES (?, ?)");
-                pstmt.setString(1, user_name);
-                pstmt.setString(2, loyalty);
+                pstmt3.setString(1, user_name);
+                pstmt3.setString(2, loyalty);
 
                 // execute the SQL statement
                 int rows = pstmt.executeUpdate();
+                int rows2 = pstmt2.executeUpdate();
+                int rows3 = pstmt3.executeUpdate();
 
-                if (rows > 0) {
+                if (rows > 0 && rows2 > 0 && rows3 > 0) {
                     out.println("<legend>New Username is sucessfully created.</legend>");
                     // display the information of the record just added including UID
                     Statement stmt = con.createStatement();
                     ResultSet rs = stmt.executeQuery("SELECT @@IDENTITY AS [@@IDENTITY]");
                     if (rs != null && rs.next() != false) {
                         out.println("<p>Username: " + user_name + "</p>");
+                        out.println("<p>Password: " + password + "</p>");
+                        out.println("<p>Role: " + role_name + "</p>");
+                        out.println("<p>Loyalty: " + loyalty + "</p>");
                         rs.close();
                     }
                     if (stmt != null) {
@@ -135,31 +140,29 @@ public class signup extends HttpServlet {
                     password = "";
                 }
                 out.println("<form id=\"Form2\" name=\"Form2\" class=\"modal-content animate\" onsubmit=\"return validateSignUp()\" method=\"post\">\n"
-                    + "                <div class=\"imgcontainer\">\n"
+                        + "                <div class=\"imgcontainer\">\n"
                         + "<span onClick=\"window.open('/bookstore/browse.do','_self');\" class='close'>&times;</span>"
-                    + "                    <img src=\"/bookstore/IMG/welcome.png\" alt=\"sign up\" class=\"avatar\">\n"
-                    + "                        </div>\n"
-                    + "                \n"
-                    + "                <div class=\"container\">\n"
-                    + "                    <label><b>Enter a Username:</b></label>\n"
-                    + "                    <input type=\"text\" placeholder=\"New Username\" name=\"uname\" required>\n"
-                    + "                        \n"
-                    + "                        <label><b>Enter a Password:</b></label>\n"
-                    + "                        <input type=\"password\" placeholder=\"New Password\" name=\"psw\" required>\n"
-                    + "                        <label><b>Re-enter password:</b></label>\n"
-                    + "                        <input type=\"password\" placeholder=\"New Password\" name=\"psw2\" required>\n"
-                    + "                            \n"
-                    + "                            <button style=\"width:100%\" name='signupbutton' value='signup' type=\"submit\">Sign Up</button>\n"
-                    + "                            </div>\n"
-                    + "                <div class=\"container\" style=\"background-color:#f1f1f1\">\n"
-                        + "<button type='button' class='cancelbtn'><a href=\"/bookstore/browse.do\">Cancel Signup</a></button>\n"
-                    + "                </div>\n"
-                    + "            </form>\n"
-                    + "        </div>\n"
-                    + "\n");
+                        + "                    <img src=\"/bookstore/IMG/welcome.png\" alt=\"sign up\" class=\"avatar\">\n"
+                        + "                        </div>\n"
+                        + "                \n"
+                        + "                <div class=\"container\">\n"
+                        + "                    <label><b>Enter a Username:</b></label>\n"
+                        + "                    <input type=\"text\" placeholder=\"New Username\" name=\"uname\" required>\n"
+                        + "                        \n"
+                        + "                        <label><b>Enter a Password:</b></label>\n"
+                        + "                        <input type=\"password\" placeholder=\"New Password\" name=\"psw\" required>\n"
+                        + "                        <label><b>Re-enter password:</b></label>\n"
+                        + "                        <input type=\"password\" placeholder=\"New Password\" name=\"psw2\" required>\n"
+                        + "                            \n"
+                        + "                            <button style='width:100%; font-size:18px' name='signupbutton' value='signup' type=\"submit\">Sign Up</button>\n"
+                        + "                            </div>\n"
+                        + "                <div class=\"container\" style=\"background-color:#f1f1f1\">\n"
+                        + "<a href='/bookstore/browse.do' class='cancelbtn' style='width:12%'>Cancel Signup</a>\n"
+                        + "                </div>\n"
+                        + "            </form>\n"
+                        + "        </div>\n"
+                        + "\n");
             }
-            out.println("<br/><a href='/bookstore/browse.do'>Back to Login Page!</a>");
-            out.println("</fieldset>");
             out.println("</body>");
             out.println("</html>");
         } catch (SQLException e) {
