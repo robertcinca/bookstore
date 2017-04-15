@@ -66,7 +66,6 @@ public class refund extends HttpServlet {
                 out.println("  <li><a href=\"/bookstore/login.do\">Login</a></li>\n");
             }
             out.println("                    <li><a href=\"/bookstore/browse.do\">Browse</a></li>\n"
-                    + "                    <li><a href=\"/bookstore/browse.do\">Browse</a></li>\n"
                     + "                    <li><a href=\"/bookstore/viewcart.do\">View Cart</a></li>\n"
                     + "                    <li><a href=\"/bookstore/payment.do\">Pay Now</a></li>\n"
                     + "                </ul>\n"
