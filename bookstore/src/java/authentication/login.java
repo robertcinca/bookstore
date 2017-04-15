@@ -71,40 +71,14 @@ public class login extends HttpServlet {
                     + "        </div>\n"
                     + "        \n"
                     + "        <h1>Welcome to our Online Bookstore!</h1>\n");
-            out.println("Please check this document for details on how to log in: <a href=\"/bookstore/iframes/info.txt\">INFO</a>");
             //simple login form
             out.println("<form name='Form' id='Form' action='j_security_check' onsubmit='return validateLogin()' method='POST'>");
             out.println("  <p>User name: <input type='text' name='j_username' id='j_username' /></p>");
             out.println("  <p>Password: <input type='password' name='j_password' id='j_password' /></p>");
-            out.println("  <p><button style='width:100%' type='submit'>Login</button></p>");
+            out.println("  <p><button style='width:100%;font-size:18px' type='submit'>Login</button></p>");
             out.println("</form>");
-            out.println("<button onclick=\"document.getElementById('id01').style.display='block'\" class=\"button\" style='float:left;'>Sign Up [Under Construction]</button>\n"
-                    + "        \n"
-                    + "        <!-- Login Form -->\n"
-                    + "        <div id=\"id01\" class=\"modal\">\n"
-                    + "            <form id=\"Form2\" name=\"Form2\" class=\"modal-content animate\" onsubmit=\"return validateSignUp()\" action=\"/bookstore/browse.do\" method=\"post\">\n"
-                    + "                <div class=\"imgcontainer\">\n"
-                    + "                    <span onclick=\"document.getElementById('id01').style.display='none'\" class=\"close\" title=\"Close Modal\">&times;</span>\n"
-                    + "                    <img src=\"/bookstore/IMG/welcome.png\" alt=\"sign up\" class=\"avatar\">\n"
-                    + "                        </div>\n"
-                    + "                \n"
-                    + "                <div class=\"container\">\n"
-                    + "                    <label><b>Enter a Username:</b></label>\n"
-                    + "                    <input type=\"text\" placeholder=\"New Username\" name=\"uname\" required>\n"
-                    + "                        \n"
-                    + "                        <label><b>Enter a Password:</b></label>\n"
-                    + "                        <input type=\"password\" placeholder=\"New Password\" name=\"psw\" required>\n"
-                    + "                        <label><b>Re-enter password:</b></label>\n"
-                    + "                        <input type=\"password\" placeholder=\"New Password\" name=\"psw2\" required>\n"
-                    + "                            \n"
-                    + "                            <button style=\"width:100%\" type=\"submit\">Sign Up</button>\n"
-                    + "                            </div>\n"
-                    + "                <div class=\"container\" style=\"background-color:#f1f1f1\">\n"
-                    + "                    <button type=\"button\" onclick=\"document.getElementById('id01').style.display='none'\" class=\"cancelbtn\">Cancel Signup</button>\n"
-                    + "                </div>\n"
-                    + "            </form>\n"
-                    + "        </div>\n"
-                    + "\n"
+            out.println("<a href='signup'>Singup</a>"
+//            out.println("<button onclick=\"document.getElementById('id01').style.display='block'\" name='signup' value='signup' class=\"button\" style='float:left;'>Sign Up!</button>\n"
                     + "  <form action='j_security_check' method='POST'> "
                     + "<input type='hidden' value='guest' name='j_username' id='j_username' />"
                     + "<input type='hidden' value='pwd' name='j_password' id='j_password' />"

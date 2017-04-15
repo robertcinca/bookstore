@@ -41,7 +41,6 @@
     <security-role>
         <role-name>sprole</role-name>
     </security-role>
-
     <servlet>
         <servlet-name>addbooks</servlet-name>
         <servlet-class>main.addbooks</servlet-class>
@@ -86,6 +85,10 @@
         <servlet-name>logout</servlet-name>
         <servlet-class>authentication.logout</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>signup</servlet-name>
+        <servlet-class>authentication.signup</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>addbooks</servlet-name>
         <url-pattern>/addbooks.do</url-pattern>
@@ -129,6 +132,10 @@
     <servlet-mapping>
         <servlet-name>logout</servlet-name>
         <url-pattern>/logout.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>signup</servlet-name>
+        <url-pattern>/signup</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

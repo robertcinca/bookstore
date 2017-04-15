@@ -67,7 +67,7 @@ public class logout extends HttpServlet {
                     + "        \n");
             out.println("<h1>Logout Page</h1>");
             out.println("<p>You have successfully logged out!</p>");
-            out.println("<p>Return to <a href='browse.do'>index page</a> (re-login required)</p>");
+            out.println("<p><a class='button' href='browse.do'>Return to Login Page</a></p>");
             out.println("</form>");
             out.println("<footer>\n" +
 "            <iframe id=\"disclaimer\" name=\"disclaimer\" src=\"/bookstore/iframes/disclaimer.jsp\" width=\"100%\">\n" +
