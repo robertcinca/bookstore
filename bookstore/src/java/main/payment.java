@@ -7,6 +7,13 @@ package main;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -28,7 +35,7 @@ public class payment extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, ClassNotFoundException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
@@ -80,41 +87,83 @@ public class payment extends HttpServlet {
             int submitValue3 = Integer.parseInt(request.getParameter("totalAmount"));
             int submitValue4 = Integer.parseInt(request.getParameter("totalLoyalty"));
             if (submitValue != null && !submitValue.equalsIgnoreCase("")) {
-                out.println("		<form action=\"/bookstore/confirmation.do\" method=\"post\">\n"
-                        + "            <fieldset>\n"
-                        + "                <legend>Pay for transaction (With Points)</legend>\n"
-                        + "                 <h2> You have XXX points. This transaction will use " + submitValue4 * 10 + " points.</h2>"
-                        + "                 <h2> Please note: you will not gain any points during this transaction as you are already paying by points.</h2>"
-                        + "                <h3>Enter delivery address</h3>\n"
-                        + "                <label>Address Line 1:</label>\n"
-                        + "				<input type=\"name\" name=\"addr1\" required>\n"
-                        + "                <label>Address Line 2:</label>\n"
-                        + "                             <input type=\"name\" name=\"addr2\" required>\n"
-                        + "                <label>City:</label>\n"
-                        + "				<input type=\"name\" name=\"city\" required>\n"
-                        + "                <label>Country:</label>\n"
-                        + "                             <input type=\"name\" name=\"country\" required>\n"
-                        + "                <label>Post Code (if any):</label>\n"
-                        + "                             <input type=\"name\" name=\"postcode\">\n"
-                                + "<input type='hidden' value='paidPoints' name='paidPoints' id='paidPoints' />"
-                        + "                <button style='width:100%; font-size:18px; border: 5px solid black;' name='pointsPaid' value='pointsPaid' type=\"submit\">Confirm Payment</button>\n"
-                        + "                <a href='/bookstore/viewcart.do' class='cancelbtn' style='width:12%; border: 5px solid black;'>Return to Cart</a>\n"
-                        + "            </fieldset>\n"
-                        + "        </form>\n"
-                        + "<fieldset> Other Options:"
-                        + "<form method='POST'>"
-                        + "<input type='hidden' value='payCard' name='payCard' id='payCard' />"
-                        + "<input type='hidden' value=" + submitValue3 + " name='totalAmount' id='totalAmount' />"
-                        + "<input type='hidden' value=" + submitValue4 + " name='totalLoyalty' id='totalLoyalty' />"
-                        + "<button type='submit' class='button' style='float:left;'>Pay by Card</button>"
-                        + "</form>"
-                        + "</fieldset>");
+                String currentUser = request.getRemoteUser();
+                int userLoyalty = 0;
+                // make connection to db and retrieve data from the table
+                String url = "jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad034_db";
+                String dbLoginId = "aiad034";
+                String dbPwd = "aiad034";
+
+                Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+                Connection con = DriverManager.getConnection(url, dbLoginId, dbPwd);
+
+                PreparedStatement stmt = con.prepareStatement("SELECT * FROM tomcat_users_loyalty WHERE user_name = ?");
+                stmt.setString(1, currentUser);
+                ResultSet rs = stmt.executeQuery();
+
+                while (rs != null && rs.next() != false) {
+                    userLoyalty = Integer.parseInt(rs.getString("loyalty"));
+                }
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stmt != null) {
+                    stmt.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+                out.println("            <fieldset>\n"
+                        + "                <legend>Pay for transaction (With Points)</legend>\n");
+                if (userLoyalty >= submitValue4 * 10) {
+                    out.println("                 <form action=\"/bookstore/confirmation.do\" method=\"post\">\n"
+                            + "                 <h2> You have " + userLoyalty + " points. This transaction will use " + submitValue4 * 10 + " points.</h2>"
+                            + "                 <h2> Please note: you will not gain any points during this transaction as you are already paying by points.</h2>"
+                            + "                <h3>Enter delivery address</h3>\n"
+                            + "                <label>Address Line 1:</label>\n"
+                            + "				<input type=\"name\" name=\"addr1\" required>\n"
+                            + "                <label>Address Line 2:</label>\n"
+                            + "                             <input type=\"name\" name=\"addr2\" required>\n"
+                            + "                <label>City:</label>\n"
+                            + "				<input type=\"name\" name=\"city\" required>\n"
+                            + "                <label>Country:</label>\n"
+                            + "                             <input type=\"name\" name=\"country\" required>\n"
+                            + "                <label>Post Code (if any):</label>\n"
+                            + "                             <input type=\"name\" name=\"postcode\">\n"
+                            + "<input type='hidden' value='paidPoints' name='paidPoints' id='paidPoints' />"
+                                    + "<input type='hidden' value=" + submitValue3 + " name='totalAmount' id='totalAmount' />"
+                            + "<input type='hidden' value=" + submitValue4 + " name='totalLoyalty' id='totalLoyalty' />"
+                            + "                <button style='width:100%; font-size:18px; border: 5px solid black;' name='pointsPaid' value='pointsPaid' type=\"submit\">Confirm Payment</button>\n"
+                            + "                <a href='/bookstore/viewcart.do' class='cancelbtn' style='width:12%; border: 5px solid black;'>Return to Cart</a>\n"
+                            + "       </fieldset>"
+                            + "</form>\n");
+                    out.println("<fieldset> Other Options:"
+                            + "<form method='POST'>"
+                            + "<input type='hidden' value='payCard' name='payCard' id='payCard' />"
+                            + "<input type='hidden' value=" + submitValue3 + " name='totalAmount' id='totalAmount' />"
+                            + "<input type='hidden' value=" + submitValue4 + " name='totalLoyalty' id='totalLoyalty' />"
+                            + "<button type='submit' class='button' style='float:left;'>Pay by Card</button>"
+                            + "</form>"
+                            + "</fieldset>");
+                } else {
+                    out.println("<h2> Error: you do not have enough loyalty points to pay for this transaction. </h2>"
+                            + "<h2> You have " + userLoyalty + " points. This transaction needs " + submitValue4 * 10 + " points.</h2>"
+                            + "<h3>Please select another method of payment or return to cart:</h3>"
+                            + "<form method='POST'>"
+                            + "<input type='hidden' value='payCard' name='payCard' id='payCard' />"
+                            + "<input type='hidden' value=" + submitValue3 + " name='totalAmount' id='totalAmount' />"
+                            + "<input type='hidden' value=" + submitValue4 + " name='totalLoyalty' id='totalLoyalty' />"
+                            + "<button type='submit' class='button'>Pay by Card</button>"
+                            + "<a href='/bookstore/viewcart.do' class='cancelbtn' style='width:12%; border: 5px solid black;'>Return to Cart</a>"
+                            + "</form>"
+                            + "</fieldset>");
+                }
             } else if (submitValue2 != null && !submitValue2.equalsIgnoreCase("")) {
                 out.println("		<form action=\"/bookstore/confirmation.do\" method=\"post\">\n"
                         + "            <fieldset>\n"
                         + "                <legend>Pay for transaction (With Card)</legend>\n"
                         + "                 <h2> This transaction will cost HKD" + submitValue3 + ".00</h2>"
-                        + "                 <h2> You will gain "+submitValue4+" points during this transaction.</h2>"
+                        + "                 <h2> You will gain " + submitValue4 + " points during this transaction.</h2>"
                         + "                     <h3>Enter your card details</h3>\n"
                         + "                 <label>Card Name:</label>\n"
                         + "                             <input type=\"name\" name=\"cardName\" required>\n"
@@ -124,7 +173,7 @@ public class payment extends HttpServlet {
                         + "                             <input type=\"date\" name=\"expiryDate\" required>\n"
                         + "                <label>Security Code:</label>\n"
                         + "                             <input type=\"name\" name=\"securityCode\" required>\n"
-                                + "             <h3>Enter delivery address</h3>\n"
+                        + "             <h3>Enter delivery address</h3>\n"
                         + "                <label>Address Line 1:</label>\n"
                         + "				<input type=\"name\" name=\"addr1\" required>\n"
                         + "                <label>Address Line 2:</label>\n"
@@ -136,6 +185,8 @@ public class payment extends HttpServlet {
                         + "                <label>Post Code (if any):</label>\n"
                         + "                             <input type=\"name\" name=\"postcode\">\n"
                         + "<input type='hidden' value='paidCard' name='paidCard' id='paidCard' />"
+                                + "<input type='hidden' value=" + submitValue3 + " name='totalAmount' id='totalAmount' />"
+                            + "<input type='hidden' value=" + submitValue4 + " name='totalLoyalty' id='totalLoyalty' />"
                         + "                <button style='width:100%; font-size:18px; border: 5px solid black;' name='pointsPaid' value='pointsPaid' type=\"submit\">Confirm Payment</button>\n"
                         + "                <a href='/bookstore/viewcart.do' class='cancelbtn' style='width:12%; border: 5px solid black;'>Return to Cart</a>\n"
                         + "            </fieldset>\n"
@@ -148,11 +199,11 @@ public class payment extends HttpServlet {
                         + "<button type='submit' class='button' style='float:left;'>Pay by Points</button>"
                         + "</form>"
                         + "</fieldset>");
-                
+
             } else {
                 int totalAmount = Integer.parseInt(request.getParameter("totalAmount"));
                 int totalLoyalty = Integer.parseInt(request.getParameter("totalLoyalty"));
-                out.println("<h2> The total amount to pay is: HKD " + totalAmount + ".00</h2>"
+                out.println("<h2> The total amount to pay is: HKD " + totalAmount + ".00 [OR] " + totalLoyalty * 10 + " loyalty points</h2>"
                         + "<h2> The total loyalty points you will gain: " + totalLoyalty + " points</h2>");
                 out.println("\n"
                         + "<fieldset> Choose payment type:"
@@ -197,7 +248,13 @@ public class payment extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(payment.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(payment.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -211,7 +268,13 @@ public class payment extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(payment.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(payment.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

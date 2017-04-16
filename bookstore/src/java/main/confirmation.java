@@ -7,10 +7,18 @@ package main;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -28,7 +36,7 @@ public class confirmation extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, ClassNotFoundException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
@@ -73,26 +81,125 @@ public class confirmation extends HttpServlet {
                     + "        </div>\n"
                     + "		\n"
                     + "		<h1>Payment Confirmation Page</h1>\n"
-                    + "		<p>Success! Your payment has been processed.</p>\n"
-                    + "         <p> The following actions have taken place: </p>");
-            
-                    //TODO: list actions that have occurred
-                    String confirmationValue = request.getParameter("paidPoints");
-                    String confirmationValue2 = request.getParameter("paidCard");
-                    if (confirmationValue != null) {
-                        out.println("<h2> You paid by points</h2>");
-                        out.println("<h2> The following loyalty points have been deducted from your account: XXX</h2>");
-                        out.println("<h2> Your new total loyalty points: XXX</h2>");
-                        out.println("<h2> You have purchased the following books: XXX</h2>");
+                    + "		<h1>Success! Your payment has been processed.</h1>");
+
+            //TODO: list actions that have occurred
+            String confirmationValue = request.getParameter("paidPoints");
+            String confirmationValue2 = request.getParameter("paidCard");
+
+            int totalAmount = Integer.parseInt(request.getParameter("totalAmount"));
+            int totalLoyalty = Integer.parseInt(request.getParameter("totalLoyalty"));
+            int userLoyalty = 0;
+            String currentUser = request.getRemoteUser();
+
+            // make connection to db and retrieve data from the table
+            String url = "jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad034_db";
+            String dbLoginId = "aiad034";
+            String dbPwd = "aiad034";
+
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Connection con = DriverManager.getConnection(url, dbLoginId, dbPwd);
+
+            PreparedStatement stmt = con.prepareStatement("SELECT * FROM tomcat_users_loyalty WHERE user_name = ?");
+            stmt.setString(1, currentUser);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs != null && rs.next() != false) {
+                userLoyalty = Integer.parseInt(rs.getString("loyalty"));
+                if (confirmationValue != null) {
+                    userLoyalty -= 10 * totalLoyalty;
+                } else {
+                    userLoyalty += totalLoyalty;
+                }
+            }
+
+            if (confirmationValue != null) {
+                out.println("<h2> You paid by points</h2>");
+                out.println("<h2> The following loyalty points have been deducted from your account: " + totalLoyalty * 10 + "</h2>");
+                out.println("<h2> Your new total loyalty points: " + userLoyalty + " points</h2>");
+                out.println("<h2> You have purchased the following books: </h2>");
+            } else {
+                out.println("<h2> You paid by card</h2>");
+                out.println("<h2> The following amount has been deducted from your card: HKD" + totalAmount + ".00</h2>");
+                out.println("<h2> The following loyalty points have been added to your account: " + totalLoyalty + " points</h2>");
+                out.println("<h2> Your new total loyalty points: " + userLoyalty + " points</h2>");
+                out.println("<h2> You have purchased the following books: </h2>");
+            }
+
+            out.println("<table>"
+                    + "	<tr>"
+                    + "	<th>Book Name</th>"
+                    + "	<th>Author</th>"
+                    + " <th>Quantity </th>"
+                    + " </tr>");
+
+            PreparedStatement stmt3 = con.prepareStatement("SELECT * FROM purchased WHERE user_name = ?");
+            stmt3.setString(1, currentUser);
+            ResultSet rs3 = stmt3.executeQuery();
+
+            while (rs3 != null && rs3.next() != false) {
+                String bookname = rs3.getString("bookname");
+                String status = rs3.getString("status");
+                int quantity = rs3.getInt("quantity");
+                out.println("<h1>" + status + "</h1>");
+                if ("pending".equals(status)) {
+                    PreparedStatement pstmt = con.prepareStatement("UPDATE tomcat_users_loyalty SET loyalty = ? WHERE user_name = ?");
+                    pstmt.setInt(1, userLoyalty);
+                    pstmt.setString(2, currentUser);
+
+                    Boolean result = pstmt.execute();
+                    
+                    status = "purchased";
+                    PreparedStatement pstmt2 = con.prepareStatement("UPDATE purchased SET status = ? WHERE user_name = ?");
+                    pstmt2.setString(1, status);
+                    pstmt2.setString(2, currentUser);
+
+                    PreparedStatement stmt2 = con.prepareStatement("SELECT * FROM book WHERE bookname = ?");
+                    stmt2.setString(1, bookname);
+                    ResultSet rs2 = stmt2.executeQuery();
+
+                    while (rs2 != null && rs2.next() != false) {
+
+                        String author = rs2.getString("author");
+
+                        out.println("</tr>"
+                                + "<td>" + bookname + "</td>"
+                                + "<td>" + author + "</td>"
+                                + "<td>" + quantity + "</td>"
+                                + "</tr>");
                     }
-                    else  {
-                        out.println("<h2> You paid by card</h2>");
-                        out.println("<h2> The following amount has been deducted from your card: XXX</h2>");
-                        out.println("<h2> The following loyalty points have been added to your account: XXX</h2>");
-                        out.println("<h2> Your new total loyalty points: XXX</h2>");
-                        out.println("<h2> You have purchased the following books: XXX</h2>");
+                    if (stmt2 != null) {
+                        stmt2.close();
                     }
-                    out.println( "		<a href=\"/bookstore/browse.do\" class=\"button\">Continue Browsing Bookstore...</a>\n"
+                    if (pstmt != null) {
+                        pstmt.close();
+                    }
+                    if (pstmt2 != null) {
+                        pstmt2.close();
+                    }
+                }
+            }
+
+            if (rs != null) {
+                rs.close();
+            }
+            if (stmt != null) {
+                stmt.close();
+            }
+
+            if (rs3 != null) {
+                rs3.close();
+            }
+            if (stmt3 != null) {
+                stmt3.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+            out.println("</table>"
+                    + "<h3>Please expect us to deliver your books in the next few days.</h3>"
+                    + "<h3>Please select one of the following options:</h3>");
+            out.println("		<a href=\"/bookstore/browse.do\" class=\"button\">Continue Browsing Bookstore...</a>\n"
                     + "                <a href=\"/bookstore/viewdetail.do\" class=\"button\">View your member details</a>\n"
                     + "		<a href=\"/bookstore/logout.do\" class=\"button\">Sign Out</a>\n"
                     + "		<br>\n"
@@ -122,7 +229,13 @@ public class confirmation extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(confirmation.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(confirmation.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -136,7 +249,13 @@ public class confirmation extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(confirmation.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(confirmation.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
