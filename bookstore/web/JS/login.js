@@ -8,31 +8,30 @@
 var modal = document.getElementById('id01');
 
 // When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
+window.onclick = function (event) {
     if (event.target == modal) {
         modal.style.display = "none";
     }
 }
 
 // Check user login (fake)
-localstorage=window.sessionStorage;
-function validateLogin(){
-    var user=document.forms["Form"]["j_username"].value;
-    var pw=document.forms["Form"]["j_password"].value;
+localstorage = window.sessionStorage;
+function validateLogin() {
+    var user = document.forms["Form"]["j_username"].value;
+    var pw = document.forms["Form"]["j_password"].value;
     if (checkLoginSyntax(user, pw) == false)
-        
         return false;
 }
 
 //Check user signup (fake)
-function validateSignUp(){
-    var user=document.forms["Form2"]["uname"].value;
-    var pw=document.forms["Form2"]["psw"].value;
-    var pw2=document.forms["Form2"]["psw2"].value;
+function validateSignUp() {
+    var user = document.forms["Form2"]["uname"].value;
+    var pw = document.forms["Form2"]["psw"].value;
+    var pw2 = document.forms["Form2"]["psw2"].value;
     for (var i = 0; i < pw.length; i++) {
         if (pw[i] != pw2[i]) {
-          window.alert("Error: Passwords do not match.");
-          return false;
+            window.alert("Error: Passwords do not match.");
+            return false;
         }
     }
     if (checkLoginSyntax(user, pw) == false)
@@ -55,8 +54,8 @@ function checkLoginSyntax(user, pw) {
     }
     for (var i = 0; i < user.length; i++) {
         if (user[i] == " ") {
-          window.alert("Error: There is an intervening space in the Username. Please try again.");
-          return false;
+            window.alert("Error: There is an intervening space in the Username. Please try again.");
+            return false;
         }
     }
     return true;
@@ -64,7 +63,7 @@ function checkLoginSyntax(user, pw) {
 
 //redirect manager to right page
 function pageDirect() {
-    window.open("browse.html","_self")
+    window.open("browse.html", "_self")
 }
 
 

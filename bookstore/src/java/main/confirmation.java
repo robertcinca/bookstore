@@ -74,7 +74,25 @@ public class confirmation extends HttpServlet {
                     + "		\n"
                     + "		<h1>Payment Confirmation Page</h1>\n"
                     + "		<p>Success! Your payment has been processed.</p>\n"
-                    + "		<a href=\"/bookstore/browse.do\" class=\"button\">Continue Browsing Bookstore...</a>\n"
+                    + "         <p> The following actions have taken place: </p>");
+            
+                    //TODO: list actions that have occurred
+                    String confirmationValue = request.getParameter("paidPoints");
+                    String confirmationValue2 = request.getParameter("paidCard");
+                    if (confirmationValue != null) {
+                        out.println("<h2> You paid by points</h2>");
+                        out.println("<h2> The following loyalty points have been deducted from your account: XXX</h2>");
+                        out.println("<h2> Your new total loyalty points: XXX</h2>");
+                        out.println("<h2> You have purchased the following books: XXX</h2>");
+                    }
+                    else  {
+                        out.println("<h2> You paid by card</h2>");
+                        out.println("<h2> The following amount has been deducted from your card: XXX</h2>");
+                        out.println("<h2> The following loyalty points have been added to your account: XXX</h2>");
+                        out.println("<h2> Your new total loyalty points: XXX</h2>");
+                        out.println("<h2> You have purchased the following books: XXX</h2>");
+                    }
+                    out.println( "		<a href=\"/bookstore/browse.do\" class=\"button\">Continue Browsing Bookstore...</a>\n"
                     + "                <a href=\"/bookstore/viewdetail.do\" class=\"button\">View your member details</a>\n"
                     + "		<a href=\"/bookstore/logout.do\" class=\"button\">Sign Out</a>\n"
                     + "		<br>\n"

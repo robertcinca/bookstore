@@ -119,33 +119,34 @@ public class viewcart extends HttpServlet {
 //                int id = rs.getInt("ID_purchased");
 //                String username = rs.getString("user_name");
                 String bookname = rs.getString("bookname");
-//                String status = rs.getString("status");
+                String status = rs.getString("status");
                 int quantity = rs.getInt("quantity");
+                if ("pending".equals(status)) {
+                    PreparedStatement stmt2 = con.prepareStatement("SELECT * FROM book WHERE bookname = ?");
+                    stmt2.setString(1, bookname);
+                    ResultSet rs2 = stmt2.executeQuery();
 
-                PreparedStatement stmt2 = con.prepareStatement("SELECT * FROM book WHERE bookname = ?");
-                stmt2.setString(1, bookname);
-                ResultSet rs2 = stmt2.executeQuery();
+                    while (rs2 != null && rs2.next() != false) {
 
-                while (rs2 != null && rs2.next() != false) {
+                        String author = rs2.getString("author");
+                        int loyalty = rs2.getInt("loyalty");
+                        int price = rs2.getInt("price");
+                        int totalPrice = price * quantity;
+                        totalAmount += totalPrice;
+                        totalLoyalty += loyalty;
 
-                    String author = rs2.getString("author");
-                    int loyalty = rs2.getInt("loyalty");
-                    int price = rs2.getInt("price");
-                    int totalPrice = price * quantity;
-                    totalAmount += totalPrice;
-                    totalLoyalty += loyalty;
-
-                    out.println("</tr>"
-                            + "<td>" + bookname + "</td>"
-                            + "<td>" + author + "</td>"
-                            + "<td>" + quantity + "</td>"
-                            + "<td>" + loyalty + "</td>"
-                            + "<td>" + price + "</td>"
-                            + "<td>" + totalPrice + "</td>"
-                            + "</tr>");
-                }
-                if (stmt2 != null) {
-                    stmt2.close();
+                        out.println("</tr>"
+                                + "<td>" + bookname + "</td>"
+                                + "<td>" + author + "</td>"
+                                + "<td>" + quantity + "</td>"
+                                + "<td>" + loyalty + "</td>"
+                                + "<td>" + price + "</td>"
+                                + "<td>" + totalPrice + "</td>"
+                                + "</tr>");
+                    }
+                    if (stmt2 != null) {
+                        stmt2.close();
+                    }
                 }
             }
 
@@ -171,7 +172,7 @@ public class viewcart extends HttpServlet {
             out.println("</table>");
 
             out.println("        <br>\n"
-                    + "<form action='/bookstore/payment.do' method='POST'>"
+                    + "<form name='Form3' action='/bookstore/payment.do' onsubmit='return checkSpend()' method='POST'>"
                     + "<input name='totalAmount' type='hidden' value=" + totalAmount + ">"
                     + "<input name='totalLoyalty' type='hidden' value=" + totalLoyalty + ">"
                     + "<button class='button' style='float:left;' name='proceedPayment' value='proceedPayment' type='submit'>Pay Now</button>"
