@@ -72,8 +72,12 @@ public class payment extends HttpServlet {
                     + "            </div>\n"
                     + "        </div>\n"
                     + "\n"
-                    + "		<h1>Payment Page</h1>\n"
-                    + "\n"
+                    + "		<h1>Payment Page</h1>\n");
+            int totalAmount = Integer.parseInt(request.getParameter("totalAmount"));
+             int totalLoyalty    =   Integer.parseInt(request.getParameter("totalLoyalty"));
+             out.println("<h2> The total amount to pay is: HKD " + totalAmount + ".00</h2>"
+                     + "<h2> The total loyalty points you will gain: " + totalLoyalty + " points</h2>");
+                    out.println( "\n"
                     + "		<form action=\"/bookstore/accountdetail.do\" method=\"post\">\n"
                     + "            <fieldset>\n"
                     + "                <legend>Pay for transaction</legend>\n"

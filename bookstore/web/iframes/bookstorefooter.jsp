@@ -27,7 +27,7 @@
     </head>
     <body>
         <p>List of all the web pages in the site (with links):</p>
-        <li><a href="/bookstore/index.do">Login (Index Page)</a></li>
+        <li><a href="/bookstore/login.do">Login Page</a></li>
         <br>
         <li><a href="/bookstore/addbooks.do">Add Books</a></li>
         <li><a href="/bookstore/browse.do">Browse</a></li>
@@ -38,6 +38,10 @@
         <li><a href="/bookstore/refund.do">Refund</a></li>
         <li><a href="/bookstore/viewcart.do">View Cart</a></li>
         <li><a href="/bookstore/viewdetail.do">View Details</a></li>
+        <br>
+        <li><a href="/bookstore/logout.do">Logout</a></li>
+        <li><a href="/bookstore/signup">Sign Up</a></li>
+        <li><a href="/bookstore/loginerror.do">Login Error</a></li>
 
         <p>List of all iframes used:</p>
         <a href="/bookstore/iframes/disclaimer.jsp">Disclaimer</a>

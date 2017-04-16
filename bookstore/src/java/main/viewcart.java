@@ -113,6 +113,7 @@ public class viewcart extends HttpServlet {
             ResultSet rs = stmt.executeQuery();
 
             int totalAmount = 0;
+            int totalLoyalty = 0;
 
             while (rs != null && rs.next() != false) {
 //                int id = rs.getInt("ID_purchased");
@@ -132,6 +133,7 @@ public class viewcart extends HttpServlet {
                     int price = rs2.getInt("price");
                     int totalPrice = price * quantity;
                     totalAmount += totalPrice;
+                    totalLoyalty += loyalty;
 
                     out.println("</tr>"
                             + "<td>" + bookname + "</td>"
@@ -158,19 +160,22 @@ public class viewcart extends HttpServlet {
             }
             out.println("<tfoot>"
                     + " <tr>"
-                    + "	<th></th>"
-                    + "	<th></th>"
-                    + " <th></th>"
-                    + " <th></th>"
-                    + " <th>Total Price (HKD):</th>"
-                    + " <th>" + totalAmount + ".00</th>"
+                    + "	<td></td>"
+                    + "	<td></td>"
+                    + " <td></td>"
+                    + " <td></td>"
+                    + " <td>Total Price (HKD):</td>"
+                    + " <td>" + totalAmount + ".00</td>"
                     + " </tr>"
                     + "  </tfoot>");
             out.println("</table>");
 
             out.println("        <br>\n"
-                    + "\n"
-                    + "		<a href=\"/bookstore/payment.do\" class=\"button\">Pay Now</a>\n"
+                    + "<form action='/bookstore/payment.do' method='POST'>"
+                    + "<input name='totalAmount' type='hidden' value=" + totalAmount + ">"
+                    + "<input name='totalLoyalty' type='hidden' value=" + totalLoyalty + ">"
+                    + "<button class='button' style='float:left;' name='proceedPayment' value='proceedPayment' type='submit'>Pay Now</button>"
+                    + "</form>"
                     + "		<a href=\"/bookstore/browse.do\" class=\"button\">Browse Books</a>\n"
                     + "		<br>\n"
                     + "\n"
