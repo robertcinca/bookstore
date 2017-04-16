@@ -40,8 +40,7 @@ function validateSignUp(){
 
     //TODO: create user in DB
     localstorage.setItem('user', user);
-    
-    window.alert("Registration successful. Please login with the new details.");
+
     return true;
 }
 

@@ -89,13 +89,14 @@ public class viewcart extends HttpServlet {
                     + "		<h2>Your Shopping Cart</h2>\n"
                     + "\n"
                     + "		 <!-- Get Shopping Cart Information and Display It in a Table -->\n"
-                    + "		<table>"
-                    + "		  <tr>"
-                    + "		    <th>ID</th>"
-                    + "		    <th>Username</th>"
-                    + " <th>Book Name </th>"
-                    + " <th>Status </th>"
+                    + "	<table>"
+                    + "	<tr>"
+                    + "	<th>Book Name</th>"
+                    + "	<th>Author</th>"
                     + " <th>Quantity </th>"
+                    + " <th>Unit Points </th>"
+                    + " <th>Unit Price </th>"
+                    + " <th>Total Price </th>"
                     + " </tr>");
 //                try {
 
@@ -111,27 +112,39 @@ public class viewcart extends HttpServlet {
             stmt.setString(1, currentUser);
             ResultSet rs = stmt.executeQuery();
 
+            int totalAmount = 0;
+
             while (rs != null && rs.next() != false) {
-                int id = rs.getInt("ID_purchased");
-                String username = rs.getString("user_name");
-                String name = rs.getString("bookname");
-                String status = rs.getString("status");
+//                int id = rs.getInt("ID_purchased");
+//                String username = rs.getString("user_name");
+                String bookname = rs.getString("bookname");
+//                String status = rs.getString("status");
                 int quantity = rs.getInt("quantity");
-                
+
                 PreparedStatement stmt2 = con.prepareStatement("SELECT * FROM book WHERE bookname = ?");
-                stmt2.setString(1, name);
+                stmt2.setString(1, bookname);
                 ResultSet rs2 = stmt2.executeQuery();
-                
-                //TODO: table
 
-                out.println("</tr>"
-                        + "<td>" + id + "</td>"
-                        + "<td>" + username + "</td>"
-                        + "<td>" + name + "</td>"
-                        + "<td>" + status + "</td>"
-                        + "<td>" + quantity + "</td>"
-                        + "</tr>");
+                while (rs2 != null && rs2.next() != false) {
 
+                    String author = rs2.getString("author");
+                    int loyalty = rs2.getInt("loyalty");
+                    int price = rs2.getInt("price");
+                    int totalPrice = price * quantity;
+                    totalAmount += totalPrice;
+
+                    out.println("</tr>"
+                            + "<td>" + bookname + "</td>"
+                            + "<td>" + author + "</td>"
+                            + "<td>" + quantity + "</td>"
+                            + "<td>" + loyalty + "</td>"
+                            + "<td>" + price + "</td>"
+                            + "<td>" + totalPrice + "</td>"
+                            + "</tr>");
+                }
+                if (stmt2 != null) {
+                    stmt2.close();
+                }
             }
 
             if (rs != null) {
@@ -143,9 +156,18 @@ public class viewcart extends HttpServlet {
             if (con != null) {
                 con.close();
             }
-            out.println("</table>\n");
+            out.println("<tfoot>"
+                    + " <tr>"
+                    + "	<th></th>"
+                    + "	<th></th>"
+                    + " <th></th>"
+                    + " <th></th>"
+                    + " <th>Total Price (HKD):</th>"
+                    + " <th>" + totalAmount + ".00</th>"
+                    + " </tr>"
+                    + "  </tfoot>");
+            out.println("</table>");
 
-            out.println( "        <div align=\"center\" id=\"showData\"><script type=\"text/javascript\">javascript:getShoppingCart()</script></div>\n");
             out.println("        <br>\n"
                     + "\n"
                     + "		<a href=\"/bookstore/payment.do\" class=\"button\">Pay Now</a>\n"

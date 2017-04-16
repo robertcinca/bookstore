@@ -94,43 +94,73 @@ public class signup extends HttpServlet {
                 Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
                 Connection con = DriverManager.getConnection(url, dbLoginId, dbPwd);
 
-                //Updating the tables
-                // Create a preparedstatement to set the SQL statement			 
-                PreparedStatement pstmt = con.prepareStatement("INSERT INTO [tomcat_users] ([user_name], [password]) VALUES (?, ?)");
-                pstmt.setString(1, user_name);
-                pstmt.setString(2, password);
+                //Check whether username is unique
+                PreparedStatement stmt2 = con.prepareStatement("SELECT user_name FROM tomcat_users");
+                ResultSet rs2 = stmt2.executeQuery();
 
-                PreparedStatement pstmt2 = con.prepareStatement("INSERT INTO [tomcat_users_roles] ([user_name], [role_name]) VALUES (?, ?)");
-                pstmt2.setString(1, user_name);
-                pstmt2.setString(2, role_name);
+                boolean isUnique = true;
+                while (rs2 != null && rs2.next() != false) {
+                    String username = rs2.getString("user_name");
 
-                PreparedStatement pstmt3 = con.prepareStatement("INSERT INTO [tomcat_users_loyalty] ([user_name], [loyalty]) VALUES (?, ?)");
-                pstmt3.setString(1, user_name);
-                pstmt3.setString(2, loyalty);
-
-                // execute the SQL statement
-                int rows = pstmt.executeUpdate();
-                int rows2 = pstmt2.executeUpdate();
-                int rows3 = pstmt3.executeUpdate();
-
-                if (rows > 0 && rows2 > 0 && rows3 > 0) {
-                    out.println("<legend>New Username is sucessfully created.</legend>");
-                    // display the information of the record just added including UID
-                    Statement stmt = con.createStatement();
-                    ResultSet rs = stmt.executeQuery("SELECT @@IDENTITY AS [@@IDENTITY]");
-                    if (rs != null && rs.next() != false) {
-                        out.println("<p>Username: " + user_name + "</p>");
-                        out.println("<p>Password: " + password + "</p>");
-                        out.println("<p>Role: " + role_name + "</p>");
-                        out.println("<p>Loyalty: " + loyalty + "</p>");
-                        rs.close();
-                    }
-                    if (stmt != null) {
-                        stmt.close();
+                    if (user_name == null ? username == null : user_name.equals(username)) {
+                        isUnique = false;
                     }
 
+                }
+
+                if (rs2 != null) {
+                    rs2.close();
+                }
+                if (stmt2 != null) {
+                    stmt2.close();
+                }
+
+                if (isUnique) {
+                    //Updating the tables
+                    // Create a preparedstatement to set the SQL statement			 
+                    PreparedStatement pstmt = con.prepareStatement("INSERT INTO [tomcat_users] ([user_name], [password]) VALUES (?, ?)");
+                    pstmt.setString(1, user_name);
+                    pstmt.setString(2, password);
+
+                    PreparedStatement pstmt2 = con.prepareStatement("INSERT INTO [tomcat_users_roles] ([user_name], [role_name]) VALUES (?, ?)");
+                    pstmt2.setString(1, user_name);
+                    pstmt2.setString(2, role_name);
+
+                    PreparedStatement pstmt3 = con.prepareStatement("INSERT INTO [tomcat_users_loyalty] ([user_name], [loyalty]) VALUES (?, ?)");
+                    pstmt3.setString(1, user_name);
+                    pstmt3.setString(2, loyalty);
+
+                    // execute the SQL statement
+                    int rows = pstmt.executeUpdate();
+                    int rows2 = pstmt2.executeUpdate();
+                    int rows3 = pstmt3.executeUpdate();
+
+                    if (rows > 0 && rows2 > 0 && rows3 > 0) {
+                        out.println("<legend>New Username is sucessfully created.</legend>");
+                        // display the information of the record just added including UID
+                        Statement stmt = con.createStatement();
+                        ResultSet rs = stmt.executeQuery("SELECT @@IDENTITY AS [@@IDENTITY]");
+                        if (rs != null && rs.next() != false) {
+                            out.println("<p>Username: " + user_name + "</p>");
+                            out.println("<a href=\"/bookstore/browse.do\" class=\"button\">Click here to log in!</a>\n");
+                            rs.close();
+                        }
+                        if (stmt != null) {
+                            stmt.close();
+                        }
+
+                        if (con != null) {
+                            con.close();
+                        }
+
+                    }
                 } else {
+
+                    if (con != null) {
+                        con.close();
+                    }
                     out.println("<legend>ERROR: New username failed to create. Please try again.</legend>");
+                    out.println("<a href=\"/bookstore/signup\" class=\"button\">Click here to try again.</a>\n");
                 }
             } else {
                 if (user_name == null) {
