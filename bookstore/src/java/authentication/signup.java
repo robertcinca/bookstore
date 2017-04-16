@@ -83,8 +83,7 @@ public class signup extends HttpServlet {
             String role_name = "sprole";
             String loyalty = "0";
 
-            if (user_name != null && !user_name.equalsIgnoreCase("")
-                    && password != null && !password.equalsIgnoreCase("")) {
+            if (user_name != null && password != null) {
 
                 // Register the JDBC driver, open a connection
                 String url = "jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad034_db";
@@ -94,25 +93,22 @@ public class signup extends HttpServlet {
                 Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
                 Connection con = DriverManager.getConnection(url, dbLoginId, dbPwd);
 
-                //Check whether username is unique
-                PreparedStatement stmt2 = con.prepareStatement("SELECT user_name FROM tomcat_users");
-                ResultSet rs2 = stmt2.executeQuery();
+                boolean isUnique;
+                try ( //Check whether username is unique
+                        PreparedStatement stmt2 = con.prepareStatement("SELECT user_name FROM tomcat_users")) {
+                    ResultSet rs2 = stmt2.executeQuery();
+                    isUnique = true;
+                    while (rs2 != null && rs2.next() != false) {
+                        String username = rs2.getString("user_name");
 
-                boolean isUnique = true;
-                while (rs2 != null && rs2.next() != false) {
-                    String username = rs2.getString("user_name");
+                        if (user_name == null ? username == null : user_name.equals(username)) {
+                            isUnique = false;
+                        }
 
-                    if (user_name == null ? username == null : user_name.equals(username)) {
-                        isUnique = false;
                     }
-
-                }
-
-                if (rs2 != null) {
-                    rs2.close();
-                }
-                if (stmt2 != null) {
-                    stmt2.close();
+                    if (rs2 != null) {
+                        rs2.close();
+                    }
                 }
 
                 if (isUnique) {
@@ -137,38 +133,24 @@ public class signup extends HttpServlet {
 
                     if (rows > 0 && rows2 > 0 && rows3 > 0) {
                         out.println("<legend>New Username is sucessfully created.</legend>");
-                        // display the information of the record just added including UID
-                        Statement stmt = con.createStatement();
-                        ResultSet rs = stmt.executeQuery("SELECT @@IDENTITY AS [@@IDENTITY]");
-                        if (rs != null && rs.next() != false) {
-                            out.println("<p>Username: " + user_name + "</p>");
-                            out.println("<a href=\"/bookstore/browse.do\" class=\"button\">Click here to log in!</a>\n");
-                            rs.close();
+                        try ( // display the information of the record just added including UID
+                                Statement stmt = con.createStatement()) {
+                            ResultSet rs = stmt.executeQuery("SELECT @@IDENTITY AS [@@IDENTITY]");
+                            if (rs != null && rs.next() != false) {
+                                out.println("<p>Username: " + user_name + "</p>");
+                                out.println("<a href=\"/bookstore/browse.do\" class=\"button\">Click here to log in!</a>\n");
+                                rs.close();
+                            }
                         }
-                        if (stmt != null) {
-                            stmt.close();
-                        }
-
-                        if (con != null) {
-                            con.close();
-                        }
-
-                    }
-                } else {
-
-                    if (con != null) {
                         con.close();
                     }
+                } else {
+                    con.close();
+
                     out.println("<legend>ERROR: New username failed to create. Please try again.</legend>");
                     out.println("<a href=\"/bookstore/signup\" class=\"button\">Click here to try again.</a>\n");
                 }
             } else {
-                if (user_name == null) {
-                    user_name = "";
-                }
-                if (password == null) {
-                    password = "";
-                }
                 out.println("<form id=\"Form2\" name=\"Form2\" class=\"modal-content animate\" onsubmit=\"return validateSignUp()\" method=\"post\">\n"
                         + "                <div class=\"imgcontainer\">\n"
                         + "<span onClick=\"window.open('/bookstore/browse.do','_self');\" class='close'>&times;</span>"

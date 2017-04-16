@@ -12,8 +12,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -35,6 +33,8 @@ public class viewcart extends HttpServlet {
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
+     * @throws java.lang.ClassNotFoundException
+     * @throws java.sql.SQLException
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ClassNotFoundException, SQLException {
@@ -99,7 +99,6 @@ public class viewcart extends HttpServlet {
                     + " <th>Unit Price </th>"
                     + " <th>Total Price </th>"
                     + " </tr>");
-//                try {
 
             // make connection to db and retrieve data from the table
             String url = "jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad034_db";
@@ -107,55 +106,47 @@ public class viewcart extends HttpServlet {
             String dbPwd = "aiad034";
 
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            Connection con = DriverManager.getConnection(url, dbLoginId, dbPwd);
+            int totalAmount;
+            int totalLoyalty;
+            try (Connection con = DriverManager.getConnection(url, dbLoginId, dbPwd); PreparedStatement stmt = con.prepareStatement("SELECT * FROM purchased WHERE user_name = ? AND status = ?")) {
+                stmt.setString(1, currentUser);
+                stmt.setString(2, "pending");
+                ResultSet rs = stmt.executeQuery();
+                totalAmount = 0;
+                totalLoyalty = 0;
+                while (rs != null && rs.next() != false) {
+                    String bookname = rs.getString("bookname");
+                    int quantity = rs.getInt("quantity");
+                    try (PreparedStatement stmt2 = con.prepareStatement("SELECT * FROM book WHERE bookname = ?")) {
+                        stmt2.setString(1, bookname);
+                        ResultSet rs2 = stmt2.executeQuery();
 
-            PreparedStatement stmt = con.prepareStatement("SELECT * FROM purchased WHERE user_name = ? AND status = ?");
-            stmt.setString(1, currentUser);
-            stmt.setString(2, "pending");
-            ResultSet rs = stmt.executeQuery();
+                        while (rs2 != null && rs2.next() != false) {
 
-            int totalAmount = 0;
-            int totalLoyalty = 0;
+                            String author = rs2.getString("author");
+                            int loyalty = rs2.getInt("loyalty");
+                            int price = rs2.getInt("price");
+                            int totalPrice = price * quantity;
+                            totalAmount += totalPrice;
+                            totalLoyalty += loyalty;
 
-            while (rs != null && rs.next() != false) {
-                String bookname = rs.getString("bookname");
-                int quantity = rs.getInt("quantity");
-                PreparedStatement stmt2 = con.prepareStatement("SELECT * FROM book WHERE bookname = ?");
-                stmt2.setString(1, bookname);
-                ResultSet rs2 = stmt2.executeQuery();
+                            out.println("</tr>"
+                                    + "<td>" + bookname + "</td>"
+                                    + "<td>" + author + "</td>"
+                                    + "<td>" + quantity + "</td>"
+                                    + "<td>" + loyalty + "</td>"
+                                    + "<td>" + price + "</td>"
+                                    + "<td>" + totalPrice + "</td>"
+                                    + "</tr>");
+                        }
+                    }
 
-                while (rs2 != null && rs2.next() != false) {
-
-                    String author = rs2.getString("author");
-                    int loyalty = rs2.getInt("loyalty");
-                    int price = rs2.getInt("price");
-                    int totalPrice = price * quantity;
-                    totalAmount += totalPrice;
-                    totalLoyalty += loyalty;
-
-                    out.println("</tr>"
-                            + "<td>" + bookname + "</td>"
-                            + "<td>" + author + "</td>"
-                            + "<td>" + quantity + "</td>"
-                            + "<td>" + loyalty + "</td>"
-                            + "<td>" + price + "</td>"
-                            + "<td>" + totalPrice + "</td>"
-                            + "</tr>");
                 }
-                if (stmt2 != null) {
-                    stmt2.close();
+                if (rs != null) {
+                    rs.close();
                 }
             }
 
-            if (rs != null) {
-                rs.close();
-            }
-            if (stmt != null) {
-                stmt.close();
-            }
-            if (con != null) {
-                con.close();
-            }
             out.println("<tfoot>"
                     + " <tr>"
                     + "	<td></td>"
@@ -204,9 +195,7 @@ public class viewcart extends HttpServlet {
             throws ServletException, IOException {
         try {
             processRequest(request, response);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(viewcart.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
+        } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(viewcart.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -224,9 +213,7 @@ public class viewcart extends HttpServlet {
             throws ServletException, IOException {
         try {
             processRequest(request, response);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(viewcart.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
+        } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(viewcart.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

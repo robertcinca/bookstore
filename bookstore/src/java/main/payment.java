@@ -33,6 +33,8 @@ public class payment extends HttpServlet {
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
+     * @throws java.lang.ClassNotFoundException
+     * @throws java.sql.SQLException
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ClassNotFoundException, SQLException {
@@ -95,24 +97,19 @@ public class payment extends HttpServlet {
                 String dbPwd = "aiad034";
 
                 Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-                Connection con = DriverManager.getConnection(url, dbLoginId, dbPwd);
+                try (Connection con = DriverManager.getConnection(url, dbLoginId, dbPwd); PreparedStatement stmt = con.prepareStatement("SELECT * FROM tomcat_users_loyalty WHERE user_name = ?")) {
+                    stmt.setString(1, currentUser);
+                    ResultSet rs = stmt.executeQuery();
 
-                PreparedStatement stmt = con.prepareStatement("SELECT * FROM tomcat_users_loyalty WHERE user_name = ?");
-                stmt.setString(1, currentUser);
-                ResultSet rs = stmt.executeQuery();
+                    while (rs != null && rs.next() != false) {
+                        userLoyalty = Integer.parseInt(rs.getString("loyalty"));
+                    }
+                    if (rs != null) {
+                        rs.close();
+                    }
 
-                while (rs != null && rs.next() != false) {
-                    userLoyalty = Integer.parseInt(rs.getString("loyalty"));
                 }
-                if (rs != null) {
-                    rs.close();
-                }
-                if (stmt != null) {
-                    stmt.close();
-                }
-                if (con != null) {
-                    con.close();
-                }
+
                 out.println("            <fieldset>\n"
                         + "                <legend>Pay for transaction (With Points)</legend>\n");
                 if (userLoyalty >= submitValue4 * 10) {
@@ -131,7 +128,7 @@ public class payment extends HttpServlet {
                             + "                <label>Post Code (if any):</label>\n"
                             + "                             <input type=\"name\" name=\"postcode\">\n"
                             + "<input type='hidden' value='paidPoints' name='paidPoints' id='paidPoints' />"
-                                    + "<input type='hidden' value=" + submitValue3 + " name='totalAmount' id='totalAmount' />"
+                            + "<input type='hidden' value=" + submitValue3 + " name='totalAmount' id='totalAmount' />"
                             + "<input type='hidden' value=" + submitValue4 + " name='totalLoyalty' id='totalLoyalty' />"
                             + "                <button style='width:100%; font-size:18px; border: 5px solid black;' name='pointsPaid' value='pointsPaid' type=\"submit\">Confirm Payment</button>\n"
                             + "                <a href='/bookstore/viewcart.do' class='cancelbtn' style='width:12%; border: 5px solid black;'>Return to Cart</a>\n"
@@ -185,8 +182,8 @@ public class payment extends HttpServlet {
                         + "                <label>Post Code (if any):</label>\n"
                         + "                             <input type=\"name\" name=\"postcode\">\n"
                         + "<input type='hidden' value='paidCard' name='paidCard' id='paidCard' />"
-                                + "<input type='hidden' value=" + submitValue3 + " name='totalAmount' id='totalAmount' />"
-                            + "<input type='hidden' value=" + submitValue4 + " name='totalLoyalty' id='totalLoyalty' />"
+                        + "<input type='hidden' value=" + submitValue3 + " name='totalAmount' id='totalAmount' />"
+                        + "<input type='hidden' value=" + submitValue4 + " name='totalLoyalty' id='totalLoyalty' />"
                         + "                <button style='width:100%; font-size:18px; border: 5px solid black;' name='pointsPaid' value='pointsPaid' type=\"submit\">Confirm Payment</button>\n"
                         + "                <a href='/bookstore/viewcart.do' class='cancelbtn' style='width:12%; border: 5px solid black;'>Return to Cart</a>\n"
                         + "            </fieldset>\n"
@@ -250,9 +247,7 @@ public class payment extends HttpServlet {
             throws ServletException, IOException {
         try {
             processRequest(request, response);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(payment.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
+        } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(payment.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -270,9 +265,7 @@ public class payment extends HttpServlet {
             throws ServletException, IOException {
         try {
             processRequest(request, response);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(payment.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
+        } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(payment.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
