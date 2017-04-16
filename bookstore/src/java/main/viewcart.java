@@ -13,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -108,45 +109,41 @@ public class viewcart extends HttpServlet {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             Connection con = DriverManager.getConnection(url, dbLoginId, dbPwd);
 
-            PreparedStatement stmt = con.prepareStatement("SELECT * FROM purchased WHERE user_name = ?");
+            PreparedStatement stmt = con.prepareStatement("SELECT * FROM purchased WHERE user_name = ? AND status = ?");
             stmt.setString(1, currentUser);
+            stmt.setString(2, "pending");
             ResultSet rs = stmt.executeQuery();
 
             int totalAmount = 0;
             int totalLoyalty = 0;
 
             while (rs != null && rs.next() != false) {
-//                int id = rs.getInt("ID_purchased");
-//                String username = rs.getString("user_name");
                 String bookname = rs.getString("bookname");
-                String status = rs.getString("status");
                 int quantity = rs.getInt("quantity");
-                if ("pending".equals(status)) {
-                    PreparedStatement stmt2 = con.prepareStatement("SELECT * FROM book WHERE bookname = ?");
-                    stmt2.setString(1, bookname);
-                    ResultSet rs2 = stmt2.executeQuery();
+                PreparedStatement stmt2 = con.prepareStatement("SELECT * FROM book WHERE bookname = ?");
+                stmt2.setString(1, bookname);
+                ResultSet rs2 = stmt2.executeQuery();
 
-                    while (rs2 != null && rs2.next() != false) {
+                while (rs2 != null && rs2.next() != false) {
 
-                        String author = rs2.getString("author");
-                        int loyalty = rs2.getInt("loyalty");
-                        int price = rs2.getInt("price");
-                        int totalPrice = price * quantity;
-                        totalAmount += totalPrice;
-                        totalLoyalty += loyalty;
+                    String author = rs2.getString("author");
+                    int loyalty = rs2.getInt("loyalty");
+                    int price = rs2.getInt("price");
+                    int totalPrice = price * quantity;
+                    totalAmount += totalPrice;
+                    totalLoyalty += loyalty;
 
-                        out.println("</tr>"
-                                + "<td>" + bookname + "</td>"
-                                + "<td>" + author + "</td>"
-                                + "<td>" + quantity + "</td>"
-                                + "<td>" + loyalty + "</td>"
-                                + "<td>" + price + "</td>"
-                                + "<td>" + totalPrice + "</td>"
-                                + "</tr>");
-                    }
-                    if (stmt2 != null) {
-                        stmt2.close();
-                    }
+                    out.println("</tr>"
+                            + "<td>" + bookname + "</td>"
+                            + "<td>" + author + "</td>"
+                            + "<td>" + quantity + "</td>"
+                            + "<td>" + loyalty + "</td>"
+                            + "<td>" + price + "</td>"
+                            + "<td>" + totalPrice + "</td>"
+                            + "</tr>");
+                }
+                if (stmt2 != null) {
+                    stmt2.close();
                 }
             }
 

@@ -116,43 +116,43 @@ public class confirmation extends HttpServlet {
             if (confirmationValue != null) {
                 out.println("<h2> You paid by points</h2>");
                 out.println("<h2> The following loyalty points have been deducted from your account: " + totalLoyalty * 10 + "</h2>");
-                out.println("<h2> Your new total loyalty points: " + userLoyalty + " points</h2>");
-                out.println("<h2> You have purchased the following books: </h2>");
+                out.println("<h2> Your new total loyalty points: " + userLoyalty + " points</h2>");;
             } else {
                 out.println("<h2> You paid by card</h2>");
                 out.println("<h2> The following amount has been deducted from your card: HKD" + totalAmount + ".00</h2>");
                 out.println("<h2> The following loyalty points have been added to your account: " + totalLoyalty + " points</h2>");
-                out.println("<h2> Your new total loyalty points: " + userLoyalty + " points</h2>");
-                out.println("<h2> You have purchased the following books: </h2>");
+                out.println("<h2> Your new total loyalty points: " + userLoyalty + " points</h2>"); 
             }
-
+            
+            out.println("<h2> You have purchased the following books: </h2>");
             out.println("<table>"
                     + "	<tr>"
                     + "	<th>Book Name</th>"
                     + "	<th>Author</th>"
                     + " <th>Quantity </th>"
                     + " </tr>");
-
-            PreparedStatement stmt3 = con.prepareStatement("SELECT * FROM purchased WHERE user_name = ?");
+            
+            PreparedStatement stmt3 = con.prepareStatement("SELECT * FROM purchased WHERE user_name = ? AND status = ?");
             stmt3.setString(1, currentUser);
+            stmt3.setString(2, "pending");
             ResultSet rs3 = stmt3.executeQuery();
 
             while (rs3 != null && rs3.next() != false) {
                 String bookname = rs3.getString("bookname");
-                String status = rs3.getString("status");
                 int quantity = rs3.getInt("quantity");
-                out.println("<h1>" + status + "</h1>");
-                if ("pending".equals(status)) {
+//                if ("pending".equals(status)) {
                     PreparedStatement pstmt = con.prepareStatement("UPDATE tomcat_users_loyalty SET loyalty = ? WHERE user_name = ?");
                     pstmt.setInt(1, userLoyalty);
                     pstmt.setString(2, currentUser);
 
                     Boolean result = pstmt.execute();
                     
-                    status = "purchased";
-                    PreparedStatement pstmt2 = con.prepareStatement("UPDATE purchased SET status = ? WHERE user_name = ?");
-                    pstmt2.setString(1, status);
+                    PreparedStatement pstmt2 = con.prepareStatement("UPDATE purchased SET status = ? WHERE user_name = ? AND status = ?");
+                    pstmt2.setString(1, "purchased");
                     pstmt2.setString(2, currentUser);
+                    pstmt2.setString(3, "pending");
+                    
+                    Boolean result2 = pstmt2.execute();
 
                     PreparedStatement stmt2 = con.prepareStatement("SELECT * FROM book WHERE bookname = ?");
                     stmt2.setString(1, bookname);
@@ -177,7 +177,7 @@ public class confirmation extends HttpServlet {
                     if (pstmt2 != null) {
                         pstmt2.close();
                     }
-                }
+//                }
             }
 
             if (rs != null) {
