@@ -54,13 +54,13 @@ public class payment extends HttpServlet {
                     + "        <title>Welcome to our Online Bookstore!</title>\n"
                     + "                            \n"
                     + "        <!-- CSS Pages -->\n"
-                    + "        <link href=\"/bookstore/CSS/theme.css\" rel=\"stylesheet\" type=\"text/css\"/>\n"
-                    + "        <link href=\"/bookstore/CSS/login.css\" rel=\"stylesheet\" type=\"text/css\"/>\n"
+                    + "        <link href=\"/Bookstore/CSS/theme.css\" rel=\"stylesheet\" type=\"text/css\"/>\n"
+                    + "        <link href=\"/Bookstore/CSS/login.css\" rel=\"stylesheet\" type=\"text/css\"/>\n"
                     + "        <!-- JS Pages -->\n"
                     + "    </head>\n"
                     + "    <body>\n"
                     + "        <header>\n"
-                    + "            <iframe id=\"disclaimer\" name=\"disclaimer\" src=\"/bookstore/iframes/disclaimer.jsp\" width=\"100%\">\n"
+                    + "            <iframe id=\"disclaimer\" name=\"disclaimer\" src=\"/Bookstore/iframes/disclaimer.jsp\" width=\"100%\">\n"
                     + "                [Your user agent does not support frames or is currently configured not to display frames.]\n"
                     + "            </iframe>\n"
                     + "        </header>\n"
@@ -71,13 +71,13 @@ public class payment extends HttpServlet {
                     + "            <div class=\"dropdown-content\">\n"
                     + "                <ul class=\"nav\">\n");
             if (request.getSession(true) != null) {
-                out.println("  <li><a href=\"/bookstore/logout.do\">Logout</a></li>\n");
+                out.println("  <li><a href=\"/Bookstore/logout.do\">Logout</a></li>\n");
             } else {
-                out.println("  <li><a href=\"/bookstore/login.do\">Login</a></li>\n");
+                out.println("  <li><a href=\"/Bookstore/login.do\">Login</a></li>\n");
             }
-            out.println("                    <li><a href=\"/bookstore/browse.do\">Browse</a></li>\n"
-                    + "                    <li><a href=\"/bookstore/viewcart.do\">View Cart</a></li>\n"
-                    + "                    <li><a href=\"/bookstore/payment.do\">Pay Now</a></li>\n"
+            out.println("                    <li><a href=\"/Bookstore/browse.do\">Browse</a></li>\n"
+                    + "                    <li><a href=\"/Bookstore/viewcart.do\">View Cart</a></li>\n"
+                    + "                    <li><a href=\"/Bookstore/payment.do\">Pay Now</a></li>\n"
                     + "                </ul>\n"
                     + "            </div>\n"
                     + "        </div>\n"
@@ -114,7 +114,7 @@ public class payment extends HttpServlet {
                 out.println("            <fieldset>\n"
                         + "                <legend>Pay for transaction (With Points)</legend>\n");
                 if (userLoyalty >= submitValue4 * 10) {
-                    out.println("                 <form action=\"/bookstore/confirmation.do\" method=\"post\">\n"
+                    out.println("                 <form action=\"/Bookstore/confirmation.do\" method=\"post\">\n"
                             + "                 <h2> You have " + userLoyalty + " points. This transaction will use " + submitValue4 * 10 + " points.</h2>"
                             + "                 <p> Note: you will not gain loyalty points if you pay with loyalty points.</p>"
                             + "                 <p>You will also not be able to refund your purchase.</p>"
@@ -133,7 +133,7 @@ public class payment extends HttpServlet {
                             + "<input type='hidden' value=" + submitValue3 + " name='totalAmount' id='totalAmount' />"
                             + "<input type='hidden' value=" + submitValue4 + " name='totalLoyalty' id='totalLoyalty' />"
                             + "                <button style='width:100%; font-size:18px; border: 5px solid black;' name='pointsPaid' value='pointsPaid' type=\"submit\">Confirm Payment</button>\n"
-                            + "                <a href='/bookstore/viewcart.do' class='cancelbtn' style='width:12%; border: 5px solid black;'>Return to Cart</a>\n"
+                            + "                <a href='/Bookstore/viewcart.do' class='cancelbtn' style='width:12%; border: 5px solid black;'>Return to Cart</a>\n"
                             + "       </fieldset>"
                             + "</form>\n");
                     out.println("<fieldset> Other Options:"
@@ -153,12 +153,12 @@ public class payment extends HttpServlet {
                             + "<input type='hidden' value=" + submitValue3 + " name='totalAmount' id='totalAmount' />"
                             + "<input type='hidden' value=" + submitValue4 + " name='totalLoyalty' id='totalLoyalty' />"
                             + "<button type='submit' class='button'>Pay by Card</button>"
-                            + "<a href='/bookstore/viewcart.do' class='cancelbtn' style='width:12%; border: 5px solid black;'>Return to Cart</a>"
+                            + "<a href='/Bookstore/viewcart.do' class='cancelbtn' style='width:12%; border: 5px solid black;'>Return to Cart</a>"
                             + "</form>"
                             + "</fieldset>");
                 }
             } else if (submitValue2 != null && !submitValue2.equalsIgnoreCase("")) {
-                out.println("		<form action=\"/bookstore/confirmation.do\" method=\"post\">\n"
+                out.println("		<form action=\"/Bookstore/confirmation.do\" method=\"post\">\n"
                         + "            <fieldset>\n"
                         + "                <legend>Pay for transaction (With Card)</legend>\n"
                         + "                 <h2> This transaction will cost HKD" + submitValue3 + ".00</h2>");
@@ -189,7 +189,7 @@ public class payment extends HttpServlet {
                         + "<input type='hidden' value=" + submitValue3 + " name='totalAmount' id='totalAmount' />"
                         + "<input type='hidden' value=" + submitValue4 + " name='totalLoyalty' id='totalLoyalty' />"
                         + "                <button style='width:100%; font-size:18px; border: 5px solid black;' name='pointsPaid' value='pointsPaid' type=\"submit\">Confirm Payment</button>\n"
-                        + "                <a href='/bookstore/viewcart.do' class='cancelbtn' style='width:12%; border: 5px solid black;'>Return to Cart</a>\n"
+                        + "                <a href='/Bookstore/viewcart.do' class='cancelbtn' style='width:12%; border: 5px solid black;'>Return to Cart</a>\n"
                         + "            </fieldset>\n"
                         + "        </form>\n");
                 if (!"guest".equals(currentUser)) {
@@ -232,10 +232,10 @@ public class payment extends HttpServlet {
             }
 
             out.println("		<footer>\n"
-                    + "			<iframe id=\"disclaimer\" name=\"disclaimer\" src=\"/bookstore/iframes/disclaimer.jsp\" width=\"100%\">\n"
+                    + "			<iframe id=\"disclaimer\" name=\"disclaimer\" src=\"/Bookstore/iframes/disclaimer.jsp\" width=\"100%\">\n"
                     + "            [Your user agent does not support frames or is currently configured not to display frames.]\n"
                     + "        	</iframe>\n"
-                    + "        	<iframe id=\"bookstorefooter\" name=\"bookstorefooter\" src=\"/bookstore/iframes/bookstorefooter.jsp\" width=\"100%\" height=\"400px\">\n"
+                    + "        	<iframe id=\"bookstorefooter\" name=\"bookstorefooter\" src=\"/Bookstore/iframes/bookstorefooter.jsp\" width=\"100%\" height=\"400px\">\n"
                     + "            [Your user agent does not support frames or is currently configured not to display frames.]\n"
                     + "        	</iframe>\n"
                     + "		</footer>\n"

@@ -16,8 +16,8 @@
     <meta name="description" content="An online marketplace for buying books.">
 
     <!-- CSS Pages -->
-    <link href="/bookstore/CSS/theme.css" rel="stylesheet">
-    <link href="/bookstore/CSS/bookstore.css" rel="stylesheet">
+    <link href="/Bookstore/CSS/theme.css" rel="stylesheet">
+    <link href="/Bookstore/CSS/Bookstore.css" rel="stylesheet">
 
     <!-- JS Pages -->
 
@@ -27,24 +27,24 @@
     </head>
     <body>
         <p>List of all the web pages in the site (with links):</p>
-        <li><a href="/bookstore/login.do">Login Page</a></li>
+        <li><a href="/Bookstore/login.do">Login Page</a></li>
         <br>
-        <li><a href="/bookstore/addbooks.do">Add Books</a></li>
-        <li><a href="/bookstore/browse.do">Browse</a></li>
-        <li><a href="/bookstore/confirmation.do">Confirmation</a></li>
-        <li><a href="/bookstore/editAccount.do">Edit Account</a></li>
-        <li><a href="/bookstore/mbrowse.do">MBrowse</a></li>
-        <li><a href="/bookstore/payment.do">Pay Now</a></li>
-        <li><a href="/bookstore/refund.do">Refund</a></li>
-        <li><a href="/bookstore/viewcart.do">View Cart</a></li>
-        <li><a href="/bookstore/viewdetail.do">View Details</a></li>
+        <li><a href="/Bookstore/addbooks.do">Add Books</a></li>
+        <li><a href="/Bookstore/browse.do">Browse</a></li>
+        <li><a href="/Bookstore/confirmation.do">Confirmation</a></li>
+        <li><a href="/Bookstore/editAccount.do">Edit Account</a></li>
+        <li><a href="/Bookstore/mbrowse.do">MBrowse</a></li>
+        <li><a href="/Bookstore/payment.do">Pay Now</a></li>
+        <li><a href="/Bookstore/refund.do">Refund</a></li>
+        <li><a href="/Bookstore/viewcart.do">View Cart</a></li>
+        <li><a href="/Bookstore/viewdetail.do">View Details</a></li>
         <br>
-        <li><a href="/bookstore/logout.do">Logout</a></li>
-        <li><a href="/bookstore/signup">Sign Up</a></li>
-        <li><a href="/bookstore/loginerror.do">Login Error</a></li>
+        <li><a href="/Bookstore/logout.do">Logout</a></li>
+        <li><a href="/Bookstore/signup">Sign Up</a></li>
+        <li><a href="/Bookstore/loginerror.do">Login Error</a></li>
 
         <p>List of all iframes used:</p>
-        <a href="/bookstore/iframes/disclaimer.jsp">Disclaimer</a>
-        <a href="/bookstore/iframes/bookstorefooter.jsp">Book Store Footer</a>
+        <a href="/Bookstore/iframes/disclaimer.jsp">Disclaimer</a>
+        <a href="/Bookstore/iframes/bookstorefooter.jsp">Book Store Footer</a>
     </body>
 </html>

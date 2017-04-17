@@ -45,12 +45,12 @@ public class refund extends HttpServlet {
                     + "        <title>Welcome to our Online Bookstore!</title>\n"
                     + "                            \n"
                     + "        <!-- CSS Pages -->\n"
-                    + "        <link href=\"/bookstore/CSS/theme.css\" rel=\"stylesheet\" type=\"text/css\"/>\n"
+                    + "        <link href=\"/Bookstore/CSS/theme.css\" rel=\"stylesheet\" type=\"text/css\"/>\n"
                     + "        <!-- JS Pages -->\n"
                     + "    </head>\n"
                     + "    <body>\n"
                     + "        <header>\n"
-                    + "            <iframe id=\"disclaimer\" name=\"disclaimer\" src=\"/bookstore/iframes/disclaimer.jsp\" width=\"100%\">\n"
+                    + "            <iframe id=\"disclaimer\" name=\"disclaimer\" src=\"/Bookstore/iframes/disclaimer.jsp\" width=\"100%\">\n"
                     + "                [Your user agent does not support frames or is currently configured not to display frames.]\n"
                     + "            </iframe>\n"
                     + "        </header>\n"
@@ -61,20 +61,20 @@ public class refund extends HttpServlet {
                     + "            <div class=\"dropdown-content\">\n"
                     + "                <ul class=\"nav\">\n");
             if (request.getSession(true) != null) {
-                out.println("  <li><a href=\"/bookstore/logout.do\">Logout</a></li>\n");
+                out.println("  <li><a href=\"/Bookstore/logout.do\">Logout</a></li>\n");
             } else {
-                out.println("  <li><a href=\"/bookstore/login.do\">Login</a></li>\n");
+                out.println("  <li><a href=\"/Bookstore/login.do\">Login</a></li>\n");
             }
-            out.println("                    <li><a href=\"/bookstore/browse.do\">Browse</a></li>\n"
-                    + "                    <li><a href=\"/bookstore/viewcart.do\">View Cart</a></li>\n"
-                    + "                    <li><a href=\"/bookstore/payment.do\">Pay Now</a></li>\n"
+            out.println("                    <li><a href=\"/Bookstore/browse.do\">Browse</a></li>\n"
+                    + "                    <li><a href=\"/Bookstore/viewcart.do\">View Cart</a></li>\n"
+                    + "                    <li><a href=\"/Bookstore/payment.do\">Pay Now</a></li>\n"
                     + "                </ul>\n"
                     + "            </div>\n"
                     + "        </div>\n"
                     + "\n"
                     + "		<h1>Refund Requests</h1>\n"
                     + "\n"
-                    + "		<a href=\"/bookstore/browse.do\" class=\"button\">Back to browse</a>\n"
+                    + "		<a href=\"/Bookstore/browse.do\" class=\"button\">Back to browse</a>\n"
                     + "		<br>\n"
                     + "\n"
                     + "		<!--Refund Requests-->\n"
@@ -122,10 +122,10 @@ public class refund extends HttpServlet {
                     + "\n"
                     + "\n"
                     + "		<footer>\n"
-                    + "			<iframe id=\"disclaimer\" name=\"disclaimer\" src=\"/bookstore/iframes/disclaimer.jsp\" width=\"100%\">\n"
+                    + "			<iframe id=\"disclaimer\" name=\"disclaimer\" src=\"/Bookstore/iframes/disclaimer.jsp\" width=\"100%\">\n"
                     + "            [Your user agent does not support frames or is currently configured not to display frames.]\n"
                     + "        	</iframe>\n"
-                    + "        	<iframe id=\"bookstorefooter\" name=\"bookstorefooter\" src=\"/bookstore/iframes/bookstorefooter.jsp\" width=\"100%\" height=\"400px\">\n"
+                    + "        	<iframe id=\"bookstorefooter\" name=\"bookstorefooter\" src=\"/Bookstore/iframes/bookstorefooter.jsp\" width=\"100%\" height=\"400px\">\n"
                     + "            [Your user agent does not support frames or is currently configured not to display frames.]\n"
                     + "        	</iframe>\n"
                     + "		</footer>\n"

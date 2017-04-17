@@ -40,15 +40,15 @@ public class logout extends HttpServlet {
                     + "        <title>Welcome to our Online Bookstore!</title>\n"
                     + "                            \n"
                     + "        <!-- CSS Pages -->\n"
-                    + "        <link href=\"/bookstore/CSS/theme.css\" rel=\"stylesheet\" type=\"text/css\"/>\n"
-                    + "        <link href=\"/bookstore/CSS/login.css\" rel=\"stylesheet\" type=\"text/css\"/>\n"
+                    + "        <link href=\"/Bookstore/CSS/theme.css\" rel=\"stylesheet\" type=\"text/css\"/>\n"
+                    + "        <link href=\"/Bookstore/CSS/login.css\" rel=\"stylesheet\" type=\"text/css\"/>\n"
                     + "        <!-- JS Pages -->\n"
-                    + "        <script src=\"/bookstore/JS/basicFunctions.js\" type=\"text/javascript\"></script>\n"
-                    + "        <script src=\"/bookstore/JS/login.js\" type=\"text/javascript\"></script>\n"
+                    + "        <script src=\"/Bookstore/JS/basicFunctions.js\" type=\"text/javascript\"></script>\n"
+                    + "        <script src=\"/Bookstore/JS/login.js\" type=\"text/javascript\"></script>\n"
                     + "    </head>\n"
                     + "    <body>\n"
                     + "        <header>\n"
-                    + "            <iframe id=\"disclaimer\" name=\"disclaimer\" src=\"/bookstore/iframes/disclaimer.jsp\" width=\"100%\">\n"
+                    + "            <iframe id=\"disclaimer\" name=\"disclaimer\" src=\"/Bookstore/iframes/disclaimer.jsp\" width=\"100%\">\n"
                     + "                [Your user agent does not support frames or is currently configured not to display frames.]\n"
                     + "            </iframe>\n"
                     + "        </header>\n"
@@ -58,9 +58,9 @@ public class logout extends HttpServlet {
                     + "            <button class=\"dropbtn\">MENU</button>\n"
                     + "            <div class=\"dropdown-content\">\n"
                     + "                <ul class=\"nav\">\n"
-                    + "                    <li><a href=\"/bookstore/browse.do\">Browse</a></li>\n"
-                    + "                    <li><a href=\"/bookstore/viewcart.do\">View Cart</a></li>\n"
-                    + "                    <li><a href=\"/bookstore/payment.do\">Pay Now</a></li>\n"
+                    + "                    <li><a href=\"/Bookstore/browse.do\">Browse</a></li>\n"
+                    + "                    <li><a href=\"/Bookstore/viewcart.do\">View Cart</a></li>\n"
+                    + "                    <li><a href=\"/Bookstore/payment.do\">Pay Now</a></li>\n"
                     + "                </ul>\n"
                     + "            </div>\n"
                     + "        </div>\n"
@@ -70,10 +70,10 @@ public class logout extends HttpServlet {
             out.println("<p><a class='button' href='browse.do'>Return to Login Page</a></p>");
             out.println("</form>");
             out.println("<footer>\n" +
-"            <iframe id=\"disclaimer\" name=\"disclaimer\" src=\"/bookstore/iframes/disclaimer.jsp\" width=\"100%\">\n" +
+"            <iframe id=\"disclaimer\" name=\"disclaimer\" src=\"/Bookstore/iframes/disclaimer.jsp\" width=\"100%\">\n" +
 "                [Your user agent does not support frames or is currently configured not to display frames.]\n" +
 "            </iframe>\n" +
-"            <iframe id=\"bookstorefooter\" name=\"bookstorefooter\" src=\"/bookstore/iframes/bookstorefooter.jsp\" width=\"100%\" height=\"400px\">\n" +
+"            <iframe id=\"bookstorefooter\" name=\"bookstorefooter\" src=\"/Bookstore/iframes/bookstorefooter.jsp\" width=\"100%\" height=\"400px\">\n" +
 "                [Your user agent does not support frames or is currently configured not to display frames.]\n" +
 "            </iframe>\n" +
 "        </footer>");

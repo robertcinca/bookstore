@@ -51,15 +51,15 @@ public class signup extends HttpServlet {
                     + "        <title>Welcome to our Online Bookstore!</title>\n"
                     + "                            \n"
                     + "        <!-- CSS Pages -->\n"
-                    + "        <link href=\"/bookstore/CSS/theme.css\" rel=\"stylesheet\" type=\"text/css\"/>\n"
-                    + "        <link href=\"/bookstore/CSS/login.css\" rel=\"stylesheet\" type=\"text/css\"/>\n"
+                    + "        <link href=\"/Bookstore/CSS/theme.css\" rel=\"stylesheet\" type=\"text/css\"/>\n"
+                    + "        <link href=\"/Bookstore/CSS/login.css\" rel=\"stylesheet\" type=\"text/css\"/>\n"
                     + "        <!-- JS Pages -->\n"
-                    + "        <script src=\"/bookstore/JS/basicFunctions.js\" type=\"text/javascript\"></script>\n"
-                    + "        <script src=\"/bookstore/JS/login.js\" type=\"text/javascript\"></script>\n"
+                    + "        <script src=\"/Bookstore/JS/basicFunctions.js\" type=\"text/javascript\"></script>\n"
+                    + "        <script src=\"/Bookstore/JS/login.js\" type=\"text/javascript\"></script>\n"
                     + "    </head>\n"
                     + "    <body>\n"
                     + "        <header>\n"
-                    + "            <iframe id=\"disclaimer\" name=\"disclaimer\" src=\"/bookstore/iframes/disclaimer.jsp\" width=\"100%\">\n"
+                    + "            <iframe id=\"disclaimer\" name=\"disclaimer\" src=\"/Bookstore/iframes/disclaimer.jsp\" width=\"100%\">\n"
                     + "                [Your user agent does not support frames or is currently configured not to display frames.]\n"
                     + "            </iframe>\n"
                     + "        </header>\n"
@@ -69,9 +69,9 @@ public class signup extends HttpServlet {
                     + "            <button class=\"dropbtn\">MENU</button>\n"
                     + "            <div class=\"dropdown-content\">\n"
                     + "                <ul class=\"nav\">\n"
-                    + "                    <li><a href=\"/bookstore/browse.do\">Browse</a></li>\n"
-                    + "                    <li><a href=\"/bookstore/viewcart.do\">View Cart</a></li>\n"
-                    + "                    <li><a href=\"/bookstore/payment.do\">Pay Now</a></li>\n"
+                    + "                    <li><a href=\"/Bookstore/browse.do\">Browse</a></li>\n"
+                    + "                    <li><a href=\"/Bookstore/viewcart.do\">View Cart</a></li>\n"
+                    + "                    <li><a href=\"/Bookstore/payment.do\">Pay Now</a></li>\n"
                     + "                </ul>\n"
                     + "            </div>\n"
                     + "        </div>\n"
@@ -138,7 +138,7 @@ public class signup extends HttpServlet {
                             ResultSet rs = stmt.executeQuery("SELECT @@IDENTITY AS [@@IDENTITY]");
                             if (rs != null && rs.next() != false) {
                                 out.println("<p>Username: " + user_name + "</p>");
-                                out.println("<a href=\"/bookstore/browse.do\" class=\"button\">Click here to log in!</a>\n");
+                                out.println("<a href=\"/Bookstore/browse.do\" class=\"button\">Click here to log in!</a>\n");
                                 rs.close();
                             }
                         }
@@ -148,13 +148,13 @@ public class signup extends HttpServlet {
                     con.close();
 
                     out.println("<legend>ERROR: New username failed to create. Please try again.</legend>");
-                    out.println("<a href=\"/bookstore/signup\" class=\"button\">Click here to try again.</a>\n");
+                    out.println("<a href=\"/Bookstore/signup\" class=\"button\">Click here to try again.</a>\n");
                 }
             } else {
                 out.println("<form id=\"Form2\" name=\"Form2\" class=\"modal-content animate\" onsubmit=\"return validateSignUp()\" method=\"post\">\n"
                         + "                <div class=\"imgcontainer\">\n"
-                        + "<span onClick=\"window.open('/bookstore/browse.do','_self');\" class='close'>&times;</span>"
-                        + "                    <img src=\"/bookstore/IMG/welcome.png\" alt=\"sign up\" class=\"avatar\">\n"
+                        + "<span onClick=\"window.open('/Bookstore/browse.do','_self');\" class='close'>&times;</span>"
+                        + "                    <img src=\"/Bookstore/IMG/welcome.png\" alt=\"sign up\" class=\"avatar\">\n"
                         + "                        </div>\n"
                         + "                \n"
                         + "                <div class=\"container\">\n"
@@ -169,7 +169,7 @@ public class signup extends HttpServlet {
                         + "                            <button style='width:100%; font-size:18px' name='signupbutton' value='signup' type=\"submit\">Sign Up</button>\n"
                         + "                            </div>\n"
                         + "                <div class=\"container\" style=\"background-color:#f1f1f1\">\n"
-                        + "<a href='/bookstore/browse.do' class='cancelbtn' style='width:12%'>Cancel Signup</a>\n"
+                        + "<a href='/Bookstore/browse.do' class='cancelbtn' style='width:12%'>Cancel Signup</a>\n"
                         + "                </div>\n"
                         + "            </form>\n"
                         + "        </div>\n"

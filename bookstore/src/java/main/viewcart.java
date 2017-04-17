@@ -54,14 +54,14 @@ public class viewcart extends HttpServlet {
                     + "        <title>Welcome to our Online Bookstore!</title>\n"
                     + "                            \n"
                     + "        <!-- CSS Pages -->\n"
-                    + "        <link href=\"/bookstore/CSS/theme.css\" rel=\"stylesheet\" type=\"text/css\"/>\n"
+                    + "        <link href=\"/Bookstore/CSS/theme.css\" rel=\"stylesheet\" type=\"text/css\"/>\n"
                     + "        <!-- JS Pages -->\n"
-                    + "        <script src=\"/bookstore/JS/basicFunctions.js\" type=\"text/javascript\"></script>\n"
-                    + "        <script src=\"/bookstore/JS/cartview.js\" type=\"text/javascript\"></script>\n"
+                    + "        <script src=\"/Bookstore/JS/basicFunctions.js\" type=\"text/javascript\"></script>\n"
+                    + "        <script src=\"/Bookstore/JS/cartview.js\" type=\"text/javascript\"></script>\n"
                     + "    </head>\n"
                     + "    <body>\n"
                     + "        <header>\n"
-                    + "            <iframe id=\"disclaimer\" name=\"disclaimer\" src=\"/bookstore/iframes/disclaimer.jsp\" width=\"100%\">\n"
+                    + "            <iframe id=\"disclaimer\" name=\"disclaimer\" src=\"/Bookstore/iframes/disclaimer.jsp\" width=\"100%\">\n"
                     + "                [Your user agent does not support frames or is currently configured not to display frames.]\n"
                     + "            </iframe>\n"
                     + "        </header>\n"
@@ -72,13 +72,13 @@ public class viewcart extends HttpServlet {
                     + "            <div class=\"dropdown-content\">\n"
                     + "                <ul class=\"nav\">\n");
             if (request.getSession(true) != null) {
-                out.println("  <li><a href=\"/bookstore/logout.do\">Logout</a></li>\n");
+                out.println("  <li><a href=\"/Bookstore/logout.do\">Logout</a></li>\n");
             } else {
-                out.println("  <li><a href=\"/bookstore/login.do\">Login</a></li>\n");
+                out.println("  <li><a href=\"/Bookstore/login.do\">Login</a></li>\n");
             }
-            out.println("                    <li><a href=\"/bookstore/browse.do\">Browse</a></li>\n"
-                    + "                    <li><a href=\"/bookstore/viewcart.do\">View Cart</a></li>\n"
-                    + "                    <li><a href=\"/bookstore/payment.do\">Pay Now</a></li>\n"
+            out.println("                    <li><a href=\"/Bookstore/browse.do\">Browse</a></li>\n"
+                    + "                    <li><a href=\"/Bookstore/viewcart.do\">View Cart</a></li>\n"
+                    + "                    <li><a href=\"/Bookstore/payment.do\">Pay Now</a></li>\n"
                     + "                </ul>\n"
                     + "            </div>\n"
                     + "        </div>\n"
@@ -160,19 +160,19 @@ public class viewcart extends HttpServlet {
             out.println("</table>");
 
             out.println("        <br>\n"
-                    + "<form name='Form3' action='/bookstore/payment.do' onsubmit='return checkSpend()' method='POST'>"
+                    + "<form name='Form3' action='/Bookstore/payment.do' onsubmit='return checkSpend()' method='POST'>"
                     + "<input name='totalAmount' type='hidden' value=" + totalAmount + ">"
                     + "<input name='totalLoyalty' type='hidden' value=" + totalLoyalty + ">"
                     + "<button class='button' style='float:left;' name='proceedPayment' value='proceedPayment' type='submit'>Pay Now</button>"
                     + "</form>"
-                    + "		<a href=\"/bookstore/browse.do\" class=\"button\">Browse Books</a>\n"
+                    + "		<a href=\"/Bookstore/browse.do\" class=\"button\">Browse Books</a>\n"
                     + "		<br>\n"
                     + "\n"
                     + "		<footer>\n"
-                    + "			<iframe id=\"disclaimer\" name=\"disclaimer\" src=\"/bookstore/iframes/disclaimer.jsp\" width=\"100%\">\n"
+                    + "			<iframe id=\"disclaimer\" name=\"disclaimer\" src=\"/Bookstore/iframes/disclaimer.jsp\" width=\"100%\">\n"
                     + "            [Your user agent does not support frames or is currently configured not to display frames.]\n"
                     + "        	</iframe>\n"
-                    + "        	<iframe id=\"bookstorefooter\" name=\"bookstorefooter\" src=\"/bookstore/iframes/bookstorefooter.jsp\" width=\"100%\" height=\"400px\">\n"
+                    + "        	<iframe id=\"bookstorefooter\" name=\"bookstorefooter\" src=\"/Bookstore/iframes/bookstorefooter.jsp\" width=\"100%\" height=\"400px\">\n"
                     + "            [Your user agent does not support frames or is currently configured not to display frames.]\n"
                     + "        	</iframe>\n"
                     + "		</footer>\n"
