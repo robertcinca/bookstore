@@ -88,8 +88,9 @@ public class payment extends HttpServlet {
             String submitValue2 = request.getParameter("payCard");
             int submitValue3 = Integer.parseInt(request.getParameter("totalAmount"));
             int submitValue4 = Integer.parseInt(request.getParameter("totalLoyalty"));
+            String currentUser = request.getRemoteUser();
+
             if (submitValue != null && !submitValue.equalsIgnoreCase("")) {
-                String currentUser = request.getRemoteUser();
                 int userLoyalty = 0;
                 // make connection to db and retrieve data from the table
                 String url = "jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad034_db";
@@ -115,7 +116,8 @@ public class payment extends HttpServlet {
                 if (userLoyalty >= submitValue4 * 10) {
                     out.println("                 <form action=\"/bookstore/confirmation.do\" method=\"post\">\n"
                             + "                 <h2> You have " + userLoyalty + " points. This transaction will use " + submitValue4 * 10 + " points.</h2>"
-                            + "                 <h2> Please note: you will not gain any points during this transaction as you are already paying by points.</h2>"
+                            + "                 <p> Note: you will not gain loyalty points if you pay with loyalty points.</p>"
+                            + "                 <p>You will also not be able to refund your purchase.</p>"
                             + "                <h3>Enter delivery address</h3>\n"
                             + "                <label>Address Line 1:</label>\n"
                             + "				<input type=\"name\" name=\"addr1\" required>\n"
@@ -159,9 +161,11 @@ public class payment extends HttpServlet {
                 out.println("		<form action=\"/bookstore/confirmation.do\" method=\"post\">\n"
                         + "            <fieldset>\n"
                         + "                <legend>Pay for transaction (With Card)</legend>\n"
-                        + "                 <h2> This transaction will cost HKD" + submitValue3 + ".00</h2>"
-                        + "                 <h2> You will gain " + submitValue4 + " points during this transaction.</h2>"
-                        + "                     <h3>Enter your card details</h3>\n"
+                        + "                 <h2> This transaction will cost HKD" + submitValue3 + ".00</h2>");
+                if (!"guest".equals(currentUser)) {
+                    out.println("                 <h2> You will gain " + submitValue4 + " points during this transaction.</h2>");
+                }
+                out.println("                     <h3>Enter your card details</h3>\n"
                         + "                 <label>Card Name:</label>\n"
                         + "                             <input type=\"name\" name=\"cardName\" required>\n"
                         + "                <label>Card Number:</label>\n"
@@ -187,21 +191,26 @@ public class payment extends HttpServlet {
                         + "                <button style='width:100%; font-size:18px; border: 5px solid black;' name='pointsPaid' value='pointsPaid' type=\"submit\">Confirm Payment</button>\n"
                         + "                <a href='/bookstore/viewcart.do' class='cancelbtn' style='width:12%; border: 5px solid black;'>Return to Cart</a>\n"
                         + "            </fieldset>\n"
-                        + "        </form>\n"
-                        + "<fieldset> Other Options:"
-                        + "<form method='POST'>"
-                        + "<input type='hidden' value='payPoints' name='payPoints' id='payPoints' />"
-                        + "<input type='hidden' value=" + submitValue3 + " name='totalAmount' id='totalAmount' />"
-                        + "<input type='hidden' value=" + submitValue4 + " name='totalLoyalty' id='totalLoyalty' />"
-                        + "<button type='submit' class='button' style='float:left;'>Pay by Points</button>"
-                        + "</form>"
-                        + "</fieldset>");
+                        + "        </form>\n");
+                if (!"guest".equals(currentUser)) {
+                    out.println("<fieldset> Other Options:"
+                            + "<form method='POST'>"
+                            + "<input type='hidden' value='payPoints' name='payPoints' id='payPoints' />"
+                            + "<input type='hidden' value=" + submitValue3 + " name='totalAmount' id='totalAmount' />"
+                            + "<input type='hidden' value=" + submitValue4 + " name='totalLoyalty' id='totalLoyalty' />"
+                            + "<button type='submit' class='button' style='float:left;'>Pay by Points</button>"
+                            + "</form>"
+                            + "</fieldset>");
+                }
 
             } else {
                 int totalAmount = Integer.parseInt(request.getParameter("totalAmount"));
                 int totalLoyalty = Integer.parseInt(request.getParameter("totalLoyalty"));
-                out.println("<h2> The total amount to pay is: HKD " + totalAmount + ".00 [OR] " + totalLoyalty * 10 + " loyalty points</h2>"
-                        + "<h2> The total loyalty points you will gain: " + totalLoyalty + " points</h2>");
+                out.println("<h2> The total amount to pay is: HKD " + totalAmount + ".00</h2>");
+                if (!"guest".equals(currentUser)) {
+                    out.println("<h2> The total loyalty points you will gain: " + totalLoyalty + " points</h2>"
+                            + "<h2>Alternatively, the total amount to pay using loyalty points: " + totalLoyalty * 10 + "</h2>");
+                }
                 out.println("\n"
                         + "<fieldset> Choose payment type:"
                         + "<form method='POST'>"
@@ -209,14 +218,17 @@ public class payment extends HttpServlet {
                         + "<input type='hidden' value=" + totalAmount + " name='totalAmount' id='totalAmount' />"
                         + "<input type='hidden' value=" + totalLoyalty + " name='totalLoyalty' id='totalLoyalty' />"
                         + "<button type='submit' class='button' style='float:left;'>Pay by Card</button>"
-                        + "</form>"
-                        + "<form method='POST'>"
-                        + "<input type='hidden' value='payPoints' name='payPoints' id='payPoints' />"
-                        + "<input type='hidden' value=" + totalAmount + " name='totalAmount' id='totalAmount' />"
-                        + "<input type='hidden' value=" + totalLoyalty + " name='totalLoyalty' id='totalLoyalty' />"
-                        + "<button type='submit' class='button'>Pay by Points: </button>"
-                        + "</form>"
-                        + "</fieldset>");
+                        + "</form>");
+                if (!"guest".equals(currentUser)) {
+                    out.println("<form method='POST'>"
+                            + "<input type='hidden' value='payPoints' name='payPoints' id='payPoints' />"
+                            + "<input type='hidden' value=" + totalAmount + " name='totalAmount' id='totalAmount' />"
+                            + "<input type='hidden' value=" + totalLoyalty + " name='totalLoyalty' id='totalLoyalty' />"
+                            + "<button type='submit' class='button'>Pay by Points: </button>"
+                            + "</form>");
+                }
+                out.println("</fieldset>");
+
             }
 
             out.println("		<footer>\n"

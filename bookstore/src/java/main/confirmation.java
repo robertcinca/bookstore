@@ -122,16 +122,20 @@ public class confirmation extends HttpServlet {
                     }
                     if (rs4 != null) {
                         rs4.close();
-                    }   if (confirmationValue != null) {
+                    }
+                    if (confirmationValue != null) {
                         out.println("<h2> You paid by points</h2>");
                         out.println("<h2> The following loyalty points have been deducted from your account: " + totalLoyalty * 10 + "</h2>");
                         out.println("<h2> Your new total loyalty points: " + userLoyalty + " points</h2>");
                     } else {
                         out.println("<h2> You paid by card</h2>");
                         out.println("<h2> The following amount has been deducted from your card: HKD" + totalAmount + ".00</h2>");
-                        out.println("<h2> The following loyalty points have been added to your account: " + totalLoyalty + " points</h2>");
-                        out.println("<h2> Your new total loyalty points: " + userLoyalty + " points</h2>");
-                    }   out.println("<h2> You have purchased the following books: </h2>");
+                        if (!"guest".equals(currentUser)) {
+                            out.println("<h2> The following loyalty points have been added to your account: " + totalLoyalty + " points</h2>");
+                            out.println("<h2> Your new total loyalty points: " + userLoyalty + " points</h2>");
+                        }
+                    }
+                    out.println("<h2> You have purchased the following books: </h2>");
                     out.println("<table>"
                             + "	<tr>"
                             + "	<th>Book Name</th>"
@@ -145,52 +149,58 @@ public class confirmation extends HttpServlet {
                     while (rs3 != null && rs3.next() != false) {
                         String bookname = rs3.getString("bookname");
                         int quantity = rs3.getInt("quantity");
-                        
-                        try (PreparedStatement pstmt2 = con.prepareStatement("UPDATE purchased SET status = ? WHERE user_name = ? AND status = ?")) {
+
+                        try (PreparedStatement pstmt2 = con.prepareStatement("UPDATE purchased SET status = ?, refundable = ? WHERE user_name = ? AND status = ?")) {
                             pstmt2.setString(1, "purchased");
-                            pstmt2.setString(2, currentUser);
-                            pstmt2.setString(3, "pending");
-                            
+                            if (confirmationValue == null) {
+                                pstmt2.setString(2, "yes");
+                            } else {
+                                pstmt2.setString(2, "no");
+                            }
+                            pstmt2.setString(3, currentUser);
+                            pstmt2.setString(4, "pending");
+
                             Boolean result2 = pstmt2.execute();
-                            
-                            try (PreparedStatement pstmt = con.prepareStatement("UPDATE tomcat_users_loyalty SET loyalty = ? WHERE user_name = ?")) {
-                                pstmt.setInt(1, userLoyalty);
-                                pstmt.setString(2, currentUser);
-                                
-                                Boolean result = pstmt.execute();
+                            if (!"guest".equals(currentUser)) {
+                                try (PreparedStatement pstmt = con.prepareStatement("UPDATE tomcat_users_loyalty SET loyalty = ? WHERE user_name = ?")) {
+                                    pstmt.setInt(1, userLoyalty);
+                                    pstmt.setString(2, currentUser);
+
+                                    Boolean result = pstmt.execute();
+                                }
+
                             }
                         }
-                        
-                        
+
                         ResultSet rs2;
                         try (PreparedStatement stmt2 = con.prepareStatement("SELECT * FROM book WHERE bookname = ?")) {
                             stmt2.setString(1, bookname);
                             rs2 = stmt2.executeQuery();
                             while (rs2 != null && rs2.next() != false) {
                                 String author = rs2.getString("author");
-                                
+
                                 out.println("</tr>"
                                         + "<td>" + bookname + "</td>"
-                                                + "<td>" + author + "</td>"
-                                                        + "<td>" + quantity + "</td>"
-                                                                + "</tr>");
+                                        + "<td>" + author + "</td>"
+                                        + "<td>" + quantity + "</td>"
+                                        + "</tr>");
                             }
                         }
-                        
+
                         if (rs2 != null) {
                             rs2.close();
                         }
-                        
-                    }   if (rs != null) {
+
+                    }
+                    if (rs != null) {
                         rs.close();
                     }
                 }
-                
+
                 if (rs3 != null) {
                     rs3.close();
                 }
-                
-                
+
                 stmt3.close();
             }
 
