@@ -75,9 +75,11 @@ public class viewcart extends HttpServlet {
                 out.println("              <li><a href='/Bookstore/login.do'>Login</a></li>\n");
             }
             out.println("                  <li><a href='/Bookstore/browse.do'>Browse</a></li>"
-                    + "                    <li><a href='/Bookstore/viewcart.do'>View Cart</a></li>"
-                    + "                    <li><a href='/Bookstore/viewdetail.do'>Account Details</a></li>"
-                    + "                </ul>"
+                    + "                    <li><a href='/Bookstore/viewcart.do'>View Cart</a></li>");
+            if (!"guest".equals(request.getRemoteUser())) {
+                out.println("              <li><a href='/Bookstore/viewdetail.do'>Account Details</a></li>");
+            }
+            out.println("              </ul>"
                     + "            </div>"
                     + "        </div>");
             // Begin Page

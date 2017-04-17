@@ -74,14 +74,16 @@ public class payment extends HttpServlet {
                 out.println("              <li><a href='/Bookstore/login.do'>Login</a></li>\n");
             }
             out.println("                  <li><a href='/Bookstore/browse.do'>Browse</a></li>"
-                    + "                    <li><a href='/Bookstore/viewcart.do'>View Cart</a></li>"
-                    + "                    <li><a href='/Bookstore/viewdetail.do'>Account Details</a></li>"
-                    + "                </ul>"
+                    + "                    <li><a href='/Bookstore/viewcart.do'>View Cart</a></li>");
+            if (!"guest".equals(request.getRemoteUser())) {
+                out.println("              <li><a href='/Bookstore/viewdetail.do'>Account Details</a></li>");
+            }
+            out.println("              </ul>"
                     + "            </div>"
                     + "        </div>");
             // Begin Page
             out.println("       <h1>Payment Page</h1>\n");
-            
+
             String submitValue = request.getParameter("payPoints");
             String submitValue2 = request.getParameter("payCard");
             int submitValue3 = Integer.parseInt(request.getParameter("totalAmount"));

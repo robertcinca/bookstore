@@ -24,7 +24,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author lokheili3, robertcinca
+ * @author lokheili3
  */
 public class browse extends HttpServlet {
 
@@ -96,18 +96,22 @@ public class browse extends HttpServlet {
                 out.println("              <li><a href='/Bookstore/login.do'>Login</a></li>\n");
             }
             out.println("                  <li><a href='/Bookstore/browse.do'>Browse</a></li>"
-                    + "                    <li><a href='/Bookstore/viewcart.do'>View Cart</a></li>"
-                    + "                    <li><a href='/Bookstore/viewdetail.do'>Account Details</a></li>"
-                    + "                </ul>"
+                    + "                    <li><a href='/Bookstore/viewcart.do'>View Cart</a></li>");
+            if (!"guest".equals(request.getRemoteUser())) {
+                out.println("              <li><a href='/Bookstore/viewdetail.do'>Account Details</a></li>");
+            }
+            out.println("              </ul>"
                     + "            </div>"
                     + "        </div>");
             // Begin Page
             if (request.isUserInRole("sprole")) {
                 //book list (customer)
                 out.println("<h1>Page to browse books (Customer)</h1>\n"
-                        + "		<a href=\"/Bookstore/viewcart.do\" class=\"button\">View Cart</a>\n"
-                        + "		<a href=\"/Bookstore/viewdetail.do\" class=\"button\">View Account Detail</a>\n"
-                        + "		<br>\n"
+                        + "		<a href=\"/Bookstore/viewcart.do\" class=\"button\">View Cart</a>\n");
+            if (!"guest".equals(request.getRemoteUser())) {
+                out.println("           <a href='/Bookstore/viewdetail.do' class='button'>View Account Details</a></li>");
+            }
+            out.println( "		<br>\n"
                         + "\n"
                         + "		<!-- Book List  -->\n"
                         + "		<table class=\"bookList\">\n"
@@ -314,9 +318,11 @@ public class browse extends HttpServlet {
                 out.println("              <li><a href='/Bookstore/login.do'>Login</a></li>\n");
             }
             out.println("                  <li><a href='/Bookstore/browse.do'>Browse</a></li>"
-                    + "                    <li><a href='/Bookstore/viewcart.do'>View Cart</a></li>"
-                    + "                    <li><a href='/Bookstore/viewdetail.do'>Account Details</a></li>"
-                    + "                </ul>"
+                    + "                    <li><a href='/Bookstore/viewcart.do'>View Cart</a></li>");
+            if (!"guest".equals(request.getRemoteUser())) {
+                out.println("              <li><a href='/Bookstore/viewdetail.do'>Account Details</a></li>");
+            }
+            out.println("              </ul>"
                     + "            </div>"
                     + "        </div>");
             // Begin Page
@@ -474,9 +480,11 @@ public class browse extends HttpServlet {
                 out.println("              <li><a href='/Bookstore/login.do'>Login</a></li>\n");
             }
             out.println("                  <li><a href='/Bookstore/browse.do'>Browse</a></li>"
-                    + "                    <li><a href='/Bookstore/viewcart.do'>View Cart</a></li>"
-                    + "                    <li><a href='/Bookstore/viewdetail.do'>Account Details</a></li>"
-                    + "                </ul>"
+                    + "                    <li><a href='/Bookstore/viewcart.do'>View Cart</a></li>");
+            if (!"guest".equals(request.getRemoteUser())) {
+                out.println("              <li><a href='/Bookstore/viewdetail.do'>Account Details</a></li>");
+            }
+            out.println("              </ul>"
                     + "            </div>"
                     + "        </div>");
             // Begin Page
