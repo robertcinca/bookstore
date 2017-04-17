@@ -8,43 +8,39 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-    <!-- Meta attributes -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="robots" content="noindex, nofollow">
-    <meta name="title" content="Online Bookstore">
-    <meta name="description" content="An online marketplace for buying books.">
+        <!-- Meta attributes -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noindex, nofollow">
+        <meta name="title" content="Online Bookstore">
+        <meta name="description" content="An online marketplace for buying books.">
 
-    <!-- CSS Pages -->
-    <link href="/Bookstore/CSS/theme.css" rel="stylesheet">
-    <link href="/Bookstore/CSS/Bookstore.css" rel="stylesheet">
+        <!-- CSS Pages -->
+        <link href="/Bookstore/CSS/theme.css" rel="stylesheet">
+        <link href="/Bookstore/CSS/Bookstore.css" rel="stylesheet">
 
-    <!-- JS Pages -->
+        <!-- JS Pages -->
 
-    <!-- Open Links Outside iFrame -->
-    <base target="_parent">
+        <!-- Open Links Outside iFrame -->
+        <base target="_parent">
 
     </head>
     <body>
-        <p>List of all the web pages in the site (with links):</p>
-        <li><a href="/Bookstore/login.do">Login Page</a></li>
-        <br>
-        <li><a href="/Bookstore/addbooks.do">Add Books</a></li>
-        <li><a href="/Bookstore/browse.do">Browse</a></li>
-        <li><a href="/Bookstore/confirmation.do">Confirmation</a></li>
-        <li><a href="/Bookstore/editAccount.do">Edit Account</a></li>
-        <li><a href="/Bookstore/mbrowse.do">MBrowse</a></li>
-        <li><a href="/Bookstore/payment.do">Pay Now</a></li>
-        <li><a href="/Bookstore/refund.do">Refund</a></li>
-        <li><a href="/Bookstore/viewcart.do">View Cart</a></li>
-        <li><a href="/Bookstore/viewdetail.do">View Details</a></li>
-        <br>
-        <li><a href="/Bookstore/logout.do">Logout</a></li>
-        <li><a href="/Bookstore/signup">Sign Up</a></li>
-        <li><a href="/Bookstore/loginerror.do">Login Error</a></li>
-
-        <p>List of all iframes used:</p>
-        <a href="/Bookstore/iframes/disclaimer.jsp">Disclaimer</a>
-        <a href="/Bookstore/iframes/bookstorefooter.jsp">Book Store Footer</a>
+        <div id="fb-root"></div>
+        <script>(function (d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id))
+                    return;
+                js = d.createElement(s);
+                js.id = id;
+                js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));</script>
+        <a href="https://www.facebook.com/Amazon/" style="float:left;margin-right: 10px;" target="_blank"><img src="http://www.flamingopark.ro/wp-content/uploads/2016/07/facebook30.png" height="35"width="35"></a> 
+        <a href="https://www.youtube.com/user/amazon" style="float:left;margin-right: 10px;" target="_blank"><img src="http://www.flamingopark.ro/wp-content/uploads/2016/07/youtube30.png" height="35"width="35"> </a> 
+        <a href="https://www.instagram.com/amazon/" style="float:left;margin-right: 10px;" target="_blank"><img src="http://www.flamingopark.ro/wp-content/uploads/2016/07/instagram30.png" height="35"width="35"></a> 
+        <a href="https://plus.google.com/+amazon" style="float:left;margin-right: 10px;" target="_blank"><img src="http://www.flamingopark.ro/wp-content/uploads/2016/07/google30.png" height="35"width="35"></a> 
+        <!--<a href="http://www.flamingopark.ro/english/"><font color="#000000" size = "3">English</font></a>--> 
+        <div class="fb-like" data-href="https://www.facebook.com/Amazon/" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
     </body>
 </html>

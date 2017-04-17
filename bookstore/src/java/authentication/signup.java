@@ -101,7 +101,7 @@ public class signup extends HttpServlet {
                     while (rs2 != null && rs2.next() != false) {
                         String username = rs2.getString("user_name");
 
-                        if (user_name == null ? username == null : user_name.equals(username)) {
+                        if (user_name.equals(username)) {
                             isUnique = false;
                         }
 
@@ -146,8 +146,7 @@ public class signup extends HttpServlet {
                     }
                 } else {
                     con.close();
-
-                    out.println("<legend>ERROR: New username failed to create. Please try again.</legend>");
+                    out.println("<h2>Unfortunately, that username already exists. Please try again with another username.</h2>");
                     out.println("<a href=\"/Bookstore/signup\" class=\"button\">Click here to try again.</a>\n");
                 }
             } else {
@@ -175,6 +174,14 @@ public class signup extends HttpServlet {
                         + "        </div>\n"
                         + "\n");
             }
+            out.println("<footer>\n"
+                    + "            <iframe id=\"disclaimer\" name=\"disclaimer\" src=\"/Bookstore/iframes/disclaimer.jsp\" width=\"100%\">\n"
+                    + "                [Your user agent does not support frames or is currently configured not to display frames.]\n"
+                    + "            </iframe>\n"
+                    + "            <iframe id=\"bookstorefooter\" name=\"bookstorefooter\" src=\"/Bookstore/iframes/bookstorefooter.jsp\" width=\"100%\" height=\"400px\">\n"
+                    + "                [Your user agent does not support frames or is currently configured not to display frames.]\n"
+                    + "            </iframe>\n"
+                    + "        </footer>");
             out.println("</body>");
             out.println("</html>");
         } catch (SQLException e) {
