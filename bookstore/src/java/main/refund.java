@@ -118,20 +118,19 @@ public class refund extends HttpServlet {
                     + "					</form>\n"
                     + "				</td>\n"
                     + "		  </tr>\n"
-                    + "		</table>\n"
-                    + "\n"
-                    + "\n"
-                    + "		<footer>\n"
-                    + "			<iframe id=\"disclaimer\" name=\"disclaimer\" src=\"/Bookstore/iframes/disclaimer.jsp\" width=\"100%\">\n"
-                    + "            [Your user agent does not support frames or is currently configured not to display frames.]\n"
-                    + "        	</iframe>\n"
-                    + "        	<iframe id=\"bookstorefooter\" name=\"bookstorefooter\" src=\"/Bookstore/iframes/bookstorefooter.jsp\" width=\"100%\" height=\"400px\">\n"
-                    + "            [Your user agent does not support frames or is currently configured not to display frames.]\n"
-                    + "        	</iframe>\n"
-                    + "		</footer>\n"
-                    + "	</body>\n"
+                    + "		</table>\n");
+            //footer
+            out.println("       <br>"
+                    + "         <footer>"
+                    + "             <iframe id='bookstorefooter' name='bookstorefooter' src='/Bookstore/iframes/bookstorefooter.jsp' width='100%' height='100px'>"
+                    + "                 [Your user agent does not support frames or is currently configured not to display frames.]"
+                    + "             </iframe>"
+                    + "             <iframe id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
+                    + "                 [Your user agent does not support frames or is currently configured not to display frames.]"
+                    + "             </iframe>"
+                    + "         </footer>"
+                    + "    </body>"
                     + "</html>");
-
         }
     }
 

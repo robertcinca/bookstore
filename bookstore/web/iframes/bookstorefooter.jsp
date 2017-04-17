@@ -18,8 +18,7 @@
         <!-- CSS Pages -->
         <link href="/Bookstore/CSS/theme.css" rel="stylesheet">
         <link href="/Bookstore/CSS/Bookstore.css" rel="stylesheet">
-
-        <!-- JS Pages -->
+        <link href="/Bookstore/CSS/footer.css" rel="stylesheet">
 
         <!-- Open Links Outside iFrame -->
         <base target="_parent">
@@ -36,11 +35,20 @@
                 js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8";
                 fjs.parentNode.insertBefore(js, fjs);
             }(document, 'script', 'facebook-jssdk'));</script>
-        <a href="https://www.facebook.com/Amazon/" style="float:left;margin-right: 10px;" target="_blank"><img src="http://www.flamingopark.ro/wp-content/uploads/2016/07/facebook30.png" height="35"width="35"></a> 
-        <a href="https://www.youtube.com/user/amazon" style="float:left;margin-right: 10px;" target="_blank"><img src="http://www.flamingopark.ro/wp-content/uploads/2016/07/youtube30.png" height="35"width="35"> </a> 
-        <a href="https://www.instagram.com/amazon/" style="float:left;margin-right: 10px;" target="_blank"><img src="http://www.flamingopark.ro/wp-content/uploads/2016/07/instagram30.png" height="35"width="35"></a> 
-        <a href="https://plus.google.com/+amazon" style="float:left;margin-right: 10px;" target="_blank"><img src="http://www.flamingopark.ro/wp-content/uploads/2016/07/google30.png" height="35"width="35"></a> 
-        <!--<a href="http://www.flamingopark.ro/english/"><font color="#000000" size = "3">English</font></a>--> 
-        <div class="fb-like" data-href="https://www.facebook.com/Amazon/" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
+        <div class="container">
+            <div class="column-left">
+                <a href="https://www.facebook.com/Amazon/" style="float:left;margin-right: 10px;" target="_blank"><img src="http://www.flamingopark.ro/wp-content/uploads/2016/07/facebook30.png" height="35"width="35"></a> 
+                <a href="https://www.youtube.com/user/amazon" style="float:left;margin-right: 10px;" target="_blank"><img src="http://www.flamingopark.ro/wp-content/uploads/2016/07/youtube30.png" height="35"width="35"> </a> 
+                <a href="https://www.instagram.com/amazon/" style="float:left;margin-right: 10px;" target="_blank"><img src="http://www.flamingopark.ro/wp-content/uploads/2016/07/instagram30.png" height="35"width="35"></a> 
+                <a href="https://plus.google.com/+amazon" style="float:left;margin-right: 10px;" target="_blank"><img src="http://www.flamingopark.ro/wp-content/uploads/2016/07/google30.png" height="35"width="35"></a> 
+                <!--<a href="http://www.flamingopark.ro/english/"><font color="#000000" size = "3">English</font></a>--> 
+            </div>
+            <div class="column-center">
+                <p>©Copyright 2017 Bookstore.</p>
+            </div>
+            <div class="column-right">
+                <div class="fb-like" data-href="https://www.facebook.com/Amazon/" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
+            </div>
+        </div>
     </body>
 </html>

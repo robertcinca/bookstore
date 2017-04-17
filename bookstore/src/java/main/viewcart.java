@@ -165,18 +165,18 @@ public class viewcart extends HttpServlet {
                     + "<input name='totalLoyalty' type='hidden' value=" + totalLoyalty + ">"
                     + "<button class='button' style='float:left;' name='proceedPayment' value='proceedPayment' type='submit'>Pay Now</button>"
                     + "</form>"
-                    + "		<a href=\"/Bookstore/browse.do\" class=\"button\">Browse Books</a>\n"
-                    + "		<br>\n"
-                    + "\n"
-                    + "		<footer>\n"
-                    + "			<iframe id=\"disclaimer\" name=\"disclaimer\" src=\"/Bookstore/iframes/disclaimer.jsp\" width=\"100%\">\n"
-                    + "            [Your user agent does not support frames or is currently configured not to display frames.]\n"
-                    + "        	</iframe>\n"
-                    + "        	<iframe id=\"bookstorefooter\" name=\"bookstorefooter\" src=\"/Bookstore/iframes/bookstorefooter.jsp\" width=\"100%\" height=\"400px\">\n"
-                    + "            [Your user agent does not support frames or is currently configured not to display frames.]\n"
-                    + "        	</iframe>\n"
-                    + "		</footer>\n"
-                    + "	</body>\n"
+                    + "		<a href=\"/Bookstore/browse.do\" class=\"button\">Browse Books</a>\n");
+            //footer
+            out.println("       <br>"
+                    + "         <footer>"
+                    + "             <iframe id='bookstorefooter' name='bookstorefooter' src='/Bookstore/iframes/bookstorefooter.jsp' width='100%' height='100px'>"
+                    + "                 [Your user agent does not support frames or is currently configured not to display frames.]"
+                    + "             </iframe>"
+                    + "             <iframe id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
+                    + "                 [Your user agent does not support frames or is currently configured not to display frames.]"
+                    + "             </iframe>"
+                    + "         </footer>"
+                    + "    </body>"
                     + "</html>");
         }
     }

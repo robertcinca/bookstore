@@ -145,23 +145,19 @@ public class viewdetail extends HttpServlet {
                     + "		<br>\n"
                     + "\n"
                     + "		<a href=\"/Bookstore/editAccount.do\" class=\"button\">Edit Account</a>\n"
-                    + "</fieldset>\n"
-                    + "\n"
-                    + "\n"
-                    + "\n"
-                    + "\n"
-                    + "\n"
-                    + "		<footer>\n"
-                    + "			<iframe id=\"disclaimer\" name=\"disclaimer\" src=\"/Bookstore/iframes/disclaimer.jsp\" width=\"100%\">\n"
-                    + "            [Your user agent does not support frames or is currently configured not to display frames.]\n"
-                    + "        	</iframe>\n"
-                    + "        	<iframe id=\"bookstorefooter\" name=\"bookstorefooter\" src=\"/Bookstore/iframes/bookstorefooter.jsp\" width=\"100%\" height=\"400px\">\n"
-                    + "            [Your user agent does not support frames or is currently configured not to display frames.]\n"
-                    + "        	</iframe>\n"
-                    + "		</footer>\n"
-                    + "	</body>\n"
+                    + "</fieldset>\n");
+            //footer
+            out.println("       <br>"
+                    + "         <footer>"
+                    + "             <iframe id='bookstorefooter' name='bookstorefooter' src='/Bookstore/iframes/bookstorefooter.jsp' width='100%' height='100px'>"
+                    + "                 [Your user agent does not support frames or is currently configured not to display frames.]"
+                    + "             </iframe>"
+                    + "             <iframe id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
+                    + "                 [Your user agent does not support frames or is currently configured not to display frames.]"
+                    + "             </iframe>"
+                    + "         </footer>"
+                    + "    </body>"
                     + "</html>");
-
         }
     }
 

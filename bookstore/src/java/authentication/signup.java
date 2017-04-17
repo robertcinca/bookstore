@@ -150,7 +150,7 @@ public class signup extends HttpServlet {
                     out.println("<a href=\"/Bookstore/signup\" class=\"button\">Click here to try again.</a>\n");
                 }
             } else {
-                out.println("<form id=\"Form2\" name=\"Form2\" class=\"modal-content animate\" onsubmit=\"return validateSignUp()\" method=\"post\">\n"
+                out.println("<form id=\"Form2\" name=\"Form2\" class='modal-content animate' onsubmit=\"return validateSignUp()\" method=\"post\">\n"
                         + "                <div class=\"imgcontainer\">\n"
                         + "<span onClick=\"window.open('/Bookstore/browse.do','_self');\" class='close'>&times;</span>"
                         + "                    <img src=\"/Bookstore/IMG/welcome.png\" alt=\"sign up\" class=\"avatar\">\n"
@@ -174,16 +174,18 @@ public class signup extends HttpServlet {
                         + "        </div>\n"
                         + "\n");
             }
-            out.println("<footer>\n"
-                    + "            <iframe id=\"disclaimer\" name=\"disclaimer\" src=\"/Bookstore/iframes/disclaimer.jsp\" width=\"100%\">\n"
-                    + "                [Your user agent does not support frames or is currently configured not to display frames.]\n"
-                    + "            </iframe>\n"
-                    + "            <iframe id=\"bookstorefooter\" name=\"bookstorefooter\" src=\"/Bookstore/iframes/bookstorefooter.jsp\" width=\"100%\" height=\"400px\">\n"
-                    + "                [Your user agent does not support frames or is currently configured not to display frames.]\n"
-                    + "            </iframe>\n"
-                    + "        </footer>");
-            out.println("</body>");
-            out.println("</html>");
+            //footer
+            out.println("       <br>"
+                    + "         <footer>"
+                    + "             <iframe id='bookstorefooter' name='bookstorefooter' src='/Bookstore/iframes/bookstorefooter.jsp' width='100%' height='100px'>"
+                    + "                 [Your user agent does not support frames or is currently configured not to display frames.]"
+                    + "             </iframe>"
+                    + "             <iframe id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
+                    + "                 [Your user agent does not support frames or is currently configured not to display frames.]"
+                    + "             </iframe>"
+                    + "         </footer>"
+                    + "    </body>"
+                    + "</html>");
         } catch (SQLException e) {
             out.println("<div style='color: red'>" + e.toString() + "</div>");
         } catch (ClassNotFoundException ex) {

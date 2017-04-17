@@ -69,16 +69,18 @@ public class logout extends HttpServlet {
             out.println("<p>You have successfully logged out!</p>");
             out.println("<p><a class='button' href='browse.do'>Return to Login Page</a></p>");
             out.println("</form>");
-            out.println("<footer>\n" +
-"            <iframe id=\"disclaimer\" name=\"disclaimer\" src=\"/Bookstore/iframes/disclaimer.jsp\" width=\"100%\">\n" +
-"                [Your user agent does not support frames or is currently configured not to display frames.]\n" +
-"            </iframe>\n" +
-"            <iframe id=\"bookstorefooter\" name=\"bookstorefooter\" src=\"/Bookstore/iframes/bookstorefooter.jsp\" width=\"100%\" height=\"400px\">\n" +
-"                [Your user agent does not support frames or is currently configured not to display frames.]\n" +
-"            </iframe>\n" +
-"        </footer>");
-            out.println("</body>");
-            out.println("</html>");
+            //footer
+            out.println("       <br>"
+                    + "         <footer>"
+                    + "             <iframe id='bookstorefooter' name='bookstorefooter' src='/Bookstore/iframes/bookstorefooter.jsp' width='100%' height='100px'>"
+                    + "                 [Your user agent does not support frames or is currently configured not to display frames.]"
+                    + "             </iframe>"
+                    + "             <iframe id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
+                    + "                 [Your user agent does not support frames or is currently configured not to display frames.]"
+                    + "             </iframe>"
+                    + "         </footer>"
+                    + "    </body>"
+                    + "</html>");
         }
     } 
 
