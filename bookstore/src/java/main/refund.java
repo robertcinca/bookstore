@@ -31,48 +31,46 @@ public class refund extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>\n"
-                    + "<html lang=\"en\">\n"
-                    + "    <head>\n"
-                    + "        <!-- Meta attributes -->\n"
-                    + "        <meta charset=\"utf-8\">\n"
-                    + "        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n"
-                    + "        <meta name=\"robots\" content=\"noindex, nofollow\">\n"
-                    + "        <meta name=\"title\" content=\"Online Bookstore\">\n"
-                    + "        <meta name=\"description\" content=\"An online marketplace for buying books.\">\n"
-                    + "                            \n"
-                    + "        <title>Welcome to our Online Bookstore!</title>\n"
-                    + "                            \n"
-                    + "        <!-- CSS Pages -->\n"
-                    + "        <link href=\"/Bookstore/CSS/theme.css\" rel=\"stylesheet\" type=\"text/css\"/>\n"
-                    + "        <!-- JS Pages -->\n"
-                    + "    </head>\n"
-                    + "    <body>\n"
-                    + "        <header>\n"
-                    + "            <iframe id=\"disclaimer\" name=\"disclaimer\" src=\"/Bookstore/iframes/disclaimer.jsp\" width=\"100%\">\n"
-                    + "                [Your user agent does not support frames or is currently configured not to display frames.]\n"
-                    + "            </iframe>\n"
-                    + "        </header>\n"
-                    + "        \n"
-                    + "        <!-- Navigation -->\n"
-                    + "        <div class=\"dropdown\">\n"
-                    + "            <button class=\"dropbtn\">MENU</button>\n"
-                    + "            <div class=\"dropdown-content\">\n"
-                    + "                <ul class=\"nav\">\n");
+            //Begin Header
+            out.println(" <!DOCTYPE html>"
+                    + "<html lang='en'>"
+                    + "    <head>"
+                    // <!-- Meta attributes -->"
+                    + "        <meta charset='utf-8'>"
+                    + "        <meta name='viewport' content='width=device-width, initial-scale=1'>"
+                    + "        <meta name='robots' content='noindex, nofollow'>"
+                    + "        <meta name='title' content='Online Bookstore'>"
+                    + "        <meta name='description' content='An online marketplace for buying books.'>"
+                    // <!-- Page Title -->"
+                    + "        <title>Welcome to our Online Bookstore!</title>"
+                    // <!-- CSS Pages -->"
+                    + "        <link href='/Bookstore/CSS/theme.css' rel='stylesheet' type='text/css'/>"
+                    // <!-- JS Pages -->"
+                    + "    </head>"
+                    + "    <body>"
+                    + "        <header>"
+                    + "            <iframe id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
+                    + "                [Your user agent does not support frames or is currently configured not to display frames.]"
+                    + "            </iframe>"
+                    + "        </header>"
+                    // <!-- Navigation -->"
+                    + "        <div class='dropdown'>"
+                    + "            <button class='dropbtn'>MENU</button>"
+                    + "            <div class='dropdown-content'>"
+                    + "                <ul class='nav'>");
             if (request.getSession(true) != null) {
-                out.println("  <li><a href=\"/Bookstore/logout.do\">Logout</a></li>\n");
+                out.println("              <li><a href='/Bookstore/logout.do'>Logout</a></li>\n");
             } else {
-                out.println("  <li><a href=\"/Bookstore/login.do\">Login</a></li>\n");
+                out.println("              <li><a href='/Bookstore/login.do'>Login</a></li>\n");
             }
-            out.println("                    <li><a href=\"/Bookstore/browse.do\">Browse</a></li>\n"
-                    + "                    <li><a href=\"/Bookstore/viewcart.do\">View Cart</a></li>\n"
-                    + "                    <li><a href=\"/Bookstore/payment.do\">Pay Now</a></li>\n"
-                    + "                </ul>\n"
-                    + "            </div>\n"
-                    + "        </div>\n"
-                    + "\n"
-                    + "		<h1>Refund Requests</h1>\n"
+            out.println("                  <li><a href='/Bookstore/browse.do'>Browse</a></li>"
+                    + "                    <li><a href='/Bookstore/viewcart.do'>View Cart</a></li>"
+                    + "                    <li><a href='/Bookstore/viewdetail.do'>Account Details</a></li>"
+                    + "                </ul>"
+                    + "            </div>"
+                    + "        </div>");
+            // Begin Page
+            out.println("       <h1>Refund Requests</h1>\n"
                     + "\n"
                     + "		<a href=\"/Bookstore/browse.do\" class=\"button\">Back to browse</a>\n"
                     + "		<br>\n"
