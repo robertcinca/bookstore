@@ -70,11 +70,11 @@ public class confirmation extends HttpServlet {
             if (request.getSession(true) != null) {
                 out.println("              <li><a href='/Bookstore/logout.do'>Logout</a></li>\n");
             } else {
-                out.println("              <li><a href='/Bookstore/login.do'>Login</a></li>\n");
+                out.println("              <li><a href='/Bookstore/browse.do'>Login</a></li>\n");
             }
             out.println("                  <li><a href='/Bookstore/browse.do'>Browse</a></li>"
                     + "                    <li><a href='/Bookstore/viewcart.do'>View Cart</a></li>");
-            if (!"guest".equals(request.getRemoteUser())) {
+            if (!request.isUserInRole("guest")) {
                 out.println("              <li><a href='/Bookstore/viewdetail.do'>Account Details</a></li>");
             }
             out.println("              </ul>"
@@ -207,9 +207,11 @@ public class confirmation extends HttpServlet {
             out.println("</table>"
                     + "<h3>Please expect us to deliver your books in the next few days.</h3>"
                     + "<h3>Please select one of the following options:</h3>");
-            out.println("		<a href=\"/Bookstore/browse.do\" class=\"button\">Continue Browsing Bookstore...</a>\n"
-                    + "                <a href=\"/Bookstore/viewdetail.do\" class=\"button\">View your member details</a>\n"
-                    + "		<a href=\"/Bookstore/logout.do\" class=\"button\">Sign Out</a>\n"
+            out.println("		<a href=\"/Bookstore/browse.do\" class=\"button\">Continue Browsing Bookstore...</a>\n");
+            if (!request.isUserInRole("guest")) {
+                out.println("         <a href=\"/Bookstore/viewdetail.do\" class=\"button\">View your member details</a>\n");
+            }
+            out.println("		<a href=\"/Bookstore/logout.do\" class=\"button\">Sign Out</a>\n"
                     + "		<br>\n");
             //footer
             out.println("       <br>"

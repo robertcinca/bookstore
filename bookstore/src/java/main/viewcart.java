@@ -72,11 +72,11 @@ public class viewcart extends HttpServlet {
             if (request.getSession(true) != null) {
                 out.println("              <li><a href='/Bookstore/logout.do'>Logout</a></li>\n");
             } else {
-                out.println("              <li><a href='/Bookstore/login.do'>Login</a></li>\n");
+                out.println("              <li><a href='/Bookstore/browse.do'>Login</a></li>\n");
             }
             out.println("                  <li><a href='/Bookstore/browse.do'>Browse</a></li>"
                     + "                    <li><a href='/Bookstore/viewcart.do'>View Cart</a></li>");
-            if (!"guest".equals(request.getRemoteUser())) {
+            if (!request.isUserInRole("guest")) {
                 out.println("              <li><a href='/Bookstore/viewdetail.do'>Account Details</a></li>");
             }
             out.println("              </ul>"

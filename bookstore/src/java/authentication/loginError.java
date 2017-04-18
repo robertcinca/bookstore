@@ -51,9 +51,13 @@ public class loginError extends HttpServlet {
                     + "        <div class='dropdown'>"
                     + "            <button class='dropbtn'>MENU</button>"
                     + "            <div class='dropdown-content'>"
-                    + "                <ul class='nav'>"
-                    + "                    <li><a href='/Bookstore/signup'>Sign Up!</a></li>"
-                    + "                    <li><a href='/Bookstore/browse.do'>Browse</a></li>"
+                    + "                <ul class='nav'>");
+            if (request.getSession(true) != null) {
+                out.println("              <li><a href='/Bookstore/logout.do'>Logout</a></li>\n");
+            } else {
+                out.println("              <li><a href='/Bookstore/browse.do'>Login</a></li>");
+            }
+            out.println("                  <li><a href='/Bookstore/browse.do'>Browse</a></li>"
                     + "                    <li><a href='/Bookstore/viewcart.do'>View Cart</a></li>"
                     + "                    <li><a href='/Bookstore/viewdetail.do'>Account Details</a></li>"
                     + "                </ul>"

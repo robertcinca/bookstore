@@ -68,10 +68,10 @@ public class signup extends HttpServlet {
                     + "            <button class='dropbtn'>MENU</button>"
                     + "            <div class='dropdown-content'>"
                     + "                <ul class='nav'>"
-                    + "                    <li><a href='/Bookstore/browse.do'>Log In</a></li>"
-                    + "                    <li><a href='/Bookstore/browse.do'>Browse</a></li>"
-                    + "                    <li><a href='/Bookstore/viewcart.do'>View Cart</a></li>"
-                    + "                    <li><a href='/Bookstore/viewdetail.do'>Account Details</a></li>"
+                    + "                     <li><a href='/Bookstore/browse.do'>Login</a></li>\n"
+                    + "                     <li><a href='/Bookstore/browse.do'>Browse</a></li>"
+                    + "                     <li><a href='/Bookstore/viewcart.do'>View Cart</a></li>"
+                    + "                     <li><a href='/Bookstore/viewdetail.do'>Account Details</a></li>"
                     + "                </ul>"
                     + "            </div>"
                     + "        </div>");
@@ -110,7 +110,7 @@ public class signup extends HttpServlet {
                 }
 
                 if (isUnique) {
-                    //Updating the tables
+                    //Creating the user
                     // Create a preparedstatement to set the SQL statement			 
                     PreparedStatement pstmt = con.prepareStatement("INSERT INTO [tomcat_users] ([user_name], [password]) VALUES (?, ?)");
                     pstmt.setString(1, user_name);

@@ -94,11 +94,11 @@ public class browse extends HttpServlet {
             if (request.getSession(true) != null) {
                 out.println("              <li><a href='/Bookstore/logout.do'>Logout</a></li>\n");
             } else {
-                out.println("              <li><a href='/Bookstore/login.do'>Login</a></li>\n");
+                out.println("              <li><a href='/Bookstore/browse.do'>Login</a></li>\n");
             }
             out.println("                  <li><a href='/Bookstore/browse.do'>Browse</a></li>"
                     + "                    <li><a href='/Bookstore/viewcart.do'>View Cart</a></li>");
-            if (!"guest".equals(request.getRemoteUser())) {
+            if (!request.isUserInRole("guest")) {
                 out.println("              <li><a href='/Bookstore/viewdetail.do'>Account Details</a></li>");
             }
             out.println("              </ul>"
@@ -107,10 +107,10 @@ public class browse extends HttpServlet {
                     + "<h1>Welcome! You can browse our books here!</h1>\n");
 
             // Begin Page
-            if (request.isUserInRole("sprole")) {
+            if (request.isUserInRole("sprole") || request.isUserInRole("guest")) {
                 //book list (customer)
                 out.println("		<a href=\"/Bookstore/viewcart.do\" class=\"button\">View Cart</a>\n");
-            if (!"guest".equals(request.getRemoteUser())) {
+            if (!request.isUserInRole("guest")) {
                 out.println("           <a href='/Bookstore/viewdetail.do' class='button'>View Account Details</a></li>");
             }
             out.println( "		<br>\n"
@@ -314,19 +314,19 @@ public class browse extends HttpServlet {
             }
             out.println("                  <li><a href='/Bookstore/browse.do'>Browse</a></li>"
                     + "                    <li><a href='/Bookstore/viewcart.do'>View Cart</a></li>");
-            if (!"guest".equals(request.getRemoteUser())) {
+            if (!request.isUserInRole("guest")) {
                 out.println("              <li><a href='/Bookstore/viewdetail.do'>Account Details</a></li>");
             }
             out.println("              </ul>"
                     + "            </div>"
                     + "        </div>");
             // Begin Page
-            if (request.isUserInRole("sprole")) {
+            if (request.isUserInRole("sprole") || request.isUserInRole("guest")) {
                 //book list (customer)
                 out.println("<h1>Page to browse books (Customer)</h1>\n"
                         + "		<a href=\"/Bookstore/viewcart.do\" class=\"button\">View Cart</a>\n"
                         + "		<a href=\"/Bookstore/browse.do\" class=\"button\">Back to Browse</a>\n");
-                if (!"guest".equals(request.getRemoteUser())) {
+                if (!request.isUserInRole("guest")) {
                     out.println("           <a href='/Bookstore/viewdetail.do' class='button'>View Account Details</a></li>");
                 }
                 
@@ -461,7 +461,7 @@ public class browse extends HttpServlet {
             }
             out.println("                  <li><a href='/Bookstore/browse.do'>Browse</a></li>"
                     + "                    <li><a href='/Bookstore/viewcart.do'>View Cart</a></li>");
-            if (!"guest".equals(request.getRemoteUser())) {
+            if (!request.isUserInRole("guest")) {
                 out.println("              <li><a href='/Bookstore/viewdetail.do'>Account Details</a></li>");
             }
             out.println("              </ul>"
@@ -623,7 +623,7 @@ public class browse extends HttpServlet {
             }
             out.println("                  <li><a href='/Bookstore/browse.do'>Browse</a></li>"
                     + "                    <li><a href='/Bookstore/viewcart.do'>View Cart</a></li>");
-            if (!"guest".equals(request.getRemoteUser())) {
+            if (!request.isUserInRole("guest")) {
                 out.println("              <li><a href='/Bookstore/viewdetail.do'>Account Details</a></li>");
             }
             out.println("              </ul>"
