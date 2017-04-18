@@ -16,8 +16,8 @@
     <meta name="description" content="An online marketplace for buying books.">
 
     <!-- CSS Pages -->
-    <link href="/bookstore/CSS/theme.css" rel="stylesheet">
-    <link href="/bookstore/CSS/disclaimer.css" rel="stylesheet">
+    <link href="/Bookstore/CSS/theme.css" rel="stylesheet">
+    <link href="/Bookstore/CSS/disclaimer.css" rel="stylesheet">
 
     <!-- JS Pages -->
 

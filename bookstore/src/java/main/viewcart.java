@@ -7,6 +7,13 @@ package main;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -26,78 +33,150 @@ public class viewcart extends HttpServlet {
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
+     * @throws java.lang.ClassNotFoundException
+     * @throws java.sql.SQLException
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, ClassNotFoundException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>\n"
-                    + "<html lang=\"en\">\n"
-                    + "    <head>\n"
-                    + "        <!-- Meta attributes -->\n"
-                    + "        <meta charset=\"utf-8\">\n"
-                    + "        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n"
-                    + "        <meta name=\"robots\" content=\"noindex, nofollow\">\n"
-                    + "        <meta name=\"title\" content=\"Online Bookstore\">\n"
-                    + "        <meta name=\"description\" content=\"An online marketplace for buying books.\">\n"
-                    + "                            \n"
-                    + "        <title>Welcome to our Online Bookstore!</title>\n"
-                    + "                            \n"
-                    + "        <!-- CSS Pages -->\n"
-                    + "        <link href=\"/bookstore/CSS/theme.css\" rel=\"stylesheet\" type=\"text/css\"/>\n"
-                    + "        <!-- JS Pages -->\n"
-                    + "        <script src=\"/bookstore/JS/basicFunctions.js\" type=\"text/javascript\"></script>\n"
-                    + "        <script src=\"/bookstore/JS/cartview.js\" type=\"text/javascript\"></script>\n"
-                    + "    </head>\n"
-                    + "    <body>\n"
-                    + "        <header>\n"
-                    + "            <iframe id=\"disclaimer\" name=\"disclaimer\" src=\"/bookstore/iframes/disclaimer.jsp\" width=\"100%\">\n"
-                    + "                [Your user agent does not support frames or is currently configured not to display frames.]\n"
-                    + "            </iframe>\n"
-                    + "        </header>\n"
-                    + "        \n"
-                    + "        <!-- Navigation -->\n"
-                    + "        <div class=\"dropdown\">\n"
-                    + "            <button class=\"dropbtn\">MENU</button>\n"
-                    + "            <div class=\"dropdown-content\">\n"
-                    + "                <ul class=\"nav\">\n");
+            //Begin Header
+            out.println(" <!DOCTYPE html>"
+                    + "<html lang='en'>"
+                    + "    <head>"
+                    // <!-- Meta attributes -->"
+                    + "        <meta charset='utf-8'>"
+                    + "        <meta name='viewport' content='width=device-width, initial-scale=1'>"
+                    + "        <meta name='robots' content='noindex, nofollow'>"
+                    + "        <meta name='title' content='Online Bookstore'>"
+                    + "        <meta name='description' content='An online marketplace for buying books.'>"
+                    // <!-- Page Title -->"
+                    + "        <title>Welcome to our Online Bookstore!</title>"
+                    // <!-- CSS Pages -->"
+                    + "        <link href='/Bookstore/CSS/theme.css' rel='stylesheet' type='text/css'/>"
+                    // <!-- JS Pages -->"
+                    + "        <script src='/Bookstore/JS/basicFunctions.js' type='text/javascript'></script>"
+                    + "        <script src='/Bookstore/JS/cartview.js' type='text/javascript'></script>"
+                    + "    </head>"
+                    + "    <body>"
+                    + "        <header>"
+                    + "            <iframe id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
+                    + "                [Your user agent does not support frames or is currently configured not to display frames.]"
+                    + "            </iframe>"
+                    + "        </header>"
+                    // <!-- Navigation -->"
+                    + "        <div class='dropdown'>"
+                    + "            <button class='dropbtn'>MENU</button>"
+                    + "            <div class='dropdown-content'>"
+                    + "                <ul class='nav'>");
             if (request.getSession(true) != null) {
-                out.println("  <li><a href=\"/bookstore/logout.do\">Logout</a></li>\n");
+                out.println("              <li><a href='/Bookstore/logout.do'>Logout</a></li>\n");
             } else {
-                out.println("  <li><a href=\"/bookstore/login.do\">Login</a></li>\n");
+                out.println("              <li><a href='/Bookstore/login.do'>Login</a></li>\n");
             }
-            out.println("                    <li><a href=\"/bookstore/browse.do\">Browse</a></li>\n"
-                    + "                    <li><a href=\"/bookstore/browse.do\">Browse</a></li>\n"
-                    + "                    <li><a href=\"/bookstore/viewcart.do\">View Cart</a></li>\n"
-                    + "                    <li><a href=\"/bookstore/payment.do\">Pay Now</a></li>\n"
-                    + "                </ul>\n"
-                    + "            </div>\n"
-                    + "        </div>\n"
-                    + "		\n"
-                    + "		<!-- View Cart Headings-->\n"
-                    + "		<h1 style=\"text-align:left;float:left;\">Confirm Your Order, </h1>\n"
-                    + "		<h1 style=\"text-align:left;float:left;\" id=\"welcomeMessage\"><script>javascript:formDataUsername();</script></h1>\n"
+            out.println("                  <li><a href='/Bookstore/browse.do'>Browse</a></li>"
+                    + "                    <li><a href='/Bookstore/viewcart.do'>View Cart</a></li>");
+            if (!"guest".equals(request.getRemoteUser())) {
+                out.println("              <li><a href='/Bookstore/viewdetail.do'>Account Details</a></li>");
+            }
+            out.println("              </ul>"
+                    + "            </div>"
+                    + "        </div>");
+            // Begin Page
+            out.println("		<!-- View Cart Headings-->\n");
+            String currentUser = request.getRemoteUser();
+            out.println("		<h1 style=\"text-align:left;float:left;\">Confirm Your Order, " + currentUser + "</h1>\n"
                     + "		<hr style=\"clear:both;\"/>\n"
                     + "		<h2>Your Shopping Cart</h2>\n"
                     + "\n"
                     + "		 <!-- Get Shopping Cart Information and Display It in a Table -->\n"
-                    + "        <div align=\"center\" id=\"showData\"><script type=\"text/javascript\">javascript:getShoppingCart()</script></div>\n"
-                    + "        <br>\n"
-                    + "\n"
-                    + "		<a href=\"/bookstore/payment.do\" class=\"button\">Pay Now</a>\n"
-                    + "		<a href=\"/bookstore/browse.do\" class=\"button\">Browse Books</a>\n"
-                    + "		<br>\n"
-                    + "\n"
-                    + "		<footer>\n"
-                    + "			<iframe id=\"disclaimer\" name=\"disclaimer\" src=\"/bookstore/iframes/disclaimer.jsp\" width=\"100%\">\n"
-                    + "            [Your user agent does not support frames or is currently configured not to display frames.]\n"
-                    + "        	</iframe>\n"
-                    + "        	<iframe id=\"bookstorefooter\" name=\"bookstorefooter\" src=\"/bookstore/iframes/bookstorefooter.jsp\" width=\"100%\" height=\"400px\">\n"
-                    + "            [Your user agent does not support frames or is currently configured not to display frames.]\n"
-                    + "        	</iframe>\n"
-                    + "		</footer>\n"
-                    + "	</body>\n"
+                    + "	<table>"
+                    + "	<tr>"
+                    + "	<th>Book Name</th>"
+                    + "	<th>Author</th>"
+                    + " <th>Quantity </th>"
+                    + " <th>Unit Points </th>"
+                    + " <th>Unit Price </th>"
+                    + " <th>Total Price </th>"
+                    + " </tr>");
+
+            // make connection to db and retrieve data from the table
+            String url = "jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad034_db";
+            String dbLoginId = "aiad034";
+            String dbPwd = "aiad034";
+
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            int totalAmount;
+            int totalLoyalty;
+            try (Connection con = DriverManager.getConnection(url, dbLoginId, dbPwd); PreparedStatement stmt = con.prepareStatement("SELECT * FROM purchased WHERE user_name = ? AND status = ?")) {
+                stmt.setString(1, currentUser);
+                stmt.setString(2, "pending");
+                ResultSet rs = stmt.executeQuery();
+                totalAmount = 0;
+                totalLoyalty = 0;
+                while (rs != null && rs.next() != false) {
+                    String bookname = rs.getString("bookname");
+                    int quantity = rs.getInt("quantity");
+                    try (PreparedStatement stmt2 = con.prepareStatement("SELECT * FROM book WHERE bookname = ?")) {
+                        stmt2.setString(1, bookname);
+                        ResultSet rs2 = stmt2.executeQuery();
+
+                        while (rs2 != null && rs2.next() != false) {
+
+                            String author = rs2.getString("author");
+                            int loyalty = rs2.getInt("loyalty");
+                            int price = rs2.getInt("price");
+                            int totalPrice = price * quantity;
+                            totalAmount += totalPrice;
+                            totalLoyalty += loyalty;
+
+                            out.println("</tr>"
+                                    + "<td>" + bookname + "</td>"
+                                    + "<td>" + author + "</td>"
+                                    + "<td>" + quantity + "</td>"
+                                    + "<td>" + loyalty + "</td>"
+                                    + "<td>" + price + "</td>"
+                                    + "<td>" + totalPrice + "</td>"
+                                    + "</tr>");
+                        }
+                    }
+
+                }
+                if (rs != null) {
+                    rs.close();
+                }
+            }
+
+            out.println("<tfoot>"
+                    + " <tr>"
+                    + "	<td></td>"
+                    + "	<td></td>"
+                    + " <td></td>"
+                    + " <td></td>"
+                    + " <td>Total Price (HKD):</td>"
+                    + " <td>" + totalAmount + ".00</td>"
+                    + " </tr>"
+                    + "  </tfoot>");
+            out.println("</table>");
+
+            out.println("        <br>\n"
+                    + "<form name='Form3' action='/Bookstore/payment.do' onsubmit='return checkSpend()' method='POST'>"
+                    + "<input name='totalAmount' type='hidden' value=" + totalAmount + ">"
+                    + "<input name='totalLoyalty' type='hidden' value=" + totalLoyalty + ">"
+                    + "<button class='button' style='float:left;' name='proceedPayment' value='proceedPayment' type='submit'>Pay Now</button>"
+                    + "</form>"
+                    + "		<a href=\"/Bookstore/browse.do\" class=\"button\">Browse Books</a>\n");
+            //footer
+            out.println("       <br>"
+                    + "         <footer>"
+                    + "             <iframe id='bookstorefooter' name='bookstorefooter' src='/Bookstore/iframes/bookstorefooter.jsp' width='100%' height='100px'>"
+                    + "                 [Your user agent does not support frames or is currently configured not to display frames.]"
+                    + "             </iframe>"
+                    + "             <iframe id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
+                    + "                 [Your user agent does not support frames or is currently configured not to display frames.]"
+                    + "             </iframe>"
+                    + "         </footer>"
+                    + "    </body>"
                     + "</html>");
         }
     }
@@ -114,7 +193,11 @@ public class viewcart extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(viewcart.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -128,7 +211,11 @@ public class viewcart extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(viewcart.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

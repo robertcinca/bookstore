@@ -5,6 +5,10 @@
         <web-resource-collection>
             <web-resource-name>Secret Web Application</web-resource-name>
             <url-pattern>*.do</url-pattern>
+            <http-method>GET</http-method>
+            <http-method>PUT</http-method>
+            <http-method>POST</http-method>
+            <http-method>DELETE</http-method>
         </web-resource-collection>
         <auth-constraint>
             <role-name>admin</role-name>
@@ -21,10 +25,14 @@
         <auth-constraint>
             <role-name>admin</role-name>
         </auth-constraint>
+        <user-data-constraint>
+            <!-- transport-guarantee can be CONFIDENTIAL, INTEGRAL, or NONE -->
+            <transport-guarantee>NONE</transport-guarantee>
+        </user-data-constraint>
     </security-constraint>
     <login-config>
         <auth-method>FORM</auth-method>
-        <realm-name>Form-Based Authentication Area</realm-name>
+        <!--<realm-name>Form-Based</realm-name>-->
         <form-login-config>
             <form-login-page>/login.do</form-login-page>
             <form-error-page>/error.do</form-error-page>
@@ -33,7 +41,6 @@
     <security-role>
         <role-name>sprole</role-name>
     </security-role>
-
     <servlet>
         <servlet-name>addbooks</servlet-name>
         <servlet-class>main.addbooks</servlet-class>
@@ -78,6 +85,10 @@
         <servlet-name>logout</servlet-name>
         <servlet-class>authentication.logout</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>signup</servlet-name>
+        <servlet-class>authentication.signup</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>addbooks</servlet-name>
         <url-pattern>/addbooks.do</url-pattern>
@@ -121,6 +132,10 @@
     <servlet-mapping>
         <servlet-name>logout</servlet-name>
         <url-pattern>/logout.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>signup</servlet-name>
+        <url-pattern>/signup</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

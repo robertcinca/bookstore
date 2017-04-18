@@ -1,6 +1,6 @@
 body {
-    border: 10px solid purple;
-    padding: 2px;
+    border: 8px solid purple;
+    padding: 6px;
     margin: 2px;
 }
 p {
@@ -8,4 +8,16 @@ p {
     font-weight: 300;
     font-size: 16pt;
     text-align: center;
+}
+.column-left{ 
+    float: left; 
+    width: 33%; 
+}
+.column-right{ 
+    float: right; 
+    width: 33%; 
+}
+.column-center{ 
+    display: inline-block; 
+    width: 33%; 
 }

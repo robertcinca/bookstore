@@ -8,39 +8,47 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-    <!-- Meta attributes -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="robots" content="noindex, nofollow">
-    <meta name="title" content="Online Bookstore">
-    <meta name="description" content="An online marketplace for buying books.">
+        <!-- Meta attributes -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noindex, nofollow">
+        <meta name="title" content="Online Bookstore">
+        <meta name="description" content="An online marketplace for buying books.">
 
-    <!-- CSS Pages -->
-    <link href="/bookstore/CSS/theme.css" rel="stylesheet">
-    <link href="/bookstore/CSS/bookstore.css" rel="stylesheet">
+        <!-- CSS Pages -->
+        <link href="/Bookstore/CSS/theme.css" rel="stylesheet">
+        <link href="/Bookstore/CSS/Bookstore.css" rel="stylesheet">
+        <link href="/Bookstore/CSS/footer.css" rel="stylesheet">
 
-    <!-- JS Pages -->
-
-    <!-- Open Links Outside iFrame -->
-    <base target="_parent">
+        <!-- Open Links Outside iFrame -->
+        <base target="_parent">
 
     </head>
     <body>
-        <p>List of all the web pages in the site (with links):</p>
-        <li><a href="/bookstore/index.do">Login (Index Page)</a></li>
-        <br>
-        <li><a href="/bookstore/addbooks.do">Add Books</a></li>
-        <li><a href="/bookstore/browse.do">Browse</a></li>
-        <li><a href="/bookstore/confirmation.do">Confirmation</a></li>
-        <li><a href="/bookstore/editAccount.do">Edit Account</a></li>
-        <li><a href="/bookstore/mbrowse.do">MBrowse</a></li>
-        <li><a href="/bookstore/payment.do">Pay Now</a></li>
-        <li><a href="/bookstore/refund.do">Refund</a></li>
-        <li><a href="/bookstore/viewcart.do">View Cart</a></li>
-        <li><a href="/bookstore/viewdetail.do">View Details</a></li>
-
-        <p>List of all iframes used:</p>
-        <a href="/bookstore/iframes/disclaimer.jsp">Disclaimer</a>
-        <a href="/bookstore/iframes/bookstorefooter.jsp">Book Store Footer</a>
+        <div id="fb-root"></div>
+        <script>(function (d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id))
+                    return;
+                js = d.createElement(s);
+                js.id = id;
+                js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));</script>
+        <div class="container">
+            <div class="column-left">
+                <a href="https://www.facebook.com/Amazon/" style="float:left;margin-right: 10px;" target="_blank"><img src="http://www.flamingopark.ro/wp-content/uploads/2016/07/facebook30.png" height="35"width="35"></a> 
+                <a href="https://www.youtube.com/user/amazon" style="float:left;margin-right: 10px;" target="_blank"><img src="http://www.flamingopark.ro/wp-content/uploads/2016/07/youtube30.png" height="35"width="35"> </a> 
+                <a href="https://www.instagram.com/amazon/" style="float:left;margin-right: 10px;" target="_blank"><img src="http://www.flamingopark.ro/wp-content/uploads/2016/07/instagram30.png" height="35"width="35"></a> 
+                <a href="https://plus.google.com/+amazon" style="float:left;margin-right: 10px;" target="_blank"><img src="http://www.flamingopark.ro/wp-content/uploads/2016/07/google30.png" height="35"width="35"></a> 
+                <!--<a href="http://www.flamingopark.ro/english/"><font color="#000000" size = "3">English</font></a>--> 
+            </div>
+            <div class="column-center">
+                <p>©Copyright 2017 Bookstore.</p>
+            </div>
+            <div class="column-right">
+                <div class="fb-like" data-href="https://www.facebook.com/Amazon/" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
+            </div>
+        </div>
     </body>
 </html>
