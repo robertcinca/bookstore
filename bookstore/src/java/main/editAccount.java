@@ -83,15 +83,17 @@ public class editAccount extends HttpServlet {
                     + "\n"
                     + "	<form>\n"
                     + "		<h3>User Info</h3>\n"
-                    + "		<label for=\"username\">Username:</label>\n"
-                    + "		<input type=\"text\" name=\"username\" >\n"
+                    + "		<label for=\"username\">Username: </label>\n"
+                    + "		<input type=\"text\" name=\"username\" value ='"+request.getRemoteUser()+"' disabled>\n"
                     + "		<label for=\"password\">Password:</label>\n"
                     + "		<input type=\"text\" name=\"password\" >\n"
                     + "		<label for=\"password2\">Confirm Password:</label>\n"
                     + "		<input type=\"text\" name=\"password2\" >\n"
                     + "		<h3><br></h3>\n"
                     + "\n"
-                    + "		<h3>Credit Card Info</h3>\n"
+                    
+                    
+                    /*+ "		<h3>Credit Card Info</h3>\n"
                     + "		<label for=\"cardname\">Card name:</label>\n"
                     + "		<input type=\"text\" name=\"cardname\" >\n"
                     + "		<label for=\"cardNumber\">Card Number:</label>\n"
@@ -112,7 +114,8 @@ public class editAccount extends HttpServlet {
                     + "		<label for=\"postCode\">Post Code (if any):</label>\n"
                     + "		<input type=\"text\" name=\"postCode\" >\n"
                     + "		<h3><br></h3>\n"
-                    + "\n"
+                    + "\n"*/
+                    
                     + "		<a href=\"/Bookstore/viewdetail.do\" class=\"button\">Back to View Detail</a>\n"
                     + "		<a href=\"/Bookstore/viewdetail.do\" class=\"button\">Confirm</a>\n"
                     + "\n"

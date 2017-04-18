@@ -42,10 +42,11 @@ public class browse extends HttpServlet {
             throws ServletException, IOException, ClassNotFoundException {
 
         String action = request.getParameter("action");
+        String username = request.getRemoteUser();
 
         if (action != null) {
             // call different action depends on the action parameter
-            if (action.equalsIgnoreCase("add to cart")) {
+            if (action.equalsIgnoreCase("Add to Cart")) {
                 this.addcartEntry(request, response);
             } else if (action.equalsIgnoreCase("change")) {
                 this.dochangeEntry(request, response);
@@ -102,12 +103,13 @@ public class browse extends HttpServlet {
             }
             out.println("              </ul>"
                     + "            </div>"
-                    + "        </div>");
+                    + "        </div>"
+                    + "<h1>Welcome! You can browse our books here!</h1>\n");
+
             // Begin Page
             if (request.isUserInRole("sprole")) {
                 //book list (customer)
-                out.println("<h1>Page to browse books (Customer)</h1>\n"
-                        + "		<a href=\"/Bookstore/viewcart.do\" class=\"button\">View Cart</a>\n");
+                out.println("		<a href=\"/Bookstore/viewcart.do\" class=\"button\">View Cart</a>\n");
             if (!"guest".equals(request.getRemoteUser())) {
                 out.println("           <a href='/Bookstore/viewdetail.do' class='button'>View Account Details</a></li>");
             }
@@ -188,8 +190,7 @@ public class browse extends HttpServlet {
                 }
             } else if (request.isUserInRole("admin")) {
                 //book list (manager)
-                out.println("<h1>Page to browse books (Manager)</h1> \n"
-                        + "            		<a href=\"/Bookstore/refund.do\" class=\"button\">Refund Request</a>\n"
+                out.println("            		<a href=\"/Bookstore/refund.do\" class=\"button\">Refund Request</a>\n"
                         + "            		<a href=\"/Bookstore/addbooks.do\" class=\"button\">Add Books</a>\n"
                         + "            		<br>\n"
                         + "\n"
@@ -277,7 +278,148 @@ public class browse extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        try {
+        //Begin Header
+            out.println(" <!DOCTYPE html>"
+                    + "<html lang='en'>"
+                    + "    <head>"
+                    // <!-- Meta attributes -->"
+                    + "        <meta charset='utf-8'>"
+                    + "        <meta name='viewport' content='width=device-width, initial-scale=1'>"
+                    + "        <meta name='robots' content='noindex, nofollow'>"
+                    + "        <meta name='title' content='Online Bookstore'>"
+                    + "        <meta name='description' content='An online marketplace for buying books.'>"
+                    // <!-- Page Title -->"
+                    + "        <title>Welcome to our Online Bookstore!</title>"
+                    // <!-- CSS Pages -->"
+                    + "        <link href='/Bookstore/CSS/theme.css' rel='stylesheet' type='text/css'/>"
+                    + "        <link href='/Bookstore/CSS/browse.css' rel='stylesheet' type='text/css'/>"
+                    // <!-- JS Pages -->"
+                    + "    </head>"
+                    + "    <body>"
+                    + "        <header>"
+                    + "            <iframe id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
+                    + "                [Your user agent does not support frames or is currently configured not to display frames.]"
+                    + "            </iframe>"
+                    + "        </header>"
+                    // <!-- Navigation -->"
+                    + "        <div class='dropdown'>"
+                    + "            <button class='dropbtn'>MENU</button>"
+                    + "            <div class='dropdown-content'>"
+                    + "                <ul class='nav'>");
+            if (request.getSession(true) != null) {
+                out.println("              <li><a href='/Bookstore/logout.do'>Logout</a></li>\n");
+            } else {
+                out.println("              <li><a href='/Bookstore/login.do'>Login</a></li>\n");
+            }
+            out.println("                  <li><a href='/Bookstore/browse.do'>Browse</a></li>"
+                    + "                    <li><a href='/Bookstore/viewcart.do'>View Cart</a></li>");
+            if (!"guest".equals(request.getRemoteUser())) {
+                out.println("              <li><a href='/Bookstore/viewdetail.do'>Account Details</a></li>");
+            }
+            out.println("              </ul>"
+                    + "            </div>"
+                    + "        </div>");
+            // Begin Page
+            if (request.isUserInRole("sprole")) {
+                //book list (customer)
+                out.println("<h1>Page to browse books (Customer)</h1>\n"
+                        + "		<a href=\"/Bookstore/viewcart.do\" class=\"button\">View Cart</a>\n"
+                        + "		<a href=\"/Bookstore/browse.do\" class=\"button\">Back to Browse</a>\n");
+                if (!"guest".equals(request.getRemoteUser())) {
+                    out.println("           <a href='/Bookstore/viewdetail.do' class='button'>View Account Details</a></li>");
+                }
+                
+                //add cart detail
+                int bookid = 0;
+                int quantity = 0;
+                if (request.getParameter("bookid") != null && !request.getParameter("bookid").equalsIgnoreCase("")) {
+                    bookid = Integer.parseInt(request.getParameter("bookid"));
+                }
+                if (request.getParameter("quantity") != null && !request.getParameter("quantity").equalsIgnoreCase("")) {
+                    quantity = Integer.parseInt(request.getParameter("quantity"));
+                }
+                
+                out.println("bookid: "+bookid+"quantity: "+quantity);
+                if(bookid!=0&&quantity!=0){
+                    // make connection to db and retrieve data from the table
+                    /* Uncomment when connecting to DB!! */
+                    String url = "jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad034_db";
+                    String dbLoginId = "aiad034";
+                    String dbPwd = "aiad034";
 
+                    Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+                    Connection con = DriverManager.getConnection(url, dbLoginId, dbPwd);
+
+                    
+
+                    //get added book info
+                    Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+                    ResultSet rs = stmt.executeQuery("SELECT * FROM [book] WHERE ID_book = " + bookid);
+
+                    while (rs != null && rs.next() != false) {
+                        int id = rs.getInt("ID_book");
+                        String name = rs.getString("bookname");
+                        String author = rs.getString("author");
+                        int price = rs.getInt("price");
+                        int point = rs.getInt("loyalty");
+                        
+                        out.println("<fieldset>");
+                        out.println("<h3>Book added to cart</h3>");
+                        out.println("<p>UID:" + bookid + "</p>");
+                        out.println("<p>Book Name:" + name + "</p>");
+                        out.println("<p>Author:" + author + "</p>");
+                        out.println("<p>Price:" + price + "</p>");
+                        out.println("<p>Loyalty:" + point + "</p>");
+                        out.println("</fieldset>");
+                        
+                         //add to cart 
+                        PreparedStatement pstmt = con.prepareStatement("INSERT INTO [purchased] ([user_name], [bookname], [quantity], [status], [refundable]) VALUES (?, ?, ?, ?, ?)");
+                        pstmt.setString(1, request.getRemoteUser());
+                        pstmt.setString(2, name);
+                        pstmt.setInt(3, quantity);
+                        pstmt.setString(4, "pending");
+                        pstmt.setString(5, "yes");
+                        
+                        Boolean result = pstmt.execute();
+                        
+                        if (pstmt != null) {
+                            pstmt.close();
+                        }
+                    }
+                    
+                    if (rs != null) {
+                        rs.close();
+                    }
+                    if (stmt != null) {
+                        stmt.close();
+                    }
+                    if (con != null) {
+                        con.close();
+                    }
+                    
+            }
+
+                //footer
+                out.println("       <br>"
+                        + "         <footer>"
+                        + "             <iframe id='bookstorefooter' name='bookstorefooter' src='/Bookstore/iframes/bookstorefooter.jsp' width='100%' height='100px'>"
+                        + "                 [Your user agent does not support frames or is currently configured not to display frames.]"
+                        + "             </iframe>"
+                        + "             <iframe id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
+                        + "                 [Your user agent does not support frames or is currently configured not to display frames.]"
+                        + "             </iframe>"
+                        + "         </footer>"
+                        + "    </body>"
+                        + "</html>");
+
+                }
+            
+        }catch (java.lang.ClassNotFoundException | SQLException e) {
+            out.println("<div style='color: red'>" + e.toString() + "</div>");
+        } finally {
+            out.close();
+        }
     }
 
     private void dochangeEntry(HttpServletRequest request, HttpServletResponse response)
