@@ -94,6 +94,10 @@
         <servlet-name>signup</servlet-name>
         <servlet-class>authentication.signup</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>guestLogin</servlet-name>
+        <servlet-class>authentication.guestLogin</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>addbooks</servlet-name>
         <url-pattern>/addbooks.do</url-pattern>
@@ -141,6 +145,10 @@
     <servlet-mapping>
         <servlet-name>signup</servlet-name>
         <url-pattern>/signup</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>guestLogin</servlet-name>
+        <url-pattern>/guestLogin</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

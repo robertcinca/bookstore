@@ -78,6 +78,7 @@ public class login extends HttpServlet {
                     + "        </div>");
             // Begin Page
             out.println("  <h1>Welcome to our Online Bookstore!</h1>");
+
             //simple login form
             out.println("<form name='Form' id='Form' action='j_security_check' onsubmit='return validateLogin()' method='POST'>");
             out.println("  <p>User name: <input type='text' name='j_username' id='j_username' /></p>");
@@ -86,44 +87,46 @@ public class login extends HttpServlet {
             out.println("</form>");
 
             //sign up page
-            out.println("<a href=\"/Bookstore/signup\" class=\"button\" style='float:left;'>Sign Up!</a>");
+            out.println("<a href='/Bookstore/signup' class='button' style='float:left;'>Sign Up!</a>");
 
-            //login as guest, create random id
-            // Register the JDBC driver, open a connection
-            String url = "jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad034_db";
-            String dbLoginId = "aiad034";
-            String dbPwd = "aiad034";
+            //log in as guest
+            out.println("<a href='/Bookstore/guestLogin' class='button' >Continue without logging in >>></a>");
 
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            String user_name;
-            //Creating the user
-            try (Connection con = DriverManager.getConnection(url, dbLoginId, dbPwd)) {
-                //Creating the user
-                user_name = "guest"; //random user
-                // Create a preparedstatement to set the SQL statement
-                PreparedStatement pstmt = con.prepareStatement("INSERT INTO [tomcat_users] ([user_name], [password]) VALUES (?, ?)");
-                pstmt.setString(1, user_name);
-                pstmt.setString(2, "pwd");
-                PreparedStatement pstmt2 = con.prepareStatement("INSERT INTO [tomcat_users_roles] ([user_name], [role_name]) VALUES (?, ?)");
-                pstmt2.setString(1, user_name);
-                pstmt2.setString(2, "guest");
-                PreparedStatement pstmt3 = con.prepareStatement("INSERT INTO [tomcat_users_loyalty] ([user_name], [loyalty]) VALUES (?, ?)");
-                pstmt3.setString(1, user_name);
-                pstmt3.setString(2, "0");
-                // execute the SQL statement
-                int rows = pstmt.executeUpdate();
-                int rows2 = pstmt2.executeUpdate();
-                int rows3 = pstmt3.executeUpdate();
-                //close connection
-            }
-
-            //guest login form
-            out.println("<form action='j_security_check' method='POST'> "
-                    + "<input type='hidden' value=" + user_name + " name='j_username' id='j_username' />"
-                    + "<input type='hidden' value='pwd' name='j_password' id='j_password' />"
-                    + "<button class='button'  type='submit'>Continue without logging in >>></button>"
-                    + "</form>");
-
+//            //login as guest, create random id
+//            // Register the JDBC driver, open a connection
+//            String url = "jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad034_db";
+//            String dbLoginId = "aiad034";
+//            String dbPwd = "aiad034";
+//
+//            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+//            String user_name;
+//            //Creating the user
+//            try (Connection con = DriverManager.getConnection(url, dbLoginId, dbPwd)) {
+//                //Creating the user
+//                user_name = "guest"; //random user
+//                // Create a preparedstatement to set the SQL statement
+//                PreparedStatement pstmt = con.prepareStatement("INSERT INTO [tomcat_users] ([user_name], [password]) VALUES (?, ?)");
+//                pstmt.setString(1, user_name);
+//                pstmt.setString(2, "pwd");
+//                PreparedStatement pstmt2 = con.prepareStatement("INSERT INTO [tomcat_users_roles] ([user_name], [role_name]) VALUES (?, ?)");
+//                pstmt2.setString(1, user_name);
+//                pstmt2.setString(2, "guest");
+//                PreparedStatement pstmt3 = con.prepareStatement("INSERT INTO [tomcat_users_loyalty] ([user_name], [loyalty]) VALUES (?, ?)");
+//                pstmt3.setString(1, user_name);
+//                pstmt3.setString(2, "0");
+//                // execute the SQL statement
+//                int rows = pstmt.executeUpdate();
+//                int rows2 = pstmt2.executeUpdate();
+//                int rows3 = pstmt3.executeUpdate();
+//                //close connection
+//            }
+//
+//            
+//            out.println("<form action='j_security_check' method='POST'> "
+//                    + "<input type='hidden' value=" + user_name + " name='j_username' id='j_username' />"
+//                    + "<input type='hidden' value='pwd' name='j_password' id='j_password' />"
+//                    + "<button class='button'  type='submit'>Continue without logging in >>></button>"
+//                    + "</form>");
             //footer
             out.println("       <br>"
                     + "         <footer>"

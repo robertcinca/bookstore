@@ -7,6 +7,12 @@ package authentication;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,12 +26,29 @@ import javax.servlet.http.HttpSession;
 public class logout extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        // invalidate the session
-        HttpSession session=request.getSession(true);
-        session.invalidate();
-        
+            throws ServletException, IOException, ClassNotFoundException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
+        // Get current user
+//        String currentUser = request.getRemoteUser();
+//                    // Delete all entries from cart
+//            // Register the JDBC driver, open a connection
+//            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+//            Connection con;
+//            con = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad024_db", "aiad024", "aiad024");
+//
+//            // Delete a preparedstatement to set the SQL statement	  
+//            PreparedStatement pstmt = con.prepareStatement("DELETE FROM purchased WHERE user_name = ? AND status = ?");
+//            pstmt.setString(1, currentUser);
+//            pstmt.setString(2, "pending");
+//
+//            // execute the SQL statement
+//            int rows = pstmt.executeUpdate();
+//
+//            //close connection
+//            con.close();
+        // Invalidate the session 
+        HttpSession session = request.getSession(true);
+        session.invalidate();
         try (PrintWriter out = response.getWriter()) {
             //Begin Header
             out.println(" <!DOCTYPE html>"
@@ -65,10 +88,13 @@ public class logout extends HttpServlet {
                     + "            </div>"
                     + "        </div>");
             // Begin Page
+            out.println(session);
+//            out.println(currentUser);
             out.println("<h1>Logout Page</h1>");
             out.println("<p>You have successfully logged out!</p>");
             out.println("<p><a class='button' href='browse.do'>Return to Login Page</a></p>");
-            out.println("</form>");
+
+
             //footer
             out.println("       <br>"
                     + "         <footer>"
@@ -82,7 +108,7 @@ public class logout extends HttpServlet {
                     + "    </body>"
                     + "</html>");
         }
-    } 
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -96,7 +122,11 @@ public class logout extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(logout.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -110,7 +140,11 @@ public class logout extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(logout.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
