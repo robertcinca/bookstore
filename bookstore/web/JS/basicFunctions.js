@@ -1,29 +1,71 @@
-//Put basic JS functions here
+//Basic JS functions
+/**
+ *
+ * @author robertcinca
+ */
 
-//Parsing URL to get name, value pair
-function getParameterByName(name, url) {
-    if (!url) {
-        url = window.location.href;
+function checkSpend() {
+    var x = document.forms["Form3"]["totalAmount"].value; //get sum
+    if (x <= 0) {
+        window.alert("Error: You have not added anything to cart.");
+        return false;
     }
-    name = name.replace(/[\[\]]/g, "\\$&");
-    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-            results = regex.exec(url);
-    if (!results)
-        return null;
-    if (!results[2])
-        return '';
-    return decodeURIComponent(results[2].replace(/\+/g, " "));
+    return true;
 }
 
-//Personal greeting with username (TODO: get uname from DataBase not from URL)
-function formDataUsername() {
-    var x = getParameterByName('uname');
-    //use to redirect/display certain pages depending on if user is signed in or not
-    if (x == null) {
-        document.getElementById("welcomeMessage").innerHTML = " Guest";
-        // x = checkLogin();
-        // if (x == "false")
-        // window.location = "login.html"; //redirect back to login page if no username present
-    } else
-        document.getElementById("welcomeMessage").innerHTML = " x";
+// Get the modal
+var modal = document.getElementById('id01');
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function (event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+
+// Check user login (fake)
+localstorage = window.sessionStorage;
+function validateLogin() {
+    var user = document.forms["Form"]["j_username"].value;
+    var pw = document.forms["Form"]["j_password"].value;
+    if (checkLoginSyntax(user, pw) == false)
+        return false;
+}
+
+//Check user signup (fake)
+function validateSignUp() {
+    var user = document.forms["Form2"]["uname"].value;
+    var pw = document.forms["Form2"]["psw"].value;
+    var pw2 = document.forms["Form2"]["psw2"].value;
+    for (var i = 0; i < pw.length; i++) {
+        if (pw[i] != pw2[i]) {
+            window.alert("Error: Passwords do not match.");
+            return false;
+        }
+    }
+    if (checkLoginSyntax(user, pw) == false)
+        return false;
+
+    //TODO: create user in DB
+    localstorage.setItem('user', user);
+
+    return true;
+}
+
+function checkLoginSyntax(user, pw) {
+    if (user.length < 4) {
+        window.alert("Error: Username is too short: minimum length is 4 characters.");
+        return false;
+    }
+    if (pw.length < 3) {
+        window.alert("Error: Password is too short: minimum length is 3 characters.");
+        return false;
+    }
+    for (var i = 0; i < user.length; i++) {
+        if (user[i] == " ") {
+            window.alert("Error: There is an intervening space in the Username. Please try again.");
+            return false;
+        }
+    }
+    return true;
 }

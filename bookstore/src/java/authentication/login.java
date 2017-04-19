@@ -7,12 +7,6 @@ package authentication;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -32,11 +26,9 @@ public class login extends HttpServlet {
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
-     * @throws java.lang.ClassNotFoundException
-     * @throws java.sql.SQLException
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, ClassNotFoundException, SQLException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             //Begin Header
@@ -56,7 +48,6 @@ public class login extends HttpServlet {
                     + "        <link href='/Bookstore/CSS/login.css' rel='stylesheet' type='text/css'/>"
                     // <!-- JS Pages -->"
                     + "        <script src='/Bookstore/JS/basicFunctions.js' type='text/javascript'></script>"
-                    + "        <script src='/Bookstore/JS/login.js' type='text/javascript'></script>"
                     + "    </head>"
                     + "    <body>"
                     + "        <header>"
@@ -92,41 +83,6 @@ public class login extends HttpServlet {
             //log in as guest
             out.println("<a href='/Bookstore/guestLogin' class='button' >Continue without logging in >>></a>");
 
-//            //login as guest, create random id
-//            // Register the JDBC driver, open a connection
-//            String url = "jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad034_db";
-//            String dbLoginId = "aiad034";
-//            String dbPwd = "aiad034";
-//
-//            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-//            String user_name;
-//            //Creating the user
-//            try (Connection con = DriverManager.getConnection(url, dbLoginId, dbPwd)) {
-//                //Creating the user
-//                user_name = "guest"; //random user
-//                // Create a preparedstatement to set the SQL statement
-//                PreparedStatement pstmt = con.prepareStatement("INSERT INTO [tomcat_users] ([user_name], [password]) VALUES (?, ?)");
-//                pstmt.setString(1, user_name);
-//                pstmt.setString(2, "pwd");
-//                PreparedStatement pstmt2 = con.prepareStatement("INSERT INTO [tomcat_users_roles] ([user_name], [role_name]) VALUES (?, ?)");
-//                pstmt2.setString(1, user_name);
-//                pstmt2.setString(2, "guest");
-//                PreparedStatement pstmt3 = con.prepareStatement("INSERT INTO [tomcat_users_loyalty] ([user_name], [loyalty]) VALUES (?, ?)");
-//                pstmt3.setString(1, user_name);
-//                pstmt3.setString(2, "0");
-//                // execute the SQL statement
-//                int rows = pstmt.executeUpdate();
-//                int rows2 = pstmt2.executeUpdate();
-//                int rows3 = pstmt3.executeUpdate();
-//                //close connection
-//            }
-//
-//            
-//            out.println("<form action='j_security_check' method='POST'> "
-//                    + "<input type='hidden' value=" + user_name + " name='j_username' id='j_username' />"
-//                    + "<input type='hidden' value='pwd' name='j_password' id='j_password' />"
-//                    + "<button class='button'  type='submit'>Continue without logging in >>></button>"
-//                    + "</form>");
             //footer
             out.println("       <br>"
                     + "         <footer>"
@@ -154,11 +110,7 @@ public class login extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -172,11 +124,7 @@ public class login extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**

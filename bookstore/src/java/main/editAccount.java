@@ -84,15 +84,13 @@ public class editAccount extends HttpServlet {
                     + "	<form>\n"
                     + "		<h3>User Info</h3>\n"
                     + "		<label for=\"username\">Username: </label>\n"
-                    + "		<input type=\"text\" name=\"username\" value ='"+request.getRemoteUser()+"' disabled>\n"
+                    + "		<input type=\"text\" name=\"username\" value ='" + request.getRemoteUser() + "' disabled>\n"
                     + "		<label for=\"password\">Password:</label>\n"
                     + "		<input type=\"text\" name=\"password\" >\n"
                     + "		<label for=\"password2\">Confirm Password:</label>\n"
                     + "		<input type=\"text\" name=\"password2\" >\n"
                     + "		<h3><br></h3>\n"
                     + "\n"
-                    
-                    
                     /*+ "		<h3>Credit Card Info</h3>\n"
                     + "		<label for=\"cardname\">Card name:</label>\n"
                     + "		<input type=\"text\" name=\"cardname\" >\n"
@@ -115,7 +113,6 @@ public class editAccount extends HttpServlet {
                     + "		<input type=\"text\" name=\"postCode\" >\n"
                     + "		<h3><br></h3>\n"
                     + "\n"*/
-                    
                     + "		<a href=\"/Bookstore/viewdetail.do\" class=\"button\">Back to View Detail</a>\n"
                     + "		<a href=\"/Bookstore/viewdetail.do\" class=\"button\">Confirm</a>\n"
                     + "\n"

@@ -39,7 +39,6 @@ public class loginError extends HttpServlet {
                     + "        <link href='/Bookstore/CSS/login.css' rel='stylesheet' type='text/css'/>"
                     // <!-- JS Pages -->"
                     + "        <script src='/Bookstore/JS/basicFunctions.js' type='text/javascript'></script>"
-                    + "        <script src='/Bookstore/JS/login.js' type='text/javascript'></script>"
                     + "    </head>"
                     + "    <body>"
                     + "        <header>"

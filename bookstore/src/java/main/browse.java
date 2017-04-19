@@ -105,15 +105,14 @@ public class browse extends HttpServlet {
                     + "            </div>"
                     + "        </div>"
                     + "<h1>Welcome! You can browse our books here!</h1>\n");
-
             // Begin Page
             if (request.isUserInRole("sprole") || request.isUserInRole("guest")) {
                 //book list (customer)
                 out.println("		<a href=\"/Bookstore/viewcart.do\" class=\"button\">View Cart</a>\n");
-            if (!request.isUserInRole("guest")) {
-                out.println("           <a href='/Bookstore/viewdetail.do' class='button'>View Account Details</a></li>");
-            }
-            out.println( "		<br>\n"
+                if (!request.isUserInRole("guest")) {
+                    out.println("           <a href='/Bookstore/viewdetail.do' class='button'>View Account Details</a></li>");
+                }
+                out.println("		<br>\n"
                         + "\n"
                         + "		<!-- Book List  -->\n"
                         + "		<table class=\"bookList\">\n"
@@ -279,7 +278,7 @@ public class browse extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-        //Begin Header
+            //Begin Header
             out.println(" <!DOCTYPE html>"
                     + "<html lang='en'>"
                     + "    <head>"
@@ -329,7 +328,7 @@ public class browse extends HttpServlet {
                 if (!request.isUserInRole("guest")) {
                     out.println("           <a href='/Bookstore/viewdetail.do' class='button'>View Account Details</a></li>");
                 }
-                
+
                 //add cart detail
                 int bookid = 0;
                 int quantity = 0;
@@ -339,9 +338,8 @@ public class browse extends HttpServlet {
                 if (request.getParameter("quantity") != null && !request.getParameter("quantity").equalsIgnoreCase("")) {
                     quantity = Integer.parseInt(request.getParameter("quantity"));
                 }
-                
-                out.println("bookid: "+bookid+"quantity: "+quantity);
-                if(bookid!=0&&quantity!=0){
+
+                if (bookid != 0 && quantity != 0) {
                     // make connection to db and retrieve data from the table
                     /* Uncomment when connecting to DB!! */
                     String url = "jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad034_db";
@@ -350,8 +348,6 @@ public class browse extends HttpServlet {
 
                     Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
                     Connection con = DriverManager.getConnection(url, dbLoginId, dbPwd);
-
-                    
 
                     //get added book info
                     Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
@@ -363,31 +359,31 @@ public class browse extends HttpServlet {
                         String author = rs.getString("author");
                         int price = rs.getInt("price");
                         int point = rs.getInt("loyalty");
-                        
+
                         out.println("<fieldset>");
                         out.println("<h3>Book added to cart</h3>");
-                        out.println("<p>UID:" + bookid + "</p>");
-                        out.println("<p>Book Name:" + name + "</p>");
-                        out.println("<p>Author:" + author + "</p>");
-                        out.println("<p>Price:" + price + "</p>");
-                        out.println("<p>Loyalty:" + point + "</p>");
+                        out.println("<p>UID : " + bookid + "</p>");
+                        out.println("<p>Book Name : " + name + "</p>");
+                        out.println("<p>Author : " + author + "</p>");
+                        out.println("<p>Price : " + price + "</p>");
+                        out.println("<p>Loyalty : " + point + "</p>");
                         out.println("</fieldset>");
-                        
-                         //add to cart 
+
+                        //add to cart 
                         PreparedStatement pstmt = con.prepareStatement("INSERT INTO [purchased] ([user_name], [bookname], [quantity], [status], [refundable]) VALUES (?, ?, ?, ?, ?)");
                         pstmt.setString(1, request.getRemoteUser());
                         pstmt.setString(2, name);
                         pstmt.setInt(3, quantity);
                         pstmt.setString(4, "pending");
                         pstmt.setString(5, "yes");
-                        
+
                         Boolean result = pstmt.execute();
-                        
+
                         if (pstmt != null) {
                             pstmt.close();
                         }
                     }
-                    
+
                     if (rs != null) {
                         rs.close();
                     }
@@ -397,8 +393,8 @@ public class browse extends HttpServlet {
                     if (con != null) {
                         con.close();
                     }
-                    
-            }
+
+                }
 
                 //footer
                 out.println("       <br>"
@@ -413,9 +409,9 @@ public class browse extends HttpServlet {
                         + "    </body>"
                         + "</html>");
 
-                }
-            
-        }catch (java.lang.ClassNotFoundException | SQLException e) {
+            }
+
+        } catch (java.lang.ClassNotFoundException | SQLException e) {
             out.println("<div style='color: red'>" + e.toString() + "</div>");
         } finally {
             out.close();
@@ -512,11 +508,11 @@ public class browse extends HttpServlet {
                         if (count >= 0) {
                             out.println("<legend>The record is sucessfully updated.</legend>");
 
-                            out.println("<p>UID:" + bookid + "</p>");
-                            out.println("<p>Book Name:" + title + "</p>");
-                            out.println("<p>Author:" + author + "</p>");
-                            out.println("<p>Price:" + price + "</p>");
-                            out.println("<p>Loyalty:" + point + "</p>");
+                            out.println("<p>UID: " + bookid + "</p>");
+                            out.println("<p>Book Name: " + title + "</p>");
+                            out.println("<p>Author: " + author + "</p>");
+                            out.println("<p>Price: " + price + "</p>");
+                            out.println("<p>Loyalty: " + point + "</p>");
                         }
                     }
                     result = pstmt.getMoreResults();

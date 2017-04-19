@@ -132,10 +132,10 @@ public class addbooks extends HttpServlet {
                             stmt.close();
                         }
 
-                        out.println("<p>Title:" + title + "</p>");
-                        out.println("<p>Author:" + author + "</p>");
-                        out.println("<p>Price:" + price + "</p>");
-                        out.println("<p>Loyalty points:" + point + "</p>");
+                        out.println("<p>Title: " + title + "</p>");
+                        out.println("<p>Author: " + author + "</p>");
+                        out.println("<p>Price: " + price + "</p>");
+                        out.println("<p>Loyalty points: " + point + "</p>");
                     } else {
                         out.println("<legend>ERROR: New record is failed to create.</legend>");
                     }

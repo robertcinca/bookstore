@@ -37,7 +37,7 @@ public class refund extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             //Begin Header
-            try{
+            try {
                 out.println(" <!DOCTYPE html>"
                         + "<html lang='en'>"
                         + "    <head>"
@@ -98,79 +98,76 @@ public class refund extends HttpServlet {
                         + "				<th></th>\n"
                         + "\n");
 
-                        // make connection to db and retrieve data from the table
-                        String url = "jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad034_db";
-                        String dbLoginId = "aiad034";
-                        String dbPwd = "aiad034";
+                // make connection to db and retrieve data from the table
+                String url = "jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad034_db";
+                String dbLoginId = "aiad034";
+                String dbPwd = "aiad034";
 
-                        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+                Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 
-                        Connection con = DriverManager.getConnection(url, dbLoginId, dbPwd); 
+                Connection con = DriverManager.getConnection(url, dbLoginId, dbPwd);
 
-                        //update refund request
-                        String action = request.getParameter("action");
-                        
-                        int purchase_id = 0;
-                        if (request.getParameter("purchase_id") != null && !request.getParameter("purchase_id").equalsIgnoreCase("")) {
-                            purchase_id = Integer.parseInt(request.getParameter("purchase_id"));
-                        }
-                        
-                        if(action!=null && purchase_id!=0) {
-                            PreparedStatement pstmt = con.prepareStatement("UPDATE [purchased] SET status = ? WHERE ID_purchased = " + purchase_id);
-                            
+                //update refund request
+                String action = request.getParameter("action");
 
-                            if(action.equalsIgnoreCase("accept")){
-                                pstmt.setString(1, "refund accepted");
-                            }
-                            else if(action.equalsIgnoreCase("decline")) {
-                                pstmt.setString(1, "refund declined");
-                            }
-                            Boolean result = pstmt.execute();
-                            
-                            if (pstmt != null) {
-                                pstmt.close();
-                            }
-                        }
-                        
-                        //refund list
-                        PreparedStatement stmt = con.prepareStatement("SELECT * FROM [purchased] WHERE status = 'refund requested' AND refundable = 'yes'");
-                        
-                        ResultSet rs = stmt.executeQuery();
-                        while (rs != null && rs.next() != false) {
-                            String username = rs.getString("user_name");
-                            String bookname = rs.getString("bookname");
-                            int quantity = rs.getInt("quantity");
-                            purchase_id = rs.getInt("ID_purchased");
-                            String refundable = rs.getString("refundable");
+                int purchase_id = 0;
+                if (request.getParameter("purchase_id") != null && !request.getParameter("purchase_id").equalsIgnoreCase("")) {
+                    purchase_id = Integer.parseInt(request.getParameter("purchase_id"));
+                }
 
-                            PreparedStatement stmt2 = con.prepareStatement("SELECT * FROM [book] WHERE bookname = ?");
-                            stmt2.setString(1, bookname);
-                            ResultSet rs2 = stmt2.executeQuery();
+                if (action != null && purchase_id != 0) {
+                    PreparedStatement pstmt = con.prepareStatement("UPDATE [purchased] SET status = ? WHERE ID_purchased = " + purchase_id);
 
-                            while (rs2 != null && rs2.next() != false) {
-                            
-                                int price = rs2.getInt("price");
-                                
-                                out.println("		  </tr>\n"
+                    if (action.equalsIgnoreCase("accept")) {
+                        pstmt.setString(1, "refund accepted");
+                    } else if (action.equalsIgnoreCase("decline")) {
+                        pstmt.setString(1, "refund declined");
+                    }
+                    Boolean result = pstmt.execute();
+
+                    if (pstmt != null) {
+                        pstmt.close();
+                    }
+                }
+
+                //refund list
+                PreparedStatement stmt = con.prepareStatement("SELECT * FROM [purchased] WHERE status = 'refund requested' AND refundable = 'yes'");
+
+                ResultSet rs = stmt.executeQuery();
+                while (rs != null && rs.next() != false) {
+                    String username = rs.getString("user_name");
+                    String bookname = rs.getString("bookname");
+                    int quantity = rs.getInt("quantity");
+                    purchase_id = rs.getInt("ID_purchased");
+                    String refundable = rs.getString("refundable");
+
+                    PreparedStatement stmt2 = con.prepareStatement("SELECT * FROM [book] WHERE bookname = ?");
+                    stmt2.setString(1, bookname);
+                    ResultSet rs2 = stmt2.executeQuery();
+
+                    while (rs2 != null && rs2.next() != false) {
+
+                        int price = rs2.getInt("price");
+
+                        out.println("		  </tr>\n"
                                 + "		  <tr>\n"
-                                + "		    <td >"+username+"</td>\n"
-                                + "		    <td >"+bookname+"</td>\n"
-                                + "				<td >HKD "+price+"</td>\n"
-                                + "				<td >"+quantity+"</td>\n"
+                                + "		    <td >" + username + "</td>\n"
+                                + "		    <td >" + bookname + "</td>\n"
+                                + "				<td >HKD " + price + "</td>\n"
+                                + "				<td >" + quantity + "</td>\n"
                                 + "				<td >\n"
                                 + "					<form class=\"refundButton\" style=\"float:right\">\n"
-                                + "                                             <input name='purchase_id' type='hidden' value='"+purchase_id+"' />"
+                                + "                                             <input name='purchase_id' type='hidden' value='" + purchase_id + "' />"
                                 + "						<input name='action' type=\"submit\" value=\"Accept\">\n"
                                 + "						<input name='action' type=\"submit\" value=\"Decline\">\n"
                                 + "					</form>\n"
                                 + "				</td>\n"
                                 + "		  </tr>\n");
-                            }
-                        }
-
+                    }
+                }
 
                 out.println("		</table>\n");
-                
+
                 //footer
                 out.println("       <br>"
                         + "         <footer>"
@@ -183,7 +180,7 @@ public class refund extends HttpServlet {
                         + "         </footer>"
                         + "    </body>"
                         + "</html>");
-            }catch (java.lang.ClassNotFoundException | SQLException e) {
+            } catch (java.lang.ClassNotFoundException | SQLException e) {
                 out.println("<div style='color: red'>" + e.toString() + "</div>");
             } finally {
                 out.close();

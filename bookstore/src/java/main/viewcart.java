@@ -56,7 +56,6 @@ public class viewcart extends HttpServlet {
                     + "        <link href='/Bookstore/CSS/theme.css' rel='stylesheet' type='text/css'/>"
                     // <!-- JS Pages -->"
                     + "        <script src='/Bookstore/JS/basicFunctions.js' type='text/javascript'></script>"
-                    + "        <script src='/Bookstore/JS/cartview.js' type='text/javascript'></script>"
                     + "    </head>"
                     + "    <body>"
                     + "        <header>"
@@ -129,7 +128,7 @@ public class viewcart extends HttpServlet {
                             int totalPrice = price * quantity;
                             totalAmount += totalPrice;
                             totalLoyalty += loyalty;
-                            
+
 //                            if (author != null) {
                             out.println("</tr>"
                                     + "<td>" + bookname + "</td>"
