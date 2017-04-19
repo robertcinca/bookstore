@@ -36,8 +36,7 @@ public class viewdetail extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            
-            
+
             //Begin Header
             try {
                 out.println(" <!DOCTYPE html>"
@@ -96,150 +95,119 @@ public class viewdetail extends HttpServlet {
                         + "\n"
                         + "		  <tr>\n"
                         + "				<th>Book Title</th>\n"
-                        + "		    <th>Price</th>\n"
                         + "		    <th>Quantity</th>\n"
                         + "				<th>Status</th>\n"
                         + "				<th></th>\n</tr>"
                         + "\n");
 
-                        //purchased book list
-                        // make connection to db and retrieve data from the table
-                        String url = "jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad034_db";
-                        String dbLoginId = "aiad034";
-                        String dbPwd = "aiad034";
+                //purchased book list
+                // make connection to db and retrieve data from the table
+                String url = "jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad034_db";
+                String dbLoginId = "aiad034";
+                String dbPwd = "aiad034";
 
-                        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+                Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 
-                        String currentUser = request.getRemoteUser();
+                String currentUser = request.getRemoteUser();
 
-                        Connection con = DriverManager.getConnection(url, dbLoginId, dbPwd); 
-                        
-                        String action = request.getParameter("action");
-                        int purchase_id = 0;
-                        if (request.getParameter("purchase_id") != null && !request.getParameter("purchase_id").equalsIgnoreCase("")) {
-                            purchase_id = Integer.parseInt(request.getParameter("purchase_id"));
-                        }
+                Connection con = DriverManager.getConnection(url, dbLoginId, dbPwd);
 
-                        //update refund request
-                        if(action!=null && purchase_id!=0) {
-                            PreparedStatement pstmt = con.prepareStatement("UPDATE [purchased] SET status = ? WHERE ID_purchased = " + purchase_id);
-                            
-                            if(action.equals("refund")){
-                                pstmt.setString(1, "refund requested");
-                            }
-                            else if(action.equals("cancel")) {
-                                pstmt.setString(1, "purchased");
-                            }
-                            Boolean result = pstmt.execute();
-                            
-                            if (pstmt != null) {
-                                pstmt.close();
-                            }
-                        }
-                        
-            
-                        PreparedStatement stmt = con.prepareStatement("SELECT * FROM [purchased] WHERE user_name = ? AND (status = 'purchased' OR status = 'refund requested' OR status = 'refund accepted' OR status = 'refund declined')");
-                        stmt.setString(1, currentUser);
+                String action = request.getParameter("action");
+                int purchase_id = 0;
+                if (request.getParameter("purchase_id") != null && !request.getParameter("purchase_id").equalsIgnoreCase("")) {
+                    purchase_id = Integer.parseInt(request.getParameter("purchase_id"));
+                }
 
-                        ResultSet rs = stmt.executeQuery();
-                        while (rs != null && rs.next() != false) {
-                            String bookname = rs.getString("bookname");
-                            int quantity = rs.getInt("quantity");
-                            String status = rs.getString("status");
-                            purchase_id = rs.getInt("ID_purchased");
-                            String refundable = rs.getString("refundable");   
-                            
-                            PreparedStatement stmt2 = con.prepareStatement("SELECT * FROM [book] WHERE bookname = ?");
-                            stmt2.setString(1, bookname);
-                            ResultSet rs2 = stmt2.executeQuery();
+                //update refund request
+                if (action != null && purchase_id != 0) {
+                    PreparedStatement pstmt = con.prepareStatement("UPDATE [purchased] SET status = ? WHERE ID_purchased = " + purchase_id);
 
-                            
-                            while (rs2 != null && rs2.next() != false) {
-                            
-                                int price = rs2.getInt("price");
-                                
-                                    out.println("<tr>\n"
-                                    + "		    <td >"+bookname+"</td>\n");
-                                    
-                                    if(refundable.equals("yes")){
-                                        out.println("		                <td >HKD "+price+"</td>\n");
-                                    }
-                                    else {
-                                        out.println("		                <td >"+price+" points</td>\n"); 
-                                    }
-                                    
-                                    out.println("				<td >"+quantity+"</td>\n"
-                                    + "				<td >"+status+"</td>\n"
-                                    + "				<td >\n");
-                                    if(status.equals("purchased") && refundable.equals("yes")){
-                                        out.println("					<form method='POST' action='" + request.getRequestURI() + "' class=\"refundButton\" style=\"float:right\">\n"
-                                        + "                                             <input name='purchase_id' type='hidden' value='"+purchase_id+"' />"
-                                                + "                                     <input name='action' type='hidden' value='refund' />"
-                                        + "						<input type='submit' value=\"Request Refund\">\n"
-                                        + "					</form>\n");
-                                    }
-                                    else if(status.equals("refund requested")){
-                                        out.println("					<form method='POST' action='" + request.getRequestURI() + "' class=\"refundButton\" style=\"float:right\">\n"
-                                        + "                                             <input name='purchase_id' type='hidden' value='"+purchase_id+"' />"
-                                                + "                                     <input name='action' type='hidden' value='cancel' />"
-                                        + "						<input type='submit' value=\"Cancel Request\">\n"
-                                        + "					</form>\n");
-                                    }
+                    if (action.equals("refund")) {
+                        pstmt.setString(1, "refund requested");
+                    } else if (action.equals("cancel")) {
+                        pstmt.setString(1, "purchased");
+                    }
+                    Boolean result = pstmt.execute();
 
-                                    out.println("				</td>\n"
-                                    + "		  </tr>\n");
-                                    
-                                    
-                            }
-                            if (rs2 != null) {
-                                rs2.close();
-                            }
-                        }
-                        if (rs != null) {
-                            rs.close();
-                        }
-                        
-                    //user detail
-                    out.print("		</table>\n\n"
-                    + "		<!--user detail-->\n"
-                    + "\n"
-                    + "		<h2>Account Detail</h2>\n"
-                    + "\n"
-                    + "<fieldset>\n"
-                    + "\n");
-                    
-                    String currentuser = request.getRemoteUser();
-                    PreparedStatement stmt3 = con.prepareStatement("SELECT * FROM [tomcat_users] WHERE user_name = ?");
-                    stmt3.setString(1, currentuser);
-                    ResultSet rs3 = stmt3.executeQuery();
-                    
-                    PreparedStatement stmt4 = con.prepareStatement("SELECT * FROM [tomcat_users_loyalty] WHERE user_name = ?");
-                    stmt4.setString(1, currentuser);
-                    ResultSet rs4 = stmt4.executeQuery();
-                    
-                    PreparedStatement stmt5 = con.prepareStatement("SELECT * FROM [tomcat_users_roles] WHERE user_name = ?");
-                    stmt5.setString(1, currentuser);
-                    ResultSet rs5 = stmt5.executeQuery();
+                    if (pstmt != null) {
+                        pstmt.close();
+                    }
+                }
 
-                    while (rs3 != null && rs3.next() != false && rs4 != null && rs4.next() != false && rs5 != null && rs5.next() != false) {
-                        
-                        String username = rs3.getString("user_name");
-                        String password = rs3.getString("password");
+                PreparedStatement stmt = con.prepareStatement("SELECT * FROM [purchased] WHERE user_name = ? AND (status = 'purchased' OR status = 'refund requested' OR status = 'refund accepted' OR status = 'refund declined')");
+                stmt.setString(1, currentUser);
 
-                        int loyalty = rs4.getInt("loyalty");
-                        String role = rs5.getString("role_name");
+                ResultSet rs = stmt.executeQuery();
+                while (rs != null && rs.next() != false) {
+                    String bookname = rs.getString("bookname");
+                    int quantity = rs.getInt("quantity");
+                    String status = rs.getString("status");
+                    purchase_id = rs.getInt("ID_purchased");
+                    String refundable = rs.getString("refundable");
 
+                    out.println("<tr>\n"
+                            + "		    <td >" + bookname + "</td>\n");
 
-                        out.print("		<h3>User Info</h3>\n"
-                        + "		<p>Username: "+username+"</p>\n"
-                        + "		<p>Password: "+password+"</p>\n"
-                        + "		<p>Role: "+role+"</p>\n"
-                        + "		<p>Loyalty Points: "+loyalty+"</p>\n"
-                        + "		<br>\n"
+                    out.println("				<td >" + quantity + "</td>\n"
+                            + "				<td >" + status + "</td>\n"
+                            + "				<td >\n");
+                    if (status.equals("purchased") && refundable.equals("yes")) {
+                        out.println("					<form method='POST' action='" + request.getRequestURI() + "' class=\"refundButton\" style=\"float:right\">\n"
+                                + "                                             <input name='purchase_id' type='hidden' value='" + purchase_id + "' />"
+                                + "                                     <input name='action' type='hidden' value='refund' />"
+                                + "						<input type='submit' value=\"Request Refund\">\n"
+                                + "					</form>\n");
+                    } else if (status.equals("refund requested")) {
+                        out.println("					<form method='POST' action='" + request.getRequestURI() + "' class=\"refundButton\" style=\"float:right\">\n"
+                                + "                                             <input name='purchase_id' type='hidden' value='" + purchase_id + "' />"
+                                + "                                     <input name='action' type='hidden' value='cancel' />"
+                                + "						<input type='submit' value=\"Cancel Request\">\n"
+                                + "					</form>\n");
+                    }
+
+                    out.println("				</td>\n"
+                            + "		  </tr>\n");
+
+                }
+
+                //user detail
+                out.print("		</table>\n\n"
+                        + "		<!--user detail-->\n"
                         + "\n"
+                        + "		<h2>Account Detail</h2>\n"
+                        + "\n"
+                        + "<fieldset>\n"
+                        + "\n");
 
+                String currentuser = request.getRemoteUser();
+                PreparedStatement stmt3 = con.prepareStatement("SELECT * FROM [tomcat_users] WHERE user_name = ?");
+                stmt3.setString(1, currentuser);
+                ResultSet rs3 = stmt3.executeQuery();
 
-                        /*+ "		<h3>Credit Card Info</h3>\n"
+                PreparedStatement stmt4 = con.prepareStatement("SELECT * FROM [tomcat_users_loyalty] WHERE user_name = ?");
+                stmt4.setString(1, currentuser);
+                ResultSet rs4 = stmt4.executeQuery();
+
+                PreparedStatement stmt5 = con.prepareStatement("SELECT * FROM [tomcat_users_roles] WHERE user_name = ?");
+                stmt5.setString(1, currentuser);
+                ResultSet rs5 = stmt5.executeQuery();
+
+                while (rs3 != null && rs3.next() != false && rs4 != null && rs4.next() != false && rs5 != null && rs5.next() != false) {
+
+                    String username = rs3.getString("user_name");
+                    String password = rs3.getString("password");
+
+                    int loyalty = rs4.getInt("loyalty");
+                    String role = rs5.getString("role_name");
+
+                    out.print("		<h3>User Info</h3>\n"
+                            + "		<p>Username: " + username + "</p>\n"
+                            + "		<p>Password: " + password + "</p>\n"
+                            + "		<p>Role: " + role + "</p>\n"
+                            + "		<p>Loyalty Points: " + loyalty + "</p>\n"
+                            + "		<br>\n"
+                            + "\n"
+                            /*+ "		<h3>Credit Card Info</h3>\n"
                         + "		<p>Card Name: </p>\n"
                         + "		<p>Card Number: </p>\n"
                         + "		<p>Expiry Date: </p>\n"
@@ -252,41 +220,39 @@ public class viewdetail extends HttpServlet {
                         + "		<p>Post Code (if any): </p>\n"
                         + "		<br>\n"
                         + "\n"*/
+                            + "		<a href=\"/Bookstore/editAccount.do\" class=\"button\">Edit Account</a>\n"
+                            + "</fieldset>\n");
+                }
+                if (rs3 != null) {
+                    rs3.close();
+                }
+                if (rs4 != null) {
+                    rs4.close();
+                }
+                if (rs5 != null) {
+                    rs5.close();
+                }
 
+                //footer
+                out.println("       <br>"
+                        + "         <footer>"
+                        + "             <iframe id='bookstorefooter' name='bookstorefooter' src='/Bookstore/iframes/bookstorefooter.jsp' width='100%' height='100px'>"
+                        + "                 [Your user agent does not support frames or is currently configured not to display frames.]"
+                        + "             </iframe>"
+                        + "             <iframe id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
+                        + "                 [Your user agent does not support frames or is currently configured not to display frames.]"
+                        + "             </iframe>"
+                        + "         </footer>"
+                        + "    </body>"
+                        + "</html>");
 
-                        + "		<a href=\"/Bookstore/editAccount.do\" class=\"button\">Edit Account</a>\n"
-                        + "</fieldset>\n");
-                    }
-                    if (rs3 != null) {
-                        rs3.close();
-                    }
-                    if (rs4 != null) {
-                        rs4.close();
-                    }
-                    if (rs5 != null) {
-                        rs5.close();
-                    }
-                    
-                    //footer
-                    out.println("       <br>"
-                            + "         <footer>"
-                            + "             <iframe id='bookstorefooter' name='bookstorefooter' src='/Bookstore/iframes/bookstorefooter.jsp' width='100%' height='100px'>"
-                            + "                 [Your user agent does not support frames or is currently configured not to display frames.]"
-                            + "             </iframe>"
-                            + "             <iframe id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
-                            + "                 [Your user agent does not support frames or is currently configured not to display frames.]"
-                            + "             </iframe>"
-                            + "         </footer>"
-                            + "    </body>"
-                            + "</html>");
-                           
-                    if (stmt != null) {
-                        stmt.close();
-                    }
-                    if (con != null) {
-                        con.close();
-                    }
-            }catch (java.lang.ClassNotFoundException | SQLException e) {
+                if (stmt != null) {
+                    stmt.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (java.lang.ClassNotFoundException | SQLException e) {
                 out.println("<div style='color: red'>" + e.toString() + "</div>");
             } finally {
                 out.close();

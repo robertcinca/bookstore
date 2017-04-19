@@ -129,7 +129,8 @@ public class viewcart extends HttpServlet {
                             int totalPrice = price * quantity;
                             totalAmount += totalPrice;
                             totalLoyalty += loyalty;
-
+                            
+//                            if (author != null) {
                             out.println("</tr>"
                                     + "<td>" + bookname + "</td>"
                                     + "<td>" + author + "</td>"
@@ -138,6 +139,7 @@ public class viewcart extends HttpServlet {
                                     + "<td>" + price + "</td>"
                                     + "<td>" + totalPrice + "</td>"
                                     + "</tr>");
+//                            }
                         }
                     }
 
