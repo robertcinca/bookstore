@@ -29,26 +29,12 @@ public class logout extends HttpServlet {
             throws ServletException, IOException, ClassNotFoundException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         // Get current user
-//        String currentUser = request.getRemoteUser();
-//                    // Delete all entries from cart
-//            // Register the JDBC driver, open a connection
-//            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-//            Connection con;
-//            con = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad024_db", "aiad024", "aiad024");
-//
-//            // Delete a preparedstatement to set the SQL statement	  
-//            PreparedStatement pstmt = con.prepareStatement("DELETE FROM purchased WHERE user_name = ? AND status = ?");
-//            pstmt.setString(1, currentUser);
-//            pstmt.setString(2, "pending");
-//
-//            // execute the SQL statement
-//            int rows = pstmt.executeUpdate();
-//
-//            //close connection
-//            con.close();
+        String currentUser = request.getRemoteUser();
         // Invalidate the session 
-        HttpSession session = request.getSession(true);
-        session.invalidate();
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
         try (PrintWriter out = response.getWriter()) {
             //Begin Header
             out.println(" <!DOCTYPE html>"
@@ -88,12 +74,25 @@ public class logout extends HttpServlet {
                     + "            </div>"
                     + "        </div>");
             // Begin Page
-            out.println(session);
-//            out.println(currentUser);
             out.println("<h1>Logout Page</h1>");
             out.println("<p>You have successfully logged out!</p>");
             out.println("<p><a class='button' href='browse.do'>Return to Login Page</a></p>");
 
+            // Delete all entries from cart
+            // Register the JDBC driver, open a connection
+            String url = "jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad034_db";
+            String dbLoginId = "aiad034";
+            String dbPwd = "aiad034";
+
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            // Delete a preparedstatement to set the SQL statement
+            try (Connection con = DriverManager.getConnection(url, dbLoginId, dbPwd)) {
+                PreparedStatement pstmt = con.prepareStatement("DELETE FROM purchased WHERE user_name = ? AND status = ?");
+                pstmt.setString(1, currentUser);
+                pstmt.setString(2, "pending");
+                // execute the SQL statement
+                int rows = pstmt.executeUpdate();
+            }
 
             //footer
             out.println("       <br>"
