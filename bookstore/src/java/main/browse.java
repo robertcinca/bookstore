@@ -153,7 +153,7 @@ public class browse extends HttpServlet {
                                 + "					<form method='POST' class=\"addToCart\">\n"
                                 + "                                             <input name='bookid' type='hidden' value='" + id + "' />"
                                 + "						<label for=\"Quantity\">Quantity:</label>\n"
-                                + "						<input type=\"number\" name=\"quantity\" value=\"1\" size=\"5\">\n"
+                                + "						<input type=\"number\" name=\"quantity\" value=\"1\" size=\"5\" min=\"1\" >\n"
                                 + "						<input name='action' type=\"submit\" value=\"Add to Cart\">\n"
                                 + "					</form>\n"
                                 + "				</td>\n"
@@ -341,7 +341,6 @@ public class browse extends HttpServlet {
 
                 if (bookid != 0 && quantity != 0) {
                     // make connection to db and retrieve data from the table
-                    /* Uncomment when connecting to DB!! */
                     String url = "jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad034_db";
                     String dbLoginId = "aiad034";
                     String dbPwd = "aiad034";
@@ -361,25 +360,60 @@ public class browse extends HttpServlet {
                         int point = rs.getInt("loyalty");
 
                         out.println("<fieldset>");
-                        out.println("<h3>Book added to cart</h3>");
+
+                        //check if book is already in cart
+                        int exists = 0;
+                        Statement stmt2 = con.createStatement();
+                        ResultSet rs2 = stmt2.executeQuery("SELECT * FROM purchased WHERE user_name = '" + request.getRemoteUser() +"' AND status = 'pending' AND bookname = '" + name + "'");
+                        while (rs2 != null && rs2.next() != false) {
+                            exists = 1;
+                        }
+
+                        // insert new book
+                        if (exists == 0) {
+                            out.println("<h3>Book added to cart</h3>");
+                            //add to cart 
+                            PreparedStatement pstmt = con.prepareStatement("INSERT INTO [purchased] ([user_name], [bookname], [quantity], [status], [refundable]) VALUES (?, ?, ?, ?, ?)");
+                            pstmt.setString(1, request.getRemoteUser());
+                            pstmt.setString(2, name);
+                            pstmt.setInt(3, quantity);
+                            pstmt.setString(4, "pending");
+                            pstmt.setString(5, "yes");
+
+                            Boolean result = pstmt.execute();
+
+                            if (pstmt != null) {
+                                pstmt.close();
+                            }
+                        } //update quantity
+                        else {
+                            out.println("<h3>The book quantity has been updated.</h3>");
+                            
+                            PreparedStatement pstmt2 = con.prepareStatement("UPDATE purchased SET quantity = ? WHERE user_name = ? AND status = ? AND bookname = ?");
+                            pstmt2.setInt(1, quantity);
+                            pstmt2.setString(2, request.getRemoteUser());
+                            pstmt2.setString(3, "pending");
+                            pstmt2.setString(4, name);
+                            // execute the SQL statement
+                            int rows = pstmt2.executeUpdate();
+                            
+                            if (pstmt2 != null) {
+                                pstmt2.close();
+                            }
+                        }
+
                         out.println("<p>Book Name : " + name + "</p>");
                         out.println("<p>Author : " + author + "</p>");
                         out.println("<p>Price : " + price + "</p>");
+                        out.println("<p>Quantity : " + quantity + "</p>");
                         out.println("<p>Loyalty : " + point + "</p>");
                         out.println("</fieldset>");
 
-                        //add to cart 
-                        PreparedStatement pstmt = con.prepareStatement("INSERT INTO [purchased] ([user_name], [bookname], [quantity], [status], [refundable]) VALUES (?, ?, ?, ?, ?)");
-                        pstmt.setString(1, request.getRemoteUser());
-                        pstmt.setString(2, name);
-                        pstmt.setInt(3, quantity);
-                        pstmt.setString(4, "pending");
-                        pstmt.setString(5, "yes");
-
-                        Boolean result = pstmt.execute();
-
-                        if (pstmt != null) {
-                            pstmt.close();
+                        if (rs2 != null) {
+                            rs2.close();
+                        }
+                        if (stmt2 != null) {
+                            stmt2.close();
                         }
                     }
 

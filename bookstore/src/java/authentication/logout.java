@@ -90,7 +90,7 @@ public class logout extends HttpServlet {
                 pstmt.setString(1, currentUser);
                 pstmt.setString(2, "pending");
                 // execute the SQL statement
-//                int rows = pstmt.executeUpdate(); //uncomment!!!!!!!!!!!!
+                int rows = pstmt.executeUpdate();
             }
 
             //footer
