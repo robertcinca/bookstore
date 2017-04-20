@@ -14,7 +14,7 @@ input[type=text], input[type=password] {
 
 /* Set a style for all buttons */
 button {
-    background-color: #4CAF50;
+    background-color: #1A497D;
     color: white;
     padding: 14px 20px;
     margin: 8px 0;
@@ -34,7 +34,7 @@ button:hover {
 }
 
 .cancelbtn {
-    background-color: #f44336;
+    background-color: #B82525;;
 }
 
 .signup {
