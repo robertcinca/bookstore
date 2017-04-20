@@ -113,26 +113,41 @@ public class refund extends HttpServlet {
                 if (request.getParameter("purchase_id") != null && !request.getParameter("purchase_id").equalsIgnoreCase("")) {
                     purchase_id = Integer.parseInt(request.getParameter("purchase_id"));
                 }
-                
+
                 int purchase_quantity = 0;
                 if (request.getParameter("purchase_quantity") != null && !request.getParameter("purchase_quantity").equalsIgnoreCase("")) {
                     purchase_quantity = Integer.parseInt(request.getParameter("purchase_quantity"));
                 }
-                
+
                 String purchase_bookname = request.getParameter("purchase_bookname");
+                String purchase_username = request.getParameter("purchase_username");
 
                 if (action != null && purchase_id != 0) {
                     PreparedStatement pstmt = con.prepareStatement("UPDATE [purchased] SET status = ? WHERE ID_purchased = " + purchase_id);
 
                     if (action.equalsIgnoreCase("accept")) {
                         pstmt.setString(1, "refund accepted");
-                        
+
                         // Update quantity if changed
                         PreparedStatement pstmt2 = con.prepareStatement("UPDATE book SET stock = stock + ? WHERE bookname = ?");
                         pstmt2.setInt(1, purchase_quantity);
                         pstmt2.setString(2, purchase_bookname);
                         // execute the SQL statement
                         int rows = pstmt2.executeUpdate();
+
+                        //refund list
+                        PreparedStatement stmt2 = con.prepareStatement("SELECT * FROM [book] WHERE bookname = '" + purchase_bookname + "'");
+                        int purchase_loyalty = 0;
+                        ResultSet rs2 = stmt2.executeQuery();
+                        while (rs2 != null && rs2.next() != false) {
+                            purchase_loyalty = rs2.getInt("loyalty");
+                        }
+                        // Update user loyalty points if changed
+                        PreparedStatement pstmt3 = con.prepareStatement("UPDATE tomcat_users_loyalty SET loyalty = loyalty - ? WHERE user_name = ?");
+                        pstmt3.setInt(1, purchase_loyalty);
+                        pstmt3.setString(2, purchase_username);
+                        // execute the SQL statement
+                        int rows2 = pstmt3.executeUpdate();
                     } else if (action.equalsIgnoreCase("decline")) {
                         pstmt.setString(1, "refund declined");
                     }
@@ -154,24 +169,23 @@ public class refund extends HttpServlet {
                     purchase_id = rs.getInt("ID_purchased");
                     String refundable = rs.getString("refundable");
 
-                    
+                    out.println("		  </tr>\n"
+                            + "		  <tr>\n"
+                            + "		    <td >" + username + "</td>\n"
+                            + "		    <td >" + bookname + "</td>\n"
+                            + "				<td >" + quantity + "</td>\n"
+                            + "				<td >\n"
+                            + "					<form class=\"refundButton\" style=\"float:right\">\n"
+                            + "                                             <input name='purchase_id' type='hidden' value='" + purchase_id + "' />"
+                            + "                                             <input name='purchase_quantity' type='hidden' value='" + quantity + "' />"
+                            + "                                             <input name='purchase_bookname' type='hidden' value='" + bookname + "' />"
+                            + "                                             <input name='purchase_username' type='hidden' value='" + username + "' />"
+                            + "						<input name='action' type=\"submit\" value=\"Accept\">\n"
+                            + "						<input name='action' type=\"submit\" value=\"Decline\">\n"
+                            + "					</form>\n"
+                            + "				</td>\n"
+                            + "		  </tr>\n");
 
-                        out.println("		  </tr>\n"
-                                + "		  <tr>\n"
-                                + "		    <td >" + username + "</td>\n"
-                                + "		    <td >" + bookname + "</td>\n"
-                                + "				<td >" + quantity + "</td>\n"
-                                + "				<td >\n"
-                                + "					<form class=\"refundButton\" style=\"float:right\">\n"
-                                + "                                             <input name='purchase_id' type='hidden' value='" + purchase_id + "' />"
-                                + "                                             <input name='purchase_quantity' type='hidden' value='" + quantity + "' />"
-                                + "                                             <input name='purchase_bookname' type='hidden' value='" + bookname + "' />"
-                                + "						<input name='action' type=\"submit\" value=\"Accept\">\n"
-                                + "						<input name='action' type=\"submit\" value=\"Decline\">\n"
-                                + "					</form>\n"
-                                + "				</td>\n"
-                                + "		  </tr>\n");
-                    
                 }
 
                 out.println("		</table>\n");
