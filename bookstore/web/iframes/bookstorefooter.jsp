@@ -18,7 +18,6 @@
         <!-- CSS Pages -->
         <link href="/Bookstore/CSS/theme.css" rel="stylesheet">
         <link href="/Bookstore/CSS/Bookstore.css" rel="stylesheet">
-        <link href="/Bookstore/CSS/footer.css" rel="stylesheet">
 
         <!-- Open Links Outside iFrame -->
         <base target="_parent">
@@ -35,7 +34,7 @@
                 js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8";
                 fjs.parentNode.insertBefore(js, fjs);
             }(document, 'script', 'facebook-jssdk'));</script>
-        <div class="container">
+        <div class="bookstoreContainer">
             <div class="column-left">
                 <a href="https://www.facebook.com/Amazon/" style="float:left;margin-right: 10px;" target="_blank"><img src="http://www.flamingopark.ro/wp-content/uploads/2016/07/facebook30.png" height="35"width="35"></a> 
                 <a href="https://www.youtube.com/user/amazon" style="float:left;margin-right: 10px;" target="_blank"><img src="http://www.flamingopark.ro/wp-content/uploads/2016/07/youtube30.png" height="35"width="35"> </a> 
