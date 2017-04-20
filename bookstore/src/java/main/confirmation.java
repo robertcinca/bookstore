@@ -68,9 +68,9 @@ public class confirmation extends HttpServlet {
                     + "            <div class='dropdown-content'>"
                     + "                <ul class='nav'>");
             if (request.getSession(true) != null) {
-                out.println("              <li><a href='/Bookstore/logout.do'>Logout</a></li>\n");
+                out.println("              <li><a href='/Bookstore/logout.do'>Logout</a></li>");
             } else {
-                out.println("              <li><a href='/Bookstore/browse.do'>Login</a></li>\n");
+                out.println("              <li><a href='/Bookstore/browse.do'>Login</a></li>");
             }
             out.println("                  <li><a href='/Bookstore/browse.do'>Browse</a></li>"
                     + "                    <li><a href='/Bookstore/viewcart.do'>View Cart</a></li>");
@@ -81,7 +81,7 @@ public class confirmation extends HttpServlet {
                     + "            </div>"
                     + "        </div>");
             // Begin Page
-            out.println("       <h1>Payment Confirmation Page</h1>\n"
+            out.println("       <h1>Payment Confirmation Page</h1>"
                     + "		<h1>Success! Your payment has been processed.</h1>");
 
             String confirmationValue = request.getParameter("paidPoints");
@@ -214,12 +214,12 @@ public class confirmation extends HttpServlet {
             out.println("</table>"
                     + "<h3>Please expect us to deliver your books in the next few days.</h3>"
                     + "<h3>Please select one of the following options:</h3>");
-            out.println("		<a href=\"/Bookstore/browse.do\" class=\"button\">Continue Browsing Bookstore...</a>\n");
+            out.println("		<a href='/Bookstore/browse.do' class='button'>Continue Browsing Bookstore...</a>");
             if (!request.isUserInRole("guest")) {
-                out.println("         <a href=\"/Bookstore/viewdetail.do\" class=\"button\">View your member details</a>\n");
+                out.println("         <a href='/Bookstore/viewdetail.do' class='button'>View your member details</a>");
             }
-            out.println("		<a href=\"/Bookstore/logout.do\" class=\"button\">Sign Out</a>\n"
-                    + "		<br>\n");
+            out.println("		<a href='/Bookstore/logout.do' class='button'>Sign Out</a>"
+                    + "		<br>");
             //footer
             out.println("       <br>"
                     + "         <footer>"

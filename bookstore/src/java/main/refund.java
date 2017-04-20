@@ -65,9 +65,9 @@ public class refund extends HttpServlet {
                         + "            <div class='dropdown-content'>"
                         + "                <ul class='nav'>");
                 if (request.getSession(true) != null) {
-                    out.println("              <li><a href='/Bookstore/logout.do'>Logout</a></li>\n");
+                    out.println("              <li><a href='/Bookstore/logout.do'>Logout</a></li>");
                 } else {
-                    out.println("              <li><a href='/Bookstore/browse.do'>Login</a></li>\n");
+                    out.println("              <li><a href='/Bookstore/browse.do'>Login</a></li>");
                 }
                 out.println("                  <li><a href='/Bookstore/browse.do'>Browse</a></li>"
                         + "                    <li><a href='/Bookstore/viewcart.do'>View Cart</a></li>"
@@ -76,26 +76,22 @@ public class refund extends HttpServlet {
                         + "            </div>"
                         + "        </div>");
                 // Begin Page
-                out.println("       <h1>Refund Requests</h1>\n"
-                        + "\n"
-                        + "		<a href=\"/Bookstore/browse.do\" class=\"button\">Back to browse</a>\n"
-                        + "		<br>\n"
-                        + "\n"
-                        + "		<!--Refund Requests-->\n"
-                        + "\n"
-                        + "		<table class=\"refundRequest\">\n"
-                        + "			<col width=\"20%\">\n"
-                        + "  		<col width=\"40%\">\n"
-                        + "			<col width=\"15%\">\n"
-                        + "  		<col width=\"10%\">\n"
-                        + "			<col width=\"15%\">\n"
-                        + "\n"
-                        + "		  <tr>\n"
-                        + "				<th>User</th>\n"
-                        + "		    <th>Book Title</th>\n"
-                        + "				<th>Quantity</th>\n"
-                        + "				<th></th>\n"
-                        + "\n");
+                out.println("       <h1>Refund Requests</h1>"
+                        + "		<a href='/Bookstore/browse.do' class='button'>Back to browse</a>"
+                        + "		<br>"
+                        + "		<!--Refund Requests-->"
+                        + "		<table class='refundRequest'>"
+                        + "			<col width='20%'>"
+                        + "  		<col width='40%'>"
+                        + "			<col width='15%'>"
+                        + "  		<col width='10%'>"
+                        + "			<col width='15%'>"
+                        + "		  <tr>"
+                        + "				<th>User</th>"
+                        + "		    <th>Book Title</th>"
+                        + "				<th>Quantity</th>"
+                        + "				<th></th>"
+                );
 
                 // make connection to db and retrieve data from the table
                 String url = "jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad034_db";
@@ -169,26 +165,26 @@ public class refund extends HttpServlet {
                     purchase_id = rs.getInt("ID_purchased");
                     String refundable = rs.getString("refundable");
 
-                    out.println("		  </tr>\n"
-                            + "		  <tr>\n"
-                            + "		    <td >" + username + "</td>\n"
-                            + "		    <td >" + bookname + "</td>\n"
-                            + "				<td >" + quantity + "</td>\n"
-                            + "				<td >\n"
-                            + "					<form class=\"refundButton\" style=\"float:right\">\n"
+                    out.println("		  </tr>"
+                            + "		  <tr>"
+                            + "		    <td >" + username + "</td>"
+                            + "		    <td >" + bookname + "</td>"
+                            + "				<td >" + quantity + "</td>"
+                            + "				<td >"
+                            + "					<form class='refundButton' style='float:right'>"
                             + "                                             <input name='purchase_id' type='hidden' value='" + purchase_id + "' />"
                             + "                                             <input name='purchase_quantity' type='hidden' value='" + quantity + "' />"
                             + "                                             <input name='purchase_bookname' type='hidden' value='" + bookname + "' />"
                             + "                                             <input name='purchase_username' type='hidden' value='" + username + "' />"
-                            + "						<input name='action' type=\"submit\" value=\"Accept\">\n"
-                            + "						<input name='action' type=\"submit\" value=\"Decline\">\n"
-                            + "					</form>\n"
-                            + "				</td>\n"
-                            + "		  </tr>\n");
+                            + "						<input name='action' type='submit' value='Accept'>"
+                            + "						<input name='action' type='submit' value='Decline'>"
+                            + "					</form>"
+                            + "				</td>"
+                            + "		  </tr>");
 
                 }
 
-                out.println("		</table>\n");
+                out.println("		</table>");
 
                 //footer
                 out.println("       <br>"

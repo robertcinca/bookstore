@@ -36,7 +36,6 @@ public class viewdetail extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-
             //Begin Header
             try {
                 out.println(" <!DOCTYPE html>"
@@ -67,9 +66,9 @@ public class viewdetail extends HttpServlet {
                         + "            <div class='dropdown-content'>"
                         + "                <ul class='nav'>");
                 if (request.getSession(true) != null) {
-                    out.println("              <li><a href='/Bookstore/logout.do'>Logout</a></li>\n");
+                    out.println("              <li><a href='/Bookstore/logout.do'>Logout</a></li>");
                 } else {
-                    out.println("              <li><a href='/Bookstore/browse.do'>Login</a></li>\n");
+                    out.println("              <li><a href='/Bookstore/browse.do'>Login</a></li>");
                 }
                 out.println("                  <li><a href='/Bookstore/browse.do'>Browse</a></li>"
                         + "                    <li><a href='/Bookstore/viewcart.do'>View Cart</a></li>"
@@ -89,29 +88,27 @@ public class viewdetail extends HttpServlet {
 
                 Connection con = DriverManager.getConnection(url, dbLoginId, dbPwd);
 
-                out.println("       <h1>Account Detail</h1>\n"
-                        + "		<a href=\"/Bookstore/browse.do\" class=\"button\">Back to Browse</a>\n");
+                out.println("           <h1>Account Detail</h1>"
+                        + "		<a href='/Bookstore/browse.do' class='button'>Back to Browse</a>");
                 if (!request.isUserInRole("admin")) {
-                    out.println("              <a href=\"/Bookstore/viewcart.do\" class=\"button\">View Cart</a>");
+                    out.println("       <a href='/Bookstore/viewcart.do' class='button'>View Cart</a>");
 
-                    out.println("		<br>\n"
-                            + "\n"
-                            + "		<!--Purchased book-->\n"
-                            + "\n"
-                            + "		<h2>Purchased book</h2>\n"
-                            + "		<table class=\"purchasedBook\">\n"
-                            + "			<col width=\"40%\">\n"
-                            + "  		<col width=\"10%\">\n"
-                            + "			<col width=\"10%\">\n"
-                            + "  		<col width=\"20%\">\n"
-                            + "			<col width=\"20%\">\n"
-                            + "\n"
-                            + "		  <tr>\n"
-                            + "				<th>Book Title</th>\n"
-                            + "		    <th>Quantity</th>\n"
-                            + "				<th>Status</th>\n"
-                            + "				<th></th>\n</tr>"
-                            + "\n");
+                    out.println("	<br>"
+                            + "		<!--Purchased book-->"
+                            + "		<h2>Purchased book</h2>"
+                            + "		<table class='purchasedBook'>"
+                            + "			<col width='40%'>"
+                            + "  		<col width='10%'>"
+                            + "			<col width='10%'>"
+                            + "  		<col width='20%'>"
+                            + "			<col width='20%'>"
+                            + "		  <tr>"
+                            + "             <th>Book Title</th>"
+                            + "		    <th>Quantity</th>"
+                            + "             <th>Status</th>"
+                            + "             <th></th>"
+                            + "           </tr>"
+                    );
 
                     //purchased book list
                     String action = request.getParameter("action");
@@ -129,6 +126,7 @@ public class viewdetail extends HttpServlet {
                         } else if (action.equals("cancel")) {
                             pstmt.setString(1, "purchased");
                         }
+
                         Boolean result = pstmt.execute();
 
                         if (pstmt != null) {
@@ -147,28 +145,27 @@ public class viewdetail extends HttpServlet {
                         purchase_id = rs.getInt("ID_purchased");
                         String refundable = rs.getString("refundable");
 
-                        out.println("<tr>\n"
-                                + "		    <td >" + bookname + "</td>\n");
+                        out.println("<tr>"
+                                + "	<td >" + bookname + "</td>");
 
-                        out.println("				<td >" + quantity + "</td>\n"
-                                + "				<td >" + status + "</td>\n"
-                                + "				<td >\n");
+                        out.println("	<td >" + quantity + "</td>"
+                                + "	<td >" + status + "</td>"
+                                + "	<td >");
                         if (status.equals("purchased") && refundable.equals("yes")) {
-                            out.println("					<form method='POST' action='" + request.getRequestURI() + "' class=\"refundButton\" style=\"float:right\">\n"
-                                    + "                                             <input name='purchase_id' type='hidden' value='" + purchase_id + "' />"
-                                    + "                                     <input name='action' type='hidden' value='refund' />"
-                                    + "						<input type='submit' value=\"Request Refund\">\n"
-                                    + "					</form>\n");
+                            out.println("<form method='POST' action='" + request.getRequestURI() + "' class='refundButton' style='float:right'>"
+                                    + "     <input name='purchase_id' type='hidden' value='" + purchase_id + "' />"
+                                    + "     <input name='action' type='hidden' value='refund' />"
+                                    + "     <input type='submit' value='Request Refund'>"
+                                    + "  </form>");
                         } else if (status.equals("refund requested")) {
-                            out.println("					<form method='POST' action='" + request.getRequestURI() + "' class=\"refundButton\" style=\"float:right\">\n"
-                                    + "                                             <input name='purchase_id' type='hidden' value='" + purchase_id + "' />"
-                                    + "                                     <input name='action' type='hidden' value='cancel' />"
-                                    + "						<input type='submit' value=\"Cancel Request\">\n"
-                                    + "					</form>\n");
+                            out.println("<form method='POST' action='" + request.getRequestURI() + "' class='refundButton' style='float:right'>"
+                                    + "     <input name='purchase_id' type='hidden' value='" + purchase_id + "' />"
+                                    + "     <input name='action' type='hidden' value='cancel' />"
+                                    + "     <input type='submit' value='Cancel Request'>"
+                                    + "	</form>");
                         }
-
-                        out.println("				</td>\n"
-                                + "		  </tr>\n");
+                        out.println("</td>"
+                                + "</tr>");
 
                     }
                     if (stmt != null) {
@@ -176,13 +173,11 @@ public class viewdetail extends HttpServlet {
                     }
                 }
                 //user detail
-                out.print("		</table>\n\n"
-                        + "		<!--user detail-->\n"
-                        + "\n"
-                        + "		<h2>Account Detail</h2>\n"
-                        + "\n"
-                        + "<fieldset>\n"
-                        + "\n");
+                out.print("		</table>\n"
+                        + "		<!--user detail-->"
+                        + "		<h2>Account Detail</h2>"
+                        + "             <fieldset>"
+                );
 
                 String currentuser = request.getRemoteUser();
                 PreparedStatement stmt3 = con.prepareStatement("SELECT * FROM [tomcat_users] WHERE user_name = ?");
@@ -205,27 +200,13 @@ public class viewdetail extends HttpServlet {
                     int loyalty = rs4.getInt("loyalty");
                     String role = rs5.getString("role_name");
 
-                    out.print("		<h3>User Info</h3>\n"
-                            + "		<p>Username: " + username + "</p>\n"
-                            + "		<p>Password: " + password + "</p>\n"
-                            + "		<p>Loyalty Points: " + loyalty + "</p>\n"
-                            + "		<br>\n"
-                            + "\n"
-                            /*+ "		<h3>Credit Card Info</h3>\n"
-                        + "		<p>Card Name: </p>\n"
-                        + "		<p>Card Number: </p>\n"
-                        + "		<p>Expiry Date: </p>\n"
-                        + "		<br>\n"
-                        + "\n"
-                        + "		<h3>Address</h3>\n"
-                        + "		<p>Address: </p>\n"
-                        + "		<p>City: </p>\n"
-                        + "		<p>Country: </p>\n"
-                        + "		<p>Post Code (if any): </p>\n"
-                        + "		<br>\n"
-                        + "\n"*/
-                            + "		<a href=\"/Bookstore/editAccount.do\" class=\"button\">Edit Account</a>\n"
-                            + "</fieldset>\n");
+                    out.print("		<h3>User Info</h3>"
+                            + "		<p>Username: " + username + "</p>"
+                            + "		<p>Password: " + password + "</p>"
+                            + "		<p>Loyalty Points: " + loyalty + "</p>"
+                            + "		<br>"
+                            + "		<a href='/Bookstore/editAccount.do' class='button'>Edit Account</a>"
+                            + "</fieldset>");
                 }
                 if (rs3 != null) {
                     rs3.close();

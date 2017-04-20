@@ -52,7 +52,7 @@ public class loginError extends HttpServlet {
                     + "            <div class='dropdown-content'>"
                     + "                <ul class='nav'>");
             if (request.getSession(true) != null) {
-                out.println("              <li><a href='/Bookstore/logout.do'>Logout</a></li>\n");
+                out.println("              <li><a href='/Bookstore/logout.do'>Logout</a></li>");
             } else {
                 out.println("              <li><a href='/Bookstore/browse.do'>Login</a></li>");
             }

@@ -69,9 +69,9 @@ public class viewcart extends HttpServlet {
                     + "            <div class='dropdown-content'>"
                     + "                <ul class='nav'>");
             if (request.getSession(true) != null) {
-                out.println("              <li><a href='/Bookstore/logout.do'>Logout</a></li>\n");
+                out.println("              <li><a href='/Bookstore/logout.do'>Logout</a></li>");
             } else {
-                out.println("              <li><a href='/Bookstore/browse.do'>Login</a></li>\n");
+                out.println("              <li><a href='/Bookstore/browse.do'>Login</a></li>");
             }
             out.println("                  <li><a href='/Bookstore/browse.do'>Browse</a></li>"
                     + "                    <li><a href='/Bookstore/viewcart.do'>View Cart</a></li>");
@@ -82,13 +82,12 @@ public class viewcart extends HttpServlet {
                     + "            </div>"
                     + "        </div>");
             // Begin Page
-            out.println("		<!-- View Cart Headings-->\n");
+            out.println("		<!-- View Cart Headings-->");
             String currentUser = request.getRemoteUser();
-            out.println("		<h1 style=\"text-align:left;float:left;\">Confirm Your Order, " + currentUser + "</h1>\n"
-                    + "		<hr style=\"clear:both;\"/>\n"
-                    + "		<h2>Your Shopping Cart</h2>\n"
-                    + "\n"
-                    + "		 <!-- Get Shopping Cart Information and Display It in a Table -->\n"
+            out.println("		<h1 style='text-align:left;float:left;'>Confirm Your Order, " + currentUser + "</h1>"
+                    + "		<hr style='clear:both;'/>"
+                    + "		<h2>Your Shopping Cart</h2>"
+                    + "		 <!-- Get Shopping Cart Information and Display It in a Table -->"
                     + "	<table>"
                     + "	<tr>"
                     + " <th> Remove? </th>"
@@ -119,7 +118,7 @@ public class viewcart extends HttpServlet {
                     int rows = pstmt.executeUpdate();
                 }
             }
-            
+
             // Update quantity if changed
             String updateQuantity = request.getParameter("bookquantity");
             String updateBook = request.getParameter("bookname2");
@@ -172,15 +171,15 @@ public class viewcart extends HttpServlet {
                                     + "<td>"
                                     + "     <form method='POST'>"
                                     + "     <input type='hidden' value='" + bookname + "' name='bookname2' id='bookname2'  />"
-                                    + "     <input type='number' name='bookquantity' id='bookquantity' value='"+quantity+"' min='1' max='"+quantityAvailable+"'/>"
-                                    + "     <input type='submit' value='Change Quantity'>" 
+                                    + "     <input type='number' name='bookquantity' id='bookquantity' value='" + quantity + "' min='1' max='" + quantityAvailable + "'/>"
+                                    + "     <input type='submit' value='Change Quantity'>"
                                     + "     </form>"
                                     + "</td>"
                                     + "<td>" + loyalty + "</td>"
                                     + "<td>" + price + "</td>"
                                     + "<td>" + totalPrice + "</td>"
                                     + "</tr>"
-                );
+                            );
                         }
                     }
 
@@ -203,13 +202,13 @@ public class viewcart extends HttpServlet {
                     + "  </tfoot>");
             out.println("</table>");
 
-            out.println("        <br>\n"
+            out.println("        <br>"
                     + "<form name='Form3' action='/Bookstore/payment.do' onsubmit='return checkSpend()' method='POST'>"
                     + "<input name='totalAmount' type='hidden' value=" + totalAmount + ">"
                     + "<input name='totalLoyalty' type='hidden' value=" + totalLoyalty + ">"
                     + "<button class='button' style='float:left;' name='proceedPayment' value='proceedPayment' type='submit'>Pay Now</button>"
                     + "</form>"
-                    + "		<a href=\"/Bookstore/browse.do\" class=\"button\">Browse Books</a>\n");
+                    + "		<a href='/Bookstore/browse.do' class='button'>Browse Books</a>");
             //footer
             out.println("       <br>"
                     + "         <footer>"

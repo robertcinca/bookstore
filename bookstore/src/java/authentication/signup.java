@@ -67,7 +67,7 @@ public class signup extends HttpServlet {
                     + "            <button class='dropbtn'>MENU</button>"
                     + "            <div class='dropdown-content'>"
                     + "                <ul class='nav'>"
-                    + "                     <li><a href='/Bookstore/browse.do'>Login</a></li>\n"
+                    + "                     <li><a href='/Bookstore/browse.do'>Login</a></li>"
                     + "                     <li><a href='/Bookstore/browse.do'>Browse</a></li>"
                     + "                     <li><a href='/Bookstore/viewcart.do'>View Cart</a></li>"
                     + "                     <li><a href='/Bookstore/viewdetail.do'>Account Details</a></li>"
@@ -135,7 +135,7 @@ public class signup extends HttpServlet {
                             ResultSet rs = stmt.executeQuery("SELECT @@IDENTITY AS [@@IDENTITY]");
                             if (rs != null && rs.next() != false) {
                                 out.println("<p>Username: " + user_name + "</p>");
-                                out.println("<a href=\"/Bookstore/browse.do\" class=\"button\">Click here to log in!</a>\n");
+                                out.println("<a href='/Bookstore/browse.do' class='button'>Click here to log in!</a>");
                                 rs.close();
                             }
                         }
@@ -144,32 +144,32 @@ public class signup extends HttpServlet {
                 } else {
                     con.close();
                     out.println("<h2>Unfortunately, that username already exists. Please try again with another username.</h2>");
-                    out.println("<a href=\"/Bookstore/signup\" class=\"button\">Click here to try again.</a>\n");
+                    out.println("<a href='/Bookstore/signup' class='button'>Click here to try again.</a>");
                 }
             } else {
-                out.println("<form id=\"Form2\" name=\"Form2\" class='modal-content animate' onsubmit=\"return validateSignUp()\" method=\"post\">\n"
-                        + "                <div class=\"imgcontainer\">\n"
-                        + "<span onClick=\"window.open('/Bookstore/browse.do','_self');\" class='close'>&times;</span>"
-                        + "                    <img src=\"/Bookstore/IMG/welcome.png\" alt=\"sign up\" class=\"avatar\">\n"
-                        + "                        </div>\n"
-                        + "                \n"
-                        + "                <div class=\"container\">\n"
-                        + "                    <label><b>Enter a Username:</b></label>\n"
-                        + "                    <input type=\"text\" placeholder=\"New Username\" name=\"uname\" required>\n"
-                        + "                        \n"
-                        + "                        <label><b>Enter a Password:</b></label>\n"
-                        + "                        <input type=\"password\" placeholder=\"New Password\" name=\"psw\" required>\n"
-                        + "                        <label><b>Re-enter password:</b></label>\n"
-                        + "                        <input type=\"password\" placeholder=\"New Password\" name=\"psw2\" required>\n"
-                        + "                            \n"
-                        + "                            <button style='width:100%; font-size:18px' name='signupbutton' value='signup' type=\"submit\">Sign Up</button>\n"
-                        + "                            </div>\n"
-                        + "                <div class=\"container\" style=\"background-color:#f1f1f1\">\n"
-                        + "<a href='/Bookstore/browse.do' class='cancelbtn' style='width:12%'>Cancel Signup</a>\n"
-                        + "                </div>\n"
-                        + "            </form>\n"
-                        + "        </div>\n"
-                        + "\n");
+                out.println("<form id='Form2' name='Form2' class='modal-content animate' onsubmit='return validateSignUp()' method='post'>"
+                        + "                <div class='imgcontainer'>"
+                        + "<span onClick='window.open('/Bookstore/browse.do','_self');' class='close'>&times;</span>"
+                        + "                    <img src='/Bookstore/IMG/welcome.png' alt='sign up' class='avatar'>"
+                        + "                        </div>"
+                        + "                "
+                        + "                <div class='container'>"
+                        + "                    <label><b>Enter a Username:</b></label>"
+                        + "                    <input type='text' placeholder='New Username' name='uname' required>"
+                        + "                        "
+                        + "                        <label><b>Enter a Password:</b></label>"
+                        + "                        <input type='password' placeholder='New Password' name='psw' required>"
+                        + "                        <label><b>Re-enter password:</b></label>"
+                        + "                        <input type='password' placeholder='New Password' name='psw2' required>"
+                        + "                            "
+                        + "                            <button style='width:100%; font-size:18px' name='signupbutton' value='signup' type='submit'>Sign Up</button>"
+                        + "                            </div>"
+                        + "                <div class='container' style='background-color:#f1f1f1'>"
+                        + "<a href='/Bookstore/browse.do' class='cancelbtn' style='width:12%'>Cancel Signup</a>"
+                        + "                </div>"
+                        + "            </form>"
+                        + "        </div>"
+                );
             }
             //footer
             out.println("       <br>"

@@ -65,9 +65,9 @@ public class addbooks extends HttpServlet {
                     + "            <div class='dropdown-content'>"
                     + "                <ul class='nav'>");
             if (request.getSession(true) != null) {
-                out.println("              <li><a href='/Bookstore/logout.do'>Logout</a></li>\n");
+                out.println("              <li><a href='/Bookstore/logout.do'>Logout</a></li>");
             } else {
-                out.println("              <li><a href='/Bookstore/browse.do'>Login</a></li>\n");
+                out.println("              <li><a href='/Bookstore/browse.do'>Login</a></li>");
             }
             out.println("                  <li><a href='/Bookstore/browse.do'>Browse</a></li>"
                     + "                    <li><a href='/Bookstore/viewcart.do'>View Cart</a></li>"
@@ -76,12 +76,10 @@ public class addbooks extends HttpServlet {
                     + "            </div>"
                     + "        </div>");
             // Begin Page
-            out.println("<h1>Page to browse books (Manager)</h1>\n"
-                    + "		<a href=\"/Bookstore/browse.do\" class=\"button\">Back to Browse</a>\n"
-                    + "\n"
-                    + "		<br>\n"
-                    + "\n"
-                    + "		<fieldset>\n");
+            out.println("<h1>Page to browse books (Manager)</h1>"
+                    + "		<a href='/Bookstore/browse.do' class='button'>Back to Browse</a>"
+                    + "		<br>"
+                    + "		<fieldset>");
 
             try {
                 //addbooks input field
@@ -97,7 +95,7 @@ public class addbooks extends HttpServlet {
                     point = Integer.parseInt(request.getParameter("point"));
                 }
                 if (request.getParameter("availableQuantity") != null && !request.getParameter("availableQuantity").equalsIgnoreCase("")) {
-                    availableQuantity = Integer.parseInt(request.getParameter("availableQuantity")); 
+                    availableQuantity = Integer.parseInt(request.getParameter("availableQuantity"));
                 }
 
                 if (title != null && !title.equalsIgnoreCase("")
@@ -130,29 +128,29 @@ public class addbooks extends HttpServlet {
                         out.println("<p>Loyalty points: " + point + "</p>");
                         out.println("<p>Available Quantity: " + availableQuantity + "</p>");
                     } else {
-                        out.println("<legend>ERROR: New record is failed to create.</legend>");
+                        out.println("<legend>ERROR: New record failed to create.</legend>");
                     }
 
                 } else {
                     out.println(
-                            "			<legend>Add New Books</legend>\n"
-                            + "			<h3>Fill in book detail</h3>\n"
-                            + "			<form method='POST' class=\"addBooks\">\n"
-                            + "				<label for=\"title\">Book Title:</label>\n"
-                            + "				<input type=\"text\" name=\"title\" >\n"
-                            + "				<label for=\"author\">Author:</label>\n"
-                            + "				<input type=\"text\" name=\"author\" >\n"
-                            + "				<label for=\"price\">Price:</label>\n"
-                            + "				<input type=\"number\" name=\"price\" >\n"
-                            + "				<label for=\"point\">Loyalty Points:</label>\n"
-                            + "				<input type=\"number\" name=\"point\" >\n"
-                            + "				<label for=\"point\">Quantity Available:</label>\n"
-                            + "				<input type=\"number\" name=\"availableQuantity\" >\n"
-                            + "				<input style=\"float:right;\" type=\"submit\" value=\"Add book\">\n"
-                            + "			</form>\n");
+                            "			<legend>Add New Books</legend>"
+                            + "			<h3>Fill in book detail</h3>"
+                            + "			<form method='POST' class='addBooks'>"
+                            + "				<label for='title'>Book Title:</label>"
+                            + "				<input type='text' name='title' >"
+                            + "				<label for='author'>Author:</label>"
+                            + "				<input type='text' name='author' >"
+                            + "				<label for='price'>Price:</label>"
+                            + "				<input type='number' name='price' >"
+                            + "				<label for='point'>Loyalty Points:</label>"
+                            + "				<input type='number' name='point' >"
+                            + "				<label for='point'>Quantity Available:</label>"
+                            + "				<input type='number' name='availableQuantity' >"
+                            + "				<input style='float:right;' type='submit' value='Add book'>"
+                            + "			</form>");
                 }
 
-                out.println("</fieldset>\n");
+                out.println("</fieldset>");
                 //footer
                 out.println("       <br>"
                         + "         <footer>"

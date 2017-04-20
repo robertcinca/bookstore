@@ -92,9 +92,9 @@ public class browse extends HttpServlet {
                     + "            <div class='dropdown-content'>"
                     + "                <ul class='nav'>");
             if (request.getSession(true) != null) {
-                out.println("              <li><a href='/Bookstore/logout.do'>Logout</a></li>\n");
+                out.println("              <li><a href='/Bookstore/logout.do'>Logout</a></li>");
             } else {
-                out.println("              <li><a href='/Bookstore/browse.do'>Login</a></li>\n");
+                out.println("              <li><a href='/Bookstore/browse.do'>Login</a></li>");
             }
             out.println("                  <li><a href='/Bookstore/browse.do'>Browse</a></li>"
                     + "                    <li><a href='/Bookstore/viewcart.do'>View Cart</a></li>");
@@ -104,24 +104,23 @@ public class browse extends HttpServlet {
             out.println("              </ul>"
                     + "            </div>"
                     + "        </div>"
-                    + "<h1>Welcome! You can browse our books here!</h1>\n");
+                    + "<h1>Welcome! You can browse our books here!</h1>");
             // Begin Page
             if (request.isUserInRole("sprole") || request.isUserInRole("guest")) {
                 //book list (customer)
-                out.println("		<a href=\"/Bookstore/viewcart.do\" class=\"button\">View Cart</a>\n");
+                out.println("		<a href='/Bookstore/viewcart.do' class='button'>View Cart</a>");
                 if (!request.isUserInRole("guest")) {
                     out.println("           <a href='/Bookstore/viewdetail.do' class='button'>View Account Details</a></li>");
                 }
-                out.println("		<br>\n"
-                        + "\n"
-                        + "		<!-- Book List  -->\n"
-                        + "		<table class=\"bookList\">\n"
-                        + "			<col width=\"20%\">\n"
-                        + "  		<col width=\"80%\">\n"
-                        + "		  <tr>\n"
-                        + "		    <th>Books</th>\n"
-                        + "		    <th>Detail</th>\n"
-                        + "\n");
+                out.println("		<br>"
+                        + "		<!-- Book List  -->"
+                        + "		<table class='bookList'>"
+                        + "			<col width='20%'>"
+                        + "  		<col width='80%'>"
+                        + "		  <tr>"
+                        + "		    <th>Books</th>"
+                        + "		    <th>Detail</th>"
+                );
                 try {
 
                     // make connection to db and retrieve data from the table
@@ -143,22 +142,22 @@ public class browse extends HttpServlet {
                         int point = rs.getInt("loyalty");
                         int quantityAvailable = rs.getInt("stock");
 
-                        out.println("</tr>\n"
-                                + "		  <tr>\n"
-                                + "		    <td style=\"text-align: center; vertical-align: middle;\"><img alt=\"Picture of a book\" src=\"/Bookstore/IMG/bookCover.png\"></td>\n"
-                                + "		    <td >\n"
-                                + "					<h3>" + name + "</h3>\n"
-                                + "					<p>by " + author + "</p>\n"
-                                + "					<p>Price: HKD " + price + "</p>\n"
-                                + "					<p>Loyalty Point: " + point + "</p>\n"
-                                + "					<form method='POST' class=\"addToCart\">\n"
+                        out.println("</tr>"
+                                + "		  <tr>"
+                                + "		    <td style='text-align: center; vertical-align: middle;'><img alt='Picture of a book' src='/Bookstore/IMG/bookCover.png'></td>"
+                                + "		    <td >"
+                                + "					<h3>" + name + "</h3>"
+                                + "					<p>by " + author + "</p>"
+                                + "					<p>Price: HKD " + price + "</p>"
+                                + "					<p>Loyalty Point: " + point + "</p>"
+                                + "					<form method='POST' class='addToCart'>"
                                 + "                                             <input name='bookid' type='hidden' value='" + id + "' />"
-                                + "						<label for=\"Quantity\">Quantity:</label>\n"
-                                + "						<input type=\"number\" name=\"quantity\" value=\"1\" size=\"5\" min=\"1\" max='"+quantityAvailable+"'>\n"
-                                + "						<input name='action' type=\"submit\" value=\"Add to Cart\">\n"
-                                + "					</form>\n"
-                                + "				</td>\n"
-                                + "		  </tr>\n");
+                                + "						<label for='Quantity'>Quantity:</label>"
+                                + "						<input type='number' name='quantity' value='1' size='5' min='1' max='" + quantityAvailable + "'>"
+                                + "						<input name='action' type='submit' value='Add to Cart'>"
+                                + "					</form>"
+                                + "				</td>"
+                                + "		  </tr>");
                     }
 
                     if (rs != null) {
@@ -170,7 +169,7 @@ public class browse extends HttpServlet {
                     if (con != null) {
                         con.close();
                     }
-                    out.println("</table>\n");
+                    out.println("</table>");
                     //footer
                     out.println("       <br>"
                             + "         <footer>"
@@ -190,21 +189,19 @@ public class browse extends HttpServlet {
                 }
             } else if (request.isUserInRole("admin")) {
                 //book list (manager)
-                out.println("            		<a href=\"/Bookstore/refund.do\" class=\"button\">Refund Request</a>\n"
-                        + "            		<a href=\"/Bookstore/addbooks.do\" class=\"button\">Add Books</a>\n"
-                        + "            		<br>\n"
-                        + "\n"
-                        + "            		<!-- Book List  -->\n"
-                        + "            		<table class=\"bookList\">\n"
-                        + "            			<col width=\"20%\">\n"
-                        + "              		<col width=\"80%\">\n"
-                        + "            		  <tr>\n"
-                        + "            		    <th>Books</th>\n"
-                        + "            		    <th>Detail</th>\n"
-                        + "\n");
+                out.println("            		<a href='/Bookstore/refund.do' class='button'>Refund Request</a>"
+                        + "            		<a href='/Bookstore/addbooks.do' class='button'>Add Books</a>"
+                        + "            		<br>"
+                        + "            		<!-- Book List  -->"
+                        + "            		<table class='bookList'>"
+                        + "            			<col width='20%'>"
+                        + "              		<col width='80%'>"
+                        + "            		  <tr>"
+                        + "            		    <th>Books</th>"
+                        + "            		    <th>Detail</th>"
+                );
 
                 try {
-
                     // make connection to db and retrieve data from the table
                     /* Uncomment when connecting to DB!! */
                     String url = "jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad034_db";
@@ -224,21 +221,21 @@ public class browse extends HttpServlet {
                         int price = rs.getInt("price");
                         int point = rs.getInt("loyalty");
 
-                        out.println("            		  </tr>\n"
-                                + "            		  <tr>\n"
-                                + "            		    <td style=\"text-align: center; vertical-align: middle;\"><img alt=\"Picture of a book\" src=\"/Bookstore/IMG/bookCover.png\"></td>\n"
-                                + "            		    <td >\n"
-                                + "            					<h3>" + name + "</h3>\n"
-                                + "            					<p>by " + author + "</p>\n"
-                                + "            					<p>Price: HKD " + price + "</p>\n"
-                                + "            					<p>Loyalty Point: " + point + "</p>\n"
-                                + "            					<form method='POST' class=\"manageButton\">\n"
-                                + "                                                     <input name='bookid' type='hidden' value='" + id + "' />\n"
-                                + "            						<input name='action' type=\"submit\" value=\"Change\">\n"
-                                + "            						<input name='action' type=\"submit\" value=\"Delete\">\n"
-                                + "            					</form>\n"
-                                + "            				</td>\n"
-                                + "            		  </tr>\n");
+                        out.println("            		  </tr>"
+                                + "            		  <tr>"
+                                + "            		    <td style='text-align: center; vertical-align: middle;'><img alt='Picture of a book' src='/Bookstore/IMG/bookCover.png'></td>"
+                                + "            		    <td >"
+                                + "            					<h3>" + name + "</h3>"
+                                + "            					<p>by " + author + "</p>"
+                                + "            					<p>Price: HKD " + price + "</p>"
+                                + "            					<p>Loyalty Point: " + point + "</p>"
+                                + "            					<form method='POST' class='manageButton'>"
+                                + "                                                     <input name='bookid' type='hidden' value='" + id + "' />"
+                                + "            						<input name='action' type='submit' value='Change'>"
+                                + "            						<input name='action' type='submit' value='Delete'>"
+                                + "            					</form>"
+                                + "            				</td>"
+                                + "            		  </tr>");
                     }
                     if (rs != null) {
                         rs.close();
@@ -250,7 +247,7 @@ public class browse extends HttpServlet {
                         con.close();
                     }
 
-                    out.println("</table>\n");
+                    out.println("</table>");
                     //footer
                     out.println("       <br>"
                             + "         <footer>"
@@ -268,7 +265,6 @@ public class browse extends HttpServlet {
                 } finally {
                     out.close();
                 }
-
             }
         }
 
@@ -277,8 +273,7 @@ public class browse extends HttpServlet {
     private void addcartEntry(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        try {
+        try (PrintWriter out = response.getWriter()) {
             //Begin Header
             out.println(" <!DOCTYPE html>"
                     + "<html lang='en'>"
@@ -308,9 +303,9 @@ public class browse extends HttpServlet {
                     + "            <div class='dropdown-content'>"
                     + "                <ul class='nav'>");
             if (request.getSession(true) != null) {
-                out.println("              <li><a href='/Bookstore/logout.do'>Logout</a></li>\n");
+                out.println("              <li><a href='/Bookstore/logout.do'>Logout</a></li>");
             } else {
-                out.println("              <li><a href='/Bookstore/login.do'>Login</a></li>\n");
+                out.println("              <li><a href='/Bookstore/login.do'>Login</a></li>");
             }
             out.println("                  <li><a href='/Bookstore/browse.do'>Browse</a></li>"
                     + "                    <li><a href='/Bookstore/viewcart.do'>View Cart</a></li>");
@@ -323,9 +318,9 @@ public class browse extends HttpServlet {
             // Begin Page
             if (request.isUserInRole("sprole") || request.isUserInRole("guest")) {
                 //book list (customer)
-                out.println("<h1>Page to browse books (Customer)</h1>\n"
-                        + "		<a href=\"/Bookstore/viewcart.do\" class=\"button\">View Cart</a>\n"
-                        + "		<a href=\"/Bookstore/browse.do\" class=\"button\">Back to Browse</a>\n");
+                out.println("<h1>Page to browse books (Customer)</h1>"
+                        + "		<a href='/Bookstore/viewcart.do' class='button'>View Cart</a>"
+                        + "		<a href='/Bookstore/browse.do' class='button'>Back to Browse</a>");
                 if (!request.isUserInRole("guest")) {
                     out.println("           <a href='/Bookstore/viewdetail.do' class='button'>View Account Details</a></li>");
                 }
@@ -365,7 +360,7 @@ public class browse extends HttpServlet {
                         //check if book is already in cart
                         int exists = 0;
                         Statement stmt2 = con.createStatement();
-                        ResultSet rs2 = stmt2.executeQuery("SELECT * FROM purchased WHERE user_name = '" + request.getRemoteUser() +"' AND status = 'pending' AND bookname = '" + name + "'");
+                        ResultSet rs2 = stmt2.executeQuery("SELECT * FROM purchased WHERE user_name = '" + request.getRemoteUser() + "' AND status = 'pending' AND bookname = '" + name + "'");
                         while (rs2 != null && rs2.next() != false) {
                             exists = 1;
                         }
@@ -389,7 +384,7 @@ public class browse extends HttpServlet {
                         } //update quantity
                         else {
                             out.println("<h3>The book quantity has been updated.</h3>");
-                            
+
                             PreparedStatement pstmt2 = con.prepareStatement("UPDATE purchased SET quantity = ? WHERE user_name = ? AND status = ? AND bookname = ?");
                             pstmt2.setInt(1, quantity);
                             pstmt2.setString(2, request.getRemoteUser());
@@ -397,7 +392,7 @@ public class browse extends HttpServlet {
                             pstmt2.setString(4, name);
                             // execute the SQL statement
                             int rows = pstmt2.executeUpdate();
-                            
+
                             if (pstmt2 != null) {
                                 pstmt2.close();
                             }
@@ -417,7 +412,6 @@ public class browse extends HttpServlet {
                             stmt2.close();
                         }
                     }
-
                     if (rs != null) {
                         rs.close();
                     }
@@ -427,7 +421,6 @@ public class browse extends HttpServlet {
                     if (con != null) {
                         con.close();
                     }
-
                 }
 
                 //footer
@@ -444,11 +437,8 @@ public class browse extends HttpServlet {
                         + "</html>");
 
             }
-
         } catch (java.lang.ClassNotFoundException | SQLException e) {
             out.println("<div style='color: red'>" + e.toString() + "</div>");
-        } finally {
-            out.close();
         }
     }
 
@@ -485,9 +475,9 @@ public class browse extends HttpServlet {
                     + "            <div class='dropdown-content'>"
                     + "                <ul class='nav'>");
             if (request.getSession(true) != null) {
-                out.println("              <li><a href='/Bookstore/logout.do'>Logout</a></li>\n");
+                out.println("              <li><a href='/Bookstore/logout.do'>Logout</a></li>");
             } else {
-                out.println("              <li><a href='/Bookstore/login.do'>Login</a></li>\n");
+                out.println("              <li><a href='/Bookstore/login.do'>Login</a></li>");
             }
             out.println("                  <li><a href='/Bookstore/browse.do'>Browse</a></li>"
                     + "                    <li><a href='/Bookstore/viewcart.do'>View Cart</a></li>");
@@ -521,8 +511,8 @@ public class browse extends HttpServlet {
                 point = Integer.parseInt(request.getParameter("point"));
             }
             if (request.getParameter("availableQuantity") != null && !request.getParameter("availableQuantity").equalsIgnoreCase("")) {
-                    availableQuantity = Integer.parseInt(request.getParameter("availableQuantity")); 
-                }
+                availableQuantity = Integer.parseInt(request.getParameter("availableQuantity"));
+            }
 
             if (title != null && !title.equalsIgnoreCase("")
                     && author != null && !author.equalsIgnoreCase("")
@@ -577,7 +567,7 @@ public class browse extends HttpServlet {
                     point = rs1.getInt("loyalty");
                     availableQuantity = rs1.getInt("stock");
 
-                    out.println("<fieldset>\n");
+                    out.println("<fieldset>");
                     out.println("<legend>Please fill in the form</legend>");
                     out.println("<form method='POST' action='" + request.getRequestURI() + "'>");
                     out.println("<input name='action' type='hidden' value='change' />");
@@ -593,8 +583,8 @@ public class browse extends HttpServlet {
                     out.println("<label for='point'>Quantity Available: </label>");
                     out.println("<input name='availableQuantity' type='number' size='8' maxlength='8' value='" + availableQuantity + "' /></p>");
                     out.println("<input style='float:right;' type='submit' value='Update!' />");
-                    out.println("</form>\n");
-                    out.println("</fieldset>\n");
+                    out.println("</form>");
+                    out.println("</fieldset>");
                     rs1.close();
 
                 }
@@ -654,9 +644,9 @@ public class browse extends HttpServlet {
                     + "            <div class='dropdown-content'>"
                     + "                <ul class='nav'>");
             if (request.getSession(true) != null) {
-                out.println("              <li><a href='/Bookstore/logout.do'>Logout</a></li>\n");
+                out.println("              <li><a href='/Bookstore/logout.do'>Logout</a></li>");
             } else {
-                out.println("              <li><a href='/Bookstore/login.do'>Login</a></li>\n");
+                out.println("              <li><a href='/Bookstore/login.do'>Login</a></li>");
             }
             out.println("                  <li><a href='/Bookstore/browse.do'>Browse</a></li>"
                     + "                    <li><a href='/Bookstore/viewcart.do'>View Cart</a></li>");
@@ -680,9 +670,7 @@ public class browse extends HttpServlet {
                 bookid = Integer.parseInt(request.getParameter("bookid"));
             }
             if (bookid != -1) {
-
                 PreparedStatement pstmt = con.prepareStatement("DELETE [book] WHERE ID_book = " + bookid);
-
                 Boolean result = pstmt.execute();
 
                 int count = 0;

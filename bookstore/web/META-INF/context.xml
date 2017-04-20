@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context antiJARLocking="true" path="/Bookstore">
-  <Realm className="org.apache.catalina.realm.JDBCRealm" connectionName="aiad034" connectionPassword="aiad034" connectionURL="jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad034_db" driverName="com.microsoft.sqlserver.jdbc.SQLServerDriver" roleNameCol="role_name" userCredCol="password" userNameCol="user_name" userRoleTable="tomcat_users_roles" userTable="tomcat_users"/>
+    <Realm className="org.apache.catalina.realm.JDBCRealm" connectionName="aiad034" connectionPassword="aiad034" connectionURL="jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad034_db" driverName="com.microsoft.sqlserver.jdbc.SQLServerDriver" roleNameCol="role_name" userCredCol="password" userNameCol="user_name" userRoleTable="tomcat_users_roles" userTable="tomcat_users"/>
 </Context>
