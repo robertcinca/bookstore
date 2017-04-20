@@ -113,12 +113,26 @@ public class refund extends HttpServlet {
                 if (request.getParameter("purchase_id") != null && !request.getParameter("purchase_id").equalsIgnoreCase("")) {
                     purchase_id = Integer.parseInt(request.getParameter("purchase_id"));
                 }
+                
+                int purchase_quantity = 0;
+                if (request.getParameter("purchase_quantity") != null && !request.getParameter("purchase_quantity").equalsIgnoreCase("")) {
+                    purchase_quantity = Integer.parseInt(request.getParameter("purchase_quantity"));
+                }
+                
+                String purchase_bookname = request.getParameter("purchase_bookname");
 
                 if (action != null && purchase_id != 0) {
                     PreparedStatement pstmt = con.prepareStatement("UPDATE [purchased] SET status = ? WHERE ID_purchased = " + purchase_id);
 
                     if (action.equalsIgnoreCase("accept")) {
                         pstmt.setString(1, "refund accepted");
+                        
+                        // Update quantity if changed
+                        PreparedStatement pstmt2 = con.prepareStatement("UPDATE book SET stock = stock + ? WHERE bookname = ?");
+                        pstmt2.setInt(1, purchase_quantity);
+                        pstmt2.setString(2, purchase_bookname);
+                        // execute the SQL statement
+                        int rows = pstmt2.executeUpdate();
                     } else if (action.equalsIgnoreCase("decline")) {
                         pstmt.setString(1, "refund declined");
                     }
@@ -150,6 +164,8 @@ public class refund extends HttpServlet {
                                 + "				<td >\n"
                                 + "					<form class=\"refundButton\" style=\"float:right\">\n"
                                 + "                                             <input name='purchase_id' type='hidden' value='" + purchase_id + "' />"
+                                + "                                             <input name='purchase_quantity' type='hidden' value='" + quantity + "' />"
+                                + "                                             <input name='purchase_bookname' type='hidden' value='" + bookname + "' />"
                                 + "						<input name='action' type=\"submit\" value=\"Accept\">\n"
                                 + "						<input name='action' type=\"submit\" value=\"Decline\">\n"
                                 + "					</form>\n"

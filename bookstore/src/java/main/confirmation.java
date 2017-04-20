@@ -171,15 +171,13 @@ public class confirmation extends HttpServlet {
 
                             }
                         }
-                        
+
                         // Update quantity if changed
-                PreparedStatement pstmt3 = con.prepareStatement("UPDATE book SET stock = stock - ? WHERE bookname = ?");
-                    pstmt3.setInt(1, quantity);
-                    pstmt3.setString(2, bookname);
-                    // execute the SQL statement
-                    int rows = pstmt3.executeUpdate();
-                
-            
+                        PreparedStatement pstmt3 = con.prepareStatement("UPDATE book SET stock = stock - ? WHERE bookname = ?");
+                        pstmt3.setInt(1, quantity);
+                        pstmt3.setString(2, bookname);
+                        // execute the SQL statement
+                        int rows = pstmt3.executeUpdate();
 
                         ResultSet rs2;
                         try (PreparedStatement stmt2 = con.prepareStatement("SELECT * FROM book WHERE bookname = ?")) {
