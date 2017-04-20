@@ -91,6 +91,7 @@ public class viewcart extends HttpServlet {
                     + "		 <!-- Get Shopping Cart Information and Display It in a Table -->\n"
                     + "	<table>"
                     + "	<tr>"
+                    + " <th> Remove? </th>"
                     + "	<th>Book Name</th>"
                     + "	<th>Author</th>"
                     + " <th>Quantity </th>"
@@ -105,6 +106,36 @@ public class viewcart extends HttpServlet {
             String dbPwd = "aiad034";
 
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+
+            // Delete the book if action called
+            String deleteBook = request.getParameter("bookname");
+            if (deleteBook != null) {
+                try (Connection con = DriverManager.getConnection(url, dbLoginId, dbPwd)) {
+                    PreparedStatement pstmt = con.prepareStatement("DELETE FROM purchased WHERE user_name = ? AND status = ? AND bookname = ?");
+                    pstmt.setString(1, currentUser);
+                    pstmt.setString(2, "pending");
+                    pstmt.setString(3, deleteBook);
+                    // execute the SQL statement
+                    int rows = pstmt.executeUpdate();
+                }
+            }
+            
+            // Update quantity if changed
+            String updateQuantity = request.getParameter("bookquantity");
+            String updateBook = request.getParameter("bookname2");
+            if (updateQuantity != null) {
+                try (Connection con = DriverManager.getConnection(url, dbLoginId, dbPwd)) {
+                    PreparedStatement pstmt2 = con.prepareStatement("UPDATE purchased SET quantity = ? WHERE user_name = ? AND status = ? AND bookname = ?");
+                    pstmt2.setString(1, updateQuantity);
+                    pstmt2.setString(2, currentUser);
+                    pstmt2.setString(3, "pending");
+                    pstmt2.setString(4, updateBook);
+                    // execute the SQL statement
+                    int rows = pstmt2.executeUpdate();
+                }
+            }
+
+            //Create view cart table
             int totalAmount;
             int totalLoyalty;
             try (Connection con = DriverManager.getConnection(url, dbLoginId, dbPwd); PreparedStatement stmt = con.prepareStatement("SELECT * FROM purchased WHERE user_name = ? AND status = ?")) {
@@ -128,17 +159,27 @@ public class viewcart extends HttpServlet {
                             int totalPrice = price * quantity;
                             totalAmount += totalPrice;
                             totalLoyalty += loyalty;
-
-//                            if (author != null) {
                             out.println("</tr>"
+                                    + "<td>"
+                                    + "     <form method='POST'>"
+                                    + "     <input type='hidden' value='" + bookname + "' name='bookname' id='bookname'  />"
+                                    + "     <input type='submit' value='Delete'/>"
+                                    + "     </form>"
+                                    + "</td>"
                                     + "<td>" + bookname + "</td>"
                                     + "<td>" + author + "</td>"
-                                    + "<td>" + quantity + "</td>"
+                                    + "<td>"
+                                    + "     <form method='POST'>"
+                                    + "     <input type='hidden' value='" + bookname + "' name='bookname2' id='bookname2'  />"
+                                    + "     <input type='number' name='bookquantity' id='bookquantity' value='"+quantity+"'/>"
+                                    + "     <input type='submit' value='Change Quantity'>" 
+                                    + "     </form>"
+                                    + "</td>"
                                     + "<td>" + loyalty + "</td>"
                                     + "<td>" + price + "</td>"
                                     + "<td>" + totalPrice + "</td>"
-                                    + "</tr>");
-//                            }
+                                    + "</tr>"
+                );
                         }
                     }
 
@@ -150,6 +191,7 @@ public class viewcart extends HttpServlet {
 
             out.println("<tfoot>"
                     + " <tr>"
+                    + "	<td></td>"
                     + "	<td></td>"
                     + "	<td></td>"
                     + " <td></td>"
