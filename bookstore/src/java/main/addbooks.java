@@ -87,6 +87,7 @@ public class addbooks extends HttpServlet {
                 //addbooks input field
                 String title = request.getParameter("title");
                 String author = request.getParameter("author");
+                int availableQuantity = 0;
                 int price = 0;
                 int point = 0;
                 if (request.getParameter("price") != null && !request.getParameter("price").equalsIgnoreCase("")) {
@@ -95,10 +96,13 @@ public class addbooks extends HttpServlet {
                 if (request.getParameter("point") != null && !request.getParameter("point").equalsIgnoreCase("")) {
                     point = Integer.parseInt(request.getParameter("point"));
                 }
+                if (request.getParameter("availableQuantity") != null && !request.getParameter("availableQuantity").equalsIgnoreCase("")) {
+                    availableQuantity = Integer.parseInt(request.getParameter("availableQuantity")); 
+                }
 
                 if (title != null && !title.equalsIgnoreCase("")
                         && author != null && !author.equalsIgnoreCase("")
-                        && price != 0 && point != 0) {
+                        && price != 0 && point != 0 && availableQuantity != 0) {
 
                     // Register the JDBC driver, open a connection
                     String url = "jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad034_db";
@@ -108,11 +112,12 @@ public class addbooks extends HttpServlet {
                     Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
                     Connection con = DriverManager.getConnection(url, dbLoginId, dbPwd);
 
-                    PreparedStatement pstmt = con.prepareStatement("INSERT INTO [book] ([bookname], [author], [price], [loyalty]) VALUES (?, ?, ?, ?)");
+                    PreparedStatement pstmt = con.prepareStatement("INSERT INTO [book] ([bookname], [author], [price], [loyalty], [stock]) VALUES (?, ?, ?, ?, ?)");
                     pstmt.setString(1, title);
                     pstmt.setString(2, author);
                     pstmt.setInt(3, price);
                     pstmt.setInt(4, point);
+                    pstmt.setInt(5, availableQuantity);
 
                     int rows = pstmt.executeUpdate();
 
@@ -123,6 +128,7 @@ public class addbooks extends HttpServlet {
                         out.println("<p>Author: " + author + "</p>");
                         out.println("<p>Price: " + price + "</p>");
                         out.println("<p>Loyalty points: " + point + "</p>");
+                        out.println("<p>Available Quantity: " + availableQuantity + "</p>");
                     } else {
                         out.println("<legend>ERROR: New record is failed to create.</legend>");
                     }
@@ -140,6 +146,8 @@ public class addbooks extends HttpServlet {
                             + "				<input type=\"number\" name=\"price\" >\n"
                             + "				<label for=\"point\">Loyalty Points:</label>\n"
                             + "				<input type=\"number\" name=\"point\" >\n"
+                            + "				<label for=\"point\">Quantity Available:</label>\n"
+                            + "				<input type=\"number\" name=\"availableQuantity\" >\n"
                             + "				<input style=\"float:right;\" type=\"submit\" value=\"Add book\">\n"
                             + "			</form>\n");
                 }

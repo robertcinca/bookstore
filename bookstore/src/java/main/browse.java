@@ -510,6 +510,7 @@ public class browse extends HttpServlet {
             String bookid = request.getParameter("bookid");
             String title = request.getParameter("title");
             String author = request.getParameter("author");
+            int availableQuantity = 0;
             int price = 0;
             int point = 0;
             if (request.getParameter("price") != null && !request.getParameter("price").equalsIgnoreCase("")) {
@@ -518,16 +519,20 @@ public class browse extends HttpServlet {
             if (request.getParameter("point") != null && !request.getParameter("point").equalsIgnoreCase("")) {
                 point = Integer.parseInt(request.getParameter("point"));
             }
+            if (request.getParameter("availableQuantity") != null && !request.getParameter("availableQuantity").equalsIgnoreCase("")) {
+                    availableQuantity = Integer.parseInt(request.getParameter("availableQuantity")); 
+                }
 
             if (title != null && !title.equalsIgnoreCase("")
                     && author != null && !author.equalsIgnoreCase("")
-                    && price != 0 && point != 0) {
+                    && price != 0 && point != 0 && availableQuantity != 0) {
 
-                PreparedStatement pstmt = con.prepareStatement("UPDATE [book] SET bookname = ?, author = ?, price = ?, loyalty = ? WHERE ID_book = " + bookid);
+                PreparedStatement pstmt = con.prepareStatement("UPDATE [book] SET bookname = ?, author = ?, price = ?, loyalty = ?, stock = ? WHERE ID_book = " + bookid);
                 pstmt.setString(1, title);
                 pstmt.setString(2, author);
                 pstmt.setInt(3, price);
                 pstmt.setInt(4, point);
+                pstmt.setInt(5, availableQuantity);
 
                 Boolean result = pstmt.execute();
 
@@ -540,12 +545,11 @@ public class browse extends HttpServlet {
                         count = pstmt.getUpdateCount();
                         if (count >= 0) {
                             out.println("<legend>The record is sucessfully updated.</legend>");
-
-                            out.println("<p>UID: " + bookid + "</p>");
                             out.println("<p>Book Name: " + title + "</p>");
                             out.println("<p>Author: " + author + "</p>");
                             out.println("<p>Price: " + price + "</p>");
                             out.println("<p>Loyalty: " + point + "</p>");
+                            out.println("<p>Loyalty: " + availableQuantity + "</p>");
                         }
                     }
                     result = pstmt.getMoreResults();
@@ -570,6 +574,7 @@ public class browse extends HttpServlet {
                     author = rs1.getString("author");
                     price = rs1.getInt("price");
                     point = rs1.getInt("loyalty");
+                    availableQuantity = rs1.getInt("stock");
 
                     out.println("<fieldset>\n");
                     out.println("<legend>Please fill in the form</legend>");
@@ -584,6 +589,8 @@ public class browse extends HttpServlet {
                     out.println("<input name='price' type='number' size='8' maxlength='8' value='" + price + "' /></p>");
                     out.println("<label for='point'>Loyalty Point: </label>");
                     out.println("<input name='point' type='number' size='8' maxlength='8' value='" + point + "' /></p>");
+                    out.println("<label for='point'>Quantity Available: </label>");
+                    out.println("<input name='availableQuantity' type='number' size='8' maxlength='8' value='" + availableQuantity + "' /></p>");
                     out.println("<input style='float:right;' type='submit' value='Update!' />");
                     out.println("</form>\n");
                     out.println("</fieldset>\n");
