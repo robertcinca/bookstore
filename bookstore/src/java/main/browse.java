@@ -141,6 +141,7 @@ public class browse extends HttpServlet {
                         String author = rs.getString("author");
                         int price = rs.getInt("price");
                         int point = rs.getInt("loyalty");
+                        int quantityAvailable = rs.getInt("stock");
 
                         out.println("</tr>\n"
                                 + "		  <tr>\n"
@@ -153,7 +154,7 @@ public class browse extends HttpServlet {
                                 + "					<form method='POST' class=\"addToCart\">\n"
                                 + "                                             <input name='bookid' type='hidden' value='" + id + "' />"
                                 + "						<label for=\"Quantity\">Quantity:</label>\n"
-                                + "						<input type=\"number\" name=\"quantity\" value=\"1\" size=\"5\" min=\"1\" >\n"
+                                + "						<input type=\"number\" name=\"quantity\" value=\"1\" size=\"5\" min=\"1\" max='"+quantityAvailable+"'>\n"
                                 + "						<input name='action' type=\"submit\" value=\"Add to Cart\">\n"
                                 + "					</form>\n"
                                 + "				</td>\n"

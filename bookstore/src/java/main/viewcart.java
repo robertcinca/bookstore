@@ -156,6 +156,7 @@ public class viewcart extends HttpServlet {
                             String author = rs2.getString("author");
                             int loyalty = rs2.getInt("loyalty");
                             int price = rs2.getInt("price");
+                            int quantityAvailable = rs2.getInt("stock");
                             int totalPrice = price * quantity;
                             totalAmount += totalPrice;
                             totalLoyalty += loyalty;
@@ -171,7 +172,7 @@ public class viewcart extends HttpServlet {
                                     + "<td>"
                                     + "     <form method='POST'>"
                                     + "     <input type='hidden' value='" + bookname + "' name='bookname2' id='bookname2'  />"
-                                    + "     <input type='number' name='bookquantity' id='bookquantity' value='"+quantity+"'/>"
+                                    + "     <input type='number' name='bookquantity' id='bookquantity' value='"+quantity+"' min='1' max='"+quantityAvailable+"'/>"
                                     + "     <input type='submit' value='Change Quantity'>" 
                                     + "     </form>"
                                     + "</td>"
