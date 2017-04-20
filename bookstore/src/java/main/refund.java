@@ -93,7 +93,6 @@ public class refund extends HttpServlet {
                         + "		  <tr>\n"
                         + "				<th>User</th>\n"
                         + "		    <th>Book Title</th>\n"
-                        + "		    <th>Price</th>\n"
                         + "				<th>Quantity</th>\n"
                         + "				<th></th>\n"
                         + "\n");
@@ -141,19 +140,12 @@ public class refund extends HttpServlet {
                     purchase_id = rs.getInt("ID_purchased");
                     String refundable = rs.getString("refundable");
 
-                    PreparedStatement stmt2 = con.prepareStatement("SELECT * FROM [book] WHERE bookname = ?");
-                    stmt2.setString(1, bookname);
-                    ResultSet rs2 = stmt2.executeQuery();
-
-                    while (rs2 != null && rs2.next() != false) {
-
-                        int price = rs2.getInt("price");
+                    
 
                         out.println("		  </tr>\n"
                                 + "		  <tr>\n"
                                 + "		    <td >" + username + "</td>\n"
                                 + "		    <td >" + bookname + "</td>\n"
-                                + "				<td >HKD " + price + "</td>\n"
                                 + "				<td >" + quantity + "</td>\n"
                                 + "				<td >\n"
                                 + "					<form class=\"refundButton\" style=\"float:right\">\n"
@@ -163,7 +155,7 @@ public class refund extends HttpServlet {
                                 + "					</form>\n"
                                 + "				</td>\n"
                                 + "		  </tr>\n");
-                    }
+                    
                 }
 
                 out.println("		</table>\n");

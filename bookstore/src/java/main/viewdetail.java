@@ -203,7 +203,6 @@ public class viewdetail extends HttpServlet {
                     out.print("		<h3>User Info</h3>\n"
                             + "		<p>Username: " + username + "</p>\n"
                             + "		<p>Password: " + password + "</p>\n"
-                            + "		<p>Role: " + role + "</p>\n"
                             + "		<p>Loyalty Points: " + loyalty + "</p>\n"
                             + "		<br>\n"
                             + "\n"

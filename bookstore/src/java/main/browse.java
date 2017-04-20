@@ -362,7 +362,6 @@ public class browse extends HttpServlet {
 
                         out.println("<fieldset>");
                         out.println("<h3>Book added to cart</h3>");
-                        out.println("<p>UID : " + bookid + "</p>");
                         out.println("<p>Book Name : " + name + "</p>");
                         out.println("<p>Author : " + author + "</p>");
                         out.println("<p>Price : " + price + "</p>");

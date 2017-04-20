@@ -10,9 +10,7 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.InputMismatchException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -121,17 +119,6 @@ public class addbooks extends HttpServlet {
                     if (rows > 0) {
                         out.println("<legend>New record is sucessfully created.</legend>");
                         // display the information of the record just added including UID
-
-                        Statement stmt = con.createStatement();
-                        ResultSet rs = stmt.executeQuery("SELECT @@IDENTITY AS [@@IDENTITY]");
-                        if (rs != null && rs.next() != false) {
-                            out.println("<p>UID: " + rs.getInt(1) + "</p>");
-                            rs.close();
-                        }
-                        if (stmt != null) {
-                            stmt.close();
-                        }
-
                         out.println("<p>Title: " + title + "</p>");
                         out.println("<p>Author: " + author + "</p>");
                         out.println("<p>Price: " + price + "</p>");
