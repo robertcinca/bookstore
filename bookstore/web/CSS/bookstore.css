@@ -1,5 +1,9 @@
+/**
+ *
+ * @author robertcinca
+ */
 body {
-    border: 8px solid purple;
+    border: 8px solid #CDCDCD;
     padding: 6px;
     margin: 2px;
 }
@@ -9,7 +13,7 @@ p {
     font-size: 16pt;
     text-align: center;
 }
-.column-left{ 
+/*.column-left{ 
     float: left; 
     width: 33%; 
 }
@@ -20,4 +24,21 @@ p {
 .column-center{ 
     display: inline-block; 
     width: 33%; 
+}*/
+.bookstoreContainer {
+    font-size: 0; /*fix white space*/
+}
+.bookstoreContainer > div {
+    font-size: 16px; /*reset font size*/
+    display: inline-block;
+    vertical-align: top;
+    width: 33.33%;
+    box-sizing: border-box;
+    text-align: center;
+}
+@media (max-width: 575px) { /*breakpoint*/
+    .bookstoreContainer > div {
+        display: block;
+        width: 100%;
+    }
 }

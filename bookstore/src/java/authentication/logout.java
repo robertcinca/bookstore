@@ -7,6 +7,12 @@ package authentication;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,12 +26,15 @@ import javax.servlet.http.HttpSession;
 public class logout extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        // invalidate the session
-        HttpSession session=request.getSession(true);
-        session.invalidate();
-        
+            throws ServletException, IOException, ClassNotFoundException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
+        // Get current user
+        String currentUser = request.getRemoteUser();
+        // Invalidate the session 
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
         try (PrintWriter out = response.getWriter()) {
             //Begin Header
             out.println(" <!DOCTYPE html>"
@@ -44,11 +53,10 @@ public class logout extends HttpServlet {
                     + "        <link href='/Bookstore/CSS/login.css' rel='stylesheet' type='text/css'/>"
                     // <!-- JS Pages -->"
                     + "        <script src='/Bookstore/JS/basicFunctions.js' type='text/javascript'></script>"
-                    + "        <script src='/Bookstore/JS/login.js' type='text/javascript'></script>"
                     + "    </head>"
                     + "    <body>"
                     + "        <header>"
-                    + "            <iframe id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
+                    + "            <iframe  scrolling='no' id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
                     + "                [Your user agent does not support frames or is currently configured not to display frames.]"
                     + "            </iframe>"
                     + "        </header>"
@@ -68,21 +76,37 @@ public class logout extends HttpServlet {
             out.println("<h1>Logout Page</h1>");
             out.println("<p>You have successfully logged out!</p>");
             out.println("<p><a class='button' href='browse.do'>Return to Login Page</a></p>");
-            out.println("</form>");
+
+            // Delete all entries from cart
+            // Register the JDBC driver, open a connection
+            String url = "jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad034_db";
+            String dbLoginId = "aiad034";
+            String dbPwd = "aiad034";
+
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            // Delete a preparedstatement to set the SQL statement
+            try (Connection con = DriverManager.getConnection(url, dbLoginId, dbPwd)) {
+                PreparedStatement pstmt = con.prepareStatement("DELETE FROM purchased WHERE user_name = ? AND status = ?");
+                pstmt.setString(1, currentUser);
+                pstmt.setString(2, "pending");
+                // execute the SQL statement
+                int rows = pstmt.executeUpdate();
+            }
+
             //footer
             out.println("       <br>"
                     + "         <footer>"
-                    + "             <iframe id='bookstorefooter' name='bookstorefooter' src='/Bookstore/iframes/bookstorefooter.jsp' width='100%' height='100px'>"
+                    + "             <iframe  scrolling='no' id='bookstorefooter' name='bookstorefooter' src='/Bookstore/iframes/bookstorefooter.jsp' width='100%' height='100px'>"
                     + "                 [Your user agent does not support frames or is currently configured not to display frames.]"
                     + "             </iframe>"
-                    + "             <iframe id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
+                    + "             <iframe  scrolling='no' id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
                     + "                 [Your user agent does not support frames or is currently configured not to display frames.]"
                     + "             </iframe>"
                     + "         </footer>"
                     + "    </body>"
                     + "</html>");
         }
-    } 
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -96,7 +120,11 @@ public class logout extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(logout.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -110,7 +138,11 @@ public class logout extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(logout.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

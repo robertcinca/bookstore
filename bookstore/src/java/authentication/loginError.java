@@ -39,11 +39,10 @@ public class loginError extends HttpServlet {
                     + "        <link href='/Bookstore/CSS/login.css' rel='stylesheet' type='text/css'/>"
                     // <!-- JS Pages -->"
                     + "        <script src='/Bookstore/JS/basicFunctions.js' type='text/javascript'></script>"
-                    + "        <script src='/Bookstore/JS/login.js' type='text/javascript'></script>"
                     + "    </head>"
                     + "    <body>"
                     + "        <header>"
-                    + "            <iframe id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
+                    + "            <iframe  scrolling='no' id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
                     + "                [Your user agent does not support frames or is currently configured not to display frames.]"
                     + "            </iframe>"
                     + "        </header>"
@@ -51,9 +50,13 @@ public class loginError extends HttpServlet {
                     + "        <div class='dropdown'>"
                     + "            <button class='dropbtn'>MENU</button>"
                     + "            <div class='dropdown-content'>"
-                    + "                <ul class='nav'>"
-                    + "                    <li><a href='/Bookstore/signup'>Sign Up!</a></li>"
-                    + "                    <li><a href='/Bookstore/browse.do'>Browse</a></li>"
+                    + "                <ul class='nav'>");
+            if (request.getSession(true) != null) {
+                out.println("              <li><a href='/Bookstore/logout.do'>Logout</a></li>");
+            } else {
+                out.println("              <li><a href='/Bookstore/browse.do'>Login</a></li>");
+            }
+            out.println("                  <li><a href='/Bookstore/browse.do'>Browse</a></li>"
                     + "                    <li><a href='/Bookstore/viewcart.do'>View Cart</a></li>"
                     + "                    <li><a href='/Bookstore/viewdetail.do'>Account Details</a></li>"
                     + "                </ul>"
@@ -68,10 +71,10 @@ public class loginError extends HttpServlet {
             //footer
             out.println("       <br>"
                     + "         <footer>"
-                    + "             <iframe id='bookstorefooter' name='bookstorefooter' src='/Bookstore/iframes/bookstorefooter.jsp' width='100%' height='100px'>"
+                    + "             <iframe  scrolling='no' id='bookstorefooter' name='bookstorefooter' src='/Bookstore/iframes/bookstorefooter.jsp' width='100%' height='100px'>"
                     + "                 [Your user agent does not support frames or is currently configured not to display frames.]"
                     + "             </iframe>"
-                    + "             <iframe id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
+                    + "             <iframe  scrolling='no' id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
                     + "                 [Your user agent does not support frames or is currently configured not to display frames.]"
                     + "             </iframe>"
                     + "         </footer>"

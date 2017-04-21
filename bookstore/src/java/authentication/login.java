@@ -48,11 +48,10 @@ public class login extends HttpServlet {
                     + "        <link href='/Bookstore/CSS/login.css' rel='stylesheet' type='text/css'/>"
                     // <!-- JS Pages -->"
                     + "        <script src='/Bookstore/JS/basicFunctions.js' type='text/javascript'></script>"
-                    + "        <script src='/Bookstore/JS/login.js' type='text/javascript'></script>"
                     + "    </head>"
                     + "    <body>"
                     + "        <header>"
-                    + "            <iframe id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
+                    + "            <iframe  scrolling='no' id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
                     + "                [Your user agent does not support frames or is currently configured not to display frames.]"
                     + "            </iframe>"
                     + "        </header>"
@@ -70,27 +69,27 @@ public class login extends HttpServlet {
                     + "        </div>");
             // Begin Page
             out.println("  <h1>Welcome to our Online Bookstore!</h1>");
+
             //simple login form
             out.println("<form name='Form' id='Form' action='j_security_check' onsubmit='return validateLogin()' method='POST'>");
             out.println("  <p>User name: <input type='text' name='j_username' id='j_username' /></p>");
             out.println("  <p>Password: <input type='password' name='j_password' id='j_password' /></p>");
             out.println("  <p><button style='width:100%;font-size:18px' type='submit'>Login</button></p>");
             out.println("</form>");
+
             //sign up page
-            out.println("<a href=\"/Bookstore/signup\" class=\"button\" style='float:left;'>Sign Up!</a>");
-            //login as guest
-            out.println("<form action='j_security_check' method='POST'> "
-                    + "<input type='hidden' value='guest' name='j_username' id='j_username' />"
-                    + "<input type='hidden' value='pwd' name='j_password' id='j_password' />"
-                    + "<button class='button'  type='submit'>Continue without logging in >>></button>"
-                    + "</form>");
+            out.println("<a href='/Bookstore/signup' class='button' style='float:left;'>Sign Up!</a>");
+
+            //log in as guest
+            out.println("<a href='/Bookstore/guestLogin' class='button' >Continue without logging in >>></a>");
+
             //footer
             out.println("       <br>"
                     + "         <footer>"
-                    + "             <iframe id='bookstorefooter' name='bookstorefooter' src='/Bookstore/iframes/bookstorefooter.jsp' width='100%' height='100px'>"
+                    + "             <iframe  scrolling='no' id='bookstorefooter' name='bookstorefooter' src='/Bookstore/iframes/bookstorefooter.jsp' width='100%' height='100px'>"
                     + "                 [Your user agent does not support frames or is currently configured not to display frames.]"
                     + "             </iframe>"
-                    + "             <iframe id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
+                    + "             <iframe  scrolling='no' id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
                     + "                 [Your user agent does not support frames or is currently configured not to display frames.]"
                     + "             </iframe>"
                     + "         </footer>"

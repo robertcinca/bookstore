@@ -1,3 +1,7 @@
+/**
+ *
+ * @author robertcinca
+ */
 /* Full-width input fields */
 input[type=text], input[type=password] {
     width: 100%;
@@ -10,7 +14,7 @@ input[type=text], input[type=password] {
 
 /* Set a style for all buttons */
 button {
-    background-color: #4CAF50;
+    background-color: #1A497D;
     color: white;
     padding: 14px 20px;
     margin: 8px 0;
@@ -30,7 +34,7 @@ button:hover {
 }
 
 .cancelbtn {
-    background-color: #f44336;
+    background-color: #B82525;;
 }
 
 .signup {
@@ -108,7 +112,7 @@ span.psw, span.psw2 {
     from {-webkit-transform: scale(0)} 
     to {-webkit-transform: scale(1)}
 }
-    
+
 @keyframes animatezoom {
     from {transform: scale(0)} 
     to {transform: scale(1)}
@@ -117,10 +121,10 @@ span.psw, span.psw2 {
 /* Change styles for span and cancel button on extra small screens */
 @media screen and (max-width: 300px) {
     span.psw , span.psw2 {
-       display: block;
-       float: none;
+        display: block;
+        float: none;
     }
     .cancelbtn {
-       width: 100%;
+        width: 100%;
     }
 }

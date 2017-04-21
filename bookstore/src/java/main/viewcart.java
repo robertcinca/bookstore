@@ -56,11 +56,10 @@ public class viewcart extends HttpServlet {
                     + "        <link href='/Bookstore/CSS/theme.css' rel='stylesheet' type='text/css'/>"
                     // <!-- JS Pages -->"
                     + "        <script src='/Bookstore/JS/basicFunctions.js' type='text/javascript'></script>"
-                    + "        <script src='/Bookstore/JS/cartview.js' type='text/javascript'></script>"
                     + "    </head>"
                     + "    <body>"
                     + "        <header>"
-                    + "            <iframe id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
+                    + "            <iframe  scrolling='no' id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
                     + "                [Your user agent does not support frames or is currently configured not to display frames.]"
                     + "            </iframe>"
                     + "        </header>"
@@ -70,28 +69,28 @@ public class viewcart extends HttpServlet {
                     + "            <div class='dropdown-content'>"
                     + "                <ul class='nav'>");
             if (request.getSession(true) != null) {
-                out.println("              <li><a href='/Bookstore/logout.do'>Logout</a></li>\n");
+                out.println("              <li><a href='/Bookstore/logout.do'>Logout</a></li>");
             } else {
-                out.println("              <li><a href='/Bookstore/login.do'>Login</a></li>\n");
+                out.println("              <li><a href='/Bookstore/browse.do'>Login</a></li>");
             }
             out.println("                  <li><a href='/Bookstore/browse.do'>Browse</a></li>"
                     + "                    <li><a href='/Bookstore/viewcart.do'>View Cart</a></li>");
-            if (!"guest".equals(request.getRemoteUser())) {
+            if (!request.isUserInRole("guest")) {
                 out.println("              <li><a href='/Bookstore/viewdetail.do'>Account Details</a></li>");
             }
             out.println("              </ul>"
                     + "            </div>"
                     + "        </div>");
             // Begin Page
-            out.println("		<!-- View Cart Headings-->\n");
+            out.println("		<!-- View Cart Headings-->");
             String currentUser = request.getRemoteUser();
-            out.println("		<h1 style=\"text-align:left;float:left;\">Confirm Your Order, " + currentUser + "</h1>\n"
-                    + "		<hr style=\"clear:both;\"/>\n"
-                    + "		<h2>Your Shopping Cart</h2>\n"
-                    + "\n"
-                    + "		 <!-- Get Shopping Cart Information and Display It in a Table -->\n"
+            out.println("		<h1 style='text-align:left;float:left;'>Confirm Your Order, " + currentUser + "</h1>"
+                    + "		<hr style='clear:both;'/>"
+                    + "		<h2>Your Shopping Cart</h2>"
+                    + "		 <!-- Get Shopping Cart Information and Display It in a Table -->"
                     + "	<table>"
                     + "	<tr>"
+                    + " <th> Remove? </th>"
                     + "	<th>Book Name</th>"
                     + "	<th>Author</th>"
                     + " <th>Quantity </th>"
@@ -106,6 +105,36 @@ public class viewcart extends HttpServlet {
             String dbPwd = "aiad034";
 
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+
+            // Delete the book if action called
+            String deleteBook = request.getParameter("bookname");
+            if (deleteBook != null) {
+                try (Connection con = DriverManager.getConnection(url, dbLoginId, dbPwd)) {
+                    PreparedStatement pstmt = con.prepareStatement("DELETE FROM purchased WHERE user_name = ? AND status = ? AND bookname = ?");
+                    pstmt.setString(1, currentUser);
+                    pstmt.setString(2, "pending");
+                    pstmt.setString(3, deleteBook);
+                    // execute the SQL statement
+                    int rows = pstmt.executeUpdate();
+                }
+            }
+
+            // Update quantity if changed
+            String updateQuantity = request.getParameter("bookquantity");
+            String updateBook = request.getParameter("bookname2");
+            if (updateQuantity != null) {
+                try (Connection con = DriverManager.getConnection(url, dbLoginId, dbPwd)) {
+                    PreparedStatement pstmt2 = con.prepareStatement("UPDATE purchased SET quantity = ? WHERE user_name = ? AND status = ? AND bookname = ?");
+                    pstmt2.setString(1, updateQuantity);
+                    pstmt2.setString(2, currentUser);
+                    pstmt2.setString(3, "pending");
+                    pstmt2.setString(4, updateBook);
+                    // execute the SQL statement
+                    int rows = pstmt2.executeUpdate();
+                }
+            }
+
+            //Create view cart table
             int totalAmount;
             int totalLoyalty;
             try (Connection con = DriverManager.getConnection(url, dbLoginId, dbPwd); PreparedStatement stmt = con.prepareStatement("SELECT * FROM purchased WHERE user_name = ? AND status = ?")) {
@@ -126,18 +155,31 @@ public class viewcart extends HttpServlet {
                             String author = rs2.getString("author");
                             int loyalty = rs2.getInt("loyalty");
                             int price = rs2.getInt("price");
+                            int quantityAvailable = rs2.getInt("stock");
                             int totalPrice = price * quantity;
                             totalAmount += totalPrice;
                             totalLoyalty += loyalty;
-
                             out.println("</tr>"
+                                    + "<td>"
+                                    + "     <form method='POST'>"
+                                    + "     <input type='hidden' value='" + bookname + "' name='bookname' id='bookname'  />"
+                                    + "     <input type='submit' value='Delete'/>"
+                                    + "     </form>"
+                                    + "</td>"
                                     + "<td>" + bookname + "</td>"
                                     + "<td>" + author + "</td>"
-                                    + "<td>" + quantity + "</td>"
+                                    + "<td>"
+                                    + "     <form method='POST'>"
+                                    + "     <input type='hidden' value='" + bookname + "' name='bookname2' id='bookname2'  />"
+                                    + "     <input type='number' name='bookquantity' id='bookquantity' value='" + quantity + "' min='1' max='" + quantityAvailable + "'/>"
+                                    + "     <input type='submit' value='Change Quantity'>"
+                                    + "     </form>"
+                                    + "</td>"
                                     + "<td>" + loyalty + "</td>"
                                     + "<td>" + price + "</td>"
                                     + "<td>" + totalPrice + "</td>"
-                                    + "</tr>");
+                                    + "</tr>"
+                            );
                         }
                     }
 
@@ -151,6 +193,7 @@ public class viewcart extends HttpServlet {
                     + " <tr>"
                     + "	<td></td>"
                     + "	<td></td>"
+                    + "	<td></td>"
                     + " <td></td>"
                     + " <td></td>"
                     + " <td>Total Price (HKD):</td>"
@@ -159,20 +202,20 @@ public class viewcart extends HttpServlet {
                     + "  </tfoot>");
             out.println("</table>");
 
-            out.println("        <br>\n"
+            out.println("        <br>"
                     + "<form name='Form3' action='/Bookstore/payment.do' onsubmit='return checkSpend()' method='POST'>"
                     + "<input name='totalAmount' type='hidden' value=" + totalAmount + ">"
                     + "<input name='totalLoyalty' type='hidden' value=" + totalLoyalty + ">"
                     + "<button class='button' style='float:left;' name='proceedPayment' value='proceedPayment' type='submit'>Pay Now</button>"
                     + "</form>"
-                    + "		<a href=\"/Bookstore/browse.do\" class=\"button\">Browse Books</a>\n");
+                    + "		<a href='/Bookstore/browse.do' class='button'>Browse Books</a>");
             //footer
             out.println("       <br>"
                     + "         <footer>"
-                    + "             <iframe id='bookstorefooter' name='bookstorefooter' src='/Bookstore/iframes/bookstorefooter.jsp' width='100%' height='100px'>"
+                    + "             <iframe  scrolling='no' id='bookstorefooter' name='bookstorefooter' src='/Bookstore/iframes/bookstorefooter.jsp' width='100%' height='100px'>"
                     + "                 [Your user agent does not support frames or is currently configured not to display frames.]"
                     + "             </iframe>"
-                    + "             <iframe id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
+                    + "             <iframe  scrolling='no' id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
                     + "                 [Your user agent does not support frames or is currently configured not to display frames.]"
                     + "             </iframe>"
                     + "         </footer>"

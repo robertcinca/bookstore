@@ -58,7 +58,7 @@ public class confirmation extends HttpServlet {
                     + "    </head>"
                     + "    <body>"
                     + "        <header>"
-                    + "            <iframe id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
+                    + "            <iframe  scrolling='no' id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
                     + "                [Your user agent does not support frames or is currently configured not to display frames.]"
                     + "            </iframe>"
                     + "        </header>"
@@ -68,20 +68,20 @@ public class confirmation extends HttpServlet {
                     + "            <div class='dropdown-content'>"
                     + "                <ul class='nav'>");
             if (request.getSession(true) != null) {
-                out.println("              <li><a href='/Bookstore/logout.do'>Logout</a></li>\n");
+                out.println("              <li><a href='/Bookstore/logout.do'>Logout</a></li>");
             } else {
-                out.println("              <li><a href='/Bookstore/login.do'>Login</a></li>\n");
+                out.println("              <li><a href='/Bookstore/browse.do'>Login</a></li>");
             }
             out.println("                  <li><a href='/Bookstore/browse.do'>Browse</a></li>"
                     + "                    <li><a href='/Bookstore/viewcart.do'>View Cart</a></li>");
-            if (!"guest".equals(request.getRemoteUser())) {
+            if (!request.isUserInRole("guest")) {
                 out.println("              <li><a href='/Bookstore/viewdetail.do'>Account Details</a></li>");
             }
             out.println("              </ul>"
                     + "            </div>"
                     + "        </div>");
             // Begin Page
-            out.println("       <h1>Payment Confirmation Page</h1>\n"
+            out.println("       <h1>Payment Confirmation Page</h1>"
                     + "		<h1>Success! Your payment has been processed.</h1>");
 
             String confirmationValue = request.getParameter("paidPoints");
@@ -172,6 +172,13 @@ public class confirmation extends HttpServlet {
                             }
                         }
 
+                        // Update quantity if changed
+                        PreparedStatement pstmt3 = con.prepareStatement("UPDATE book SET stock = stock - ? WHERE bookname = ?");
+                        pstmt3.setInt(1, quantity);
+                        pstmt3.setString(2, bookname);
+                        // execute the SQL statement
+                        int rows = pstmt3.executeUpdate();
+
                         ResultSet rs2;
                         try (PreparedStatement stmt2 = con.prepareStatement("SELECT * FROM book WHERE bookname = ?")) {
                             stmt2.setString(1, bookname);
@@ -207,17 +214,19 @@ public class confirmation extends HttpServlet {
             out.println("</table>"
                     + "<h3>Please expect us to deliver your books in the next few days.</h3>"
                     + "<h3>Please select one of the following options:</h3>");
-            out.println("		<a href=\"/Bookstore/browse.do\" class=\"button\">Continue Browsing Bookstore...</a>\n"
-                    + "                <a href=\"/Bookstore/viewdetail.do\" class=\"button\">View your member details</a>\n"
-                    + "		<a href=\"/Bookstore/logout.do\" class=\"button\">Sign Out</a>\n"
-                    + "		<br>\n");
+            out.println("		<a href='/Bookstore/browse.do' class='button'>Continue Browsing Bookstore...</a>");
+            if (!request.isUserInRole("guest")) {
+                out.println("         <a href='/Bookstore/viewdetail.do' class='button'>View your member details</a>");
+            }
+            out.println("		<a href='/Bookstore/logout.do' class='button'>Sign Out</a>"
+                    + "		<br>");
             //footer
             out.println("       <br>"
                     + "         <footer>"
-                    + "             <iframe id='bookstorefooter' name='bookstorefooter' src='/Bookstore/iframes/bookstorefooter.jsp' width='100%' height='100px'>"
+                    + "             <iframe  scrolling='no' id='bookstorefooter' name='bookstorefooter' src='/Bookstore/iframes/bookstorefooter.jsp' width='100%' height='100px'>"
                     + "                 [Your user agent does not support frames or is currently configured not to display frames.]"
                     + "             </iframe>"
-                    + "             <iframe id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
+                    + "             <iframe  scrolling='no' id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
                     + "                 [Your user agent does not support frames or is currently configured not to display frames.]"
                     + "             </iframe>"
                     + "         </footer>"

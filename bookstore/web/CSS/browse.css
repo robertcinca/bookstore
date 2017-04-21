@@ -1,15 +1,18 @@
-
+/**
+ *
+ * @author lokheili3
+ */
 .bookList  img{
-  height: 150px;
-  width: 100px;
+    height: 150px;
+    width: 100px;
 }
 
 .addToCart{
-  display: inline-block;
-  float: right;
+    display: inline-block;
+    float: right;
 }
 
 .addToCart label {
-  width: auto;
-  padding-right: 10px;
+    width: auto;
+    padding-right: 10px;
 }

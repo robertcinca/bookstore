@@ -10,9 +10,7 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.InputMismatchException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -57,7 +55,7 @@ public class addbooks extends HttpServlet {
                     + "    </head>"
                     + "    <body>"
                     + "        <header>"
-                    + "            <iframe id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
+                    + "            <iframe  scrolling='no' id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
                     + "                [Your user agent does not support frames or is currently configured not to display frames.]"
                     + "            </iframe>"
                     + "        </header>"
@@ -67,9 +65,9 @@ public class addbooks extends HttpServlet {
                     + "            <div class='dropdown-content'>"
                     + "                <ul class='nav'>");
             if (request.getSession(true) != null) {
-                out.println("              <li><a href='/Bookstore/logout.do'>Logout</a></li>\n");
+                out.println("              <li><a href='/Bookstore/logout.do'>Logout</a></li>");
             } else {
-                out.println("              <li><a href='/Bookstore/login.do'>Login</a></li>\n");
+                out.println("              <li><a href='/Bookstore/browse.do'>Login</a></li>");
             }
             out.println("                  <li><a href='/Bookstore/browse.do'>Browse</a></li>"
                     + "                    <li><a href='/Bookstore/viewcart.do'>View Cart</a></li>"
@@ -78,17 +76,16 @@ public class addbooks extends HttpServlet {
                     + "            </div>"
                     + "        </div>");
             // Begin Page
-            out.println("<h1>Page to browse books (Manager)</h1>\n"
-                    + "		<a href=\"/Bookstore/browse.do\" class=\"button\">Back to Browse</a>\n"
-                    + "\n"
-                    + "		<br>\n"
-                    + "\n"
-                    + "		<fieldset>\n");
+            out.println("<h1>Page to browse books (Manager)</h1>"
+                    + "		<a href='/Bookstore/browse.do' class='button'>Back to Browse</a>"
+                    + "		<br>"
+                    + "		<fieldset>");
 
             try {
                 //addbooks input field
                 String title = request.getParameter("title");
                 String author = request.getParameter("author");
+                int availableQuantity = 0;
                 int price = 0;
                 int point = 0;
                 if (request.getParameter("price") != null && !request.getParameter("price").equalsIgnoreCase("")) {
@@ -97,10 +94,13 @@ public class addbooks extends HttpServlet {
                 if (request.getParameter("point") != null && !request.getParameter("point").equalsIgnoreCase("")) {
                     point = Integer.parseInt(request.getParameter("point"));
                 }
+                if (request.getParameter("availableQuantity") != null && !request.getParameter("availableQuantity").equalsIgnoreCase("")) {
+                    availableQuantity = Integer.parseInt(request.getParameter("availableQuantity"));
+                }
 
                 if (title != null && !title.equalsIgnoreCase("")
                         && author != null && !author.equalsIgnoreCase("")
-                        && price != 0 && point != 0) {
+                        && price != 0 && point != 0 && availableQuantity != 0) {
 
                     // Register the JDBC driver, open a connection
                     String url = "jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad034_db";
@@ -110,61 +110,54 @@ public class addbooks extends HttpServlet {
                     Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
                     Connection con = DriverManager.getConnection(url, dbLoginId, dbPwd);
 
-                    PreparedStatement pstmt = con.prepareStatement("INSERT INTO [book] ([bookname], [author], [price], [loyalty]) VALUES (?, ?, ?, ?)");
+                    PreparedStatement pstmt = con.prepareStatement("INSERT INTO [book] ([bookname], [author], [price], [loyalty], [stock]) VALUES (?, ?, ?, ?, ?)");
                     pstmt.setString(1, title);
                     pstmt.setString(2, author);
                     pstmt.setInt(3, price);
                     pstmt.setInt(4, point);
+                    pstmt.setInt(5, availableQuantity);
 
                     int rows = pstmt.executeUpdate();
 
                     if (rows > 0) {
                         out.println("<legend>New record is sucessfully created.</legend>");
                         // display the information of the record just added including UID
-
-                        Statement stmt = con.createStatement();
-                        ResultSet rs = stmt.executeQuery("SELECT @@IDENTITY AS [@@IDENTITY]");
-                        if (rs != null && rs.next() != false) {
-                            out.println("<p>UID: " + rs.getInt(1) + "</p>");
-                            rs.close();
-                        }
-                        if (stmt != null) {
-                            stmt.close();
-                        }
-
-                        out.println("<p>Title:" + title + "</p>");
-                        out.println("<p>Author:" + author + "</p>");
-                        out.println("<p>Price:" + price + "</p>");
-                        out.println("<p>Loyalty points:" + point + "</p>");
+                        out.println("<p>Title: " + title + "</p>");
+                        out.println("<p>Author: " + author + "</p>");
+                        out.println("<p>Price: " + price + "</p>");
+                        out.println("<p>Loyalty points: " + point + "</p>");
+                        out.println("<p>Available Quantity: " + availableQuantity + "</p>");
                     } else {
-                        out.println("<legend>ERROR: New record is failed to create.</legend>");
+                        out.println("<legend>ERROR: New record failed to create.</legend>");
                     }
 
                 } else {
                     out.println(
-                            "			<legend>Add New Books</legend>\n"
-                            + "			<h3>Fill in book detail</h3>\n"
-                            + "			<form method='POST' class=\"addBooks\">\n"
-                            + "				<label for=\"title\">Book Title:</label>\n"
-                            + "				<input type=\"text\" name=\"title\" >\n"
-                            + "				<label for=\"author\">Author:</label>\n"
-                            + "				<input type=\"text\" name=\"author\" >\n"
-                            + "				<label for=\"price\">Price:</label>\n"
-                            + "				<input type=\"number\" name=\"price\" >\n"
-                            + "				<label for=\"point\">Loyalty Points:</label>\n"
-                            + "				<input type=\"number\" name=\"point\" >\n"
-                            + "				<input style=\"float:right;\" type=\"submit\" value=\"Add book\">\n"
-                            + "			</form>\n");
+                            "			<legend>Add New Books</legend>"
+                            + "			<h3>Fill in book detail</h3>"
+                            + "			<form method='POST' class='addBooks'>"
+                            + "				<label for='title'>Book Title:</label>"
+                            + "				<input type='text' name='title' >"
+                            + "				<label for='author'>Author:</label>"
+                            + "				<input type='text' name='author' >"
+                            + "				<label for='price'>Price:</label>"
+                            + "				<input type='number' name='price' >"
+                            + "				<label for='point'>Loyalty Points:</label>"
+                            + "				<input type='number' name='point' >"
+                            + "				<label for='point'>Quantity Available:</label>"
+                            + "				<input type='number' name='availableQuantity' >"
+                            + "				<input style='float:right;' type='submit' value='Add book'>"
+                            + "			</form>");
                 }
 
-                out.println("</fieldset>\n");
+                out.println("</fieldset>");
                 //footer
                 out.println("       <br>"
                         + "         <footer>"
-                        + "             <iframe id='bookstorefooter' name='bookstorefooter' src='/Bookstore/iframes/bookstorefooter.jsp' width='100%' height='100px'>"
+                        + "             <iframe  scrolling='no' id='bookstorefooter' name='bookstorefooter' src='/Bookstore/iframes/bookstorefooter.jsp' width='100%' height='100px'>"
                         + "                 [Your user agent does not support frames or is currently configured not to display frames.]"
                         + "             </iframe>"
-                        + "             <iframe id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
+                        + "             <iframe  scrolling='no' id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
                         + "                 [Your user agent does not support frames or is currently configured not to display frames.]"
                         + "             </iframe>"
                         + "         </footer>"

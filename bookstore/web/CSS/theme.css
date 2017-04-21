@@ -1,12 +1,7 @@
-/*
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
-*/
-/* 
-    Created on : 08-Apr-2017, 20:56:14
-    Author     : robertcinca
-*/
+/**
+ *
+ * @author robertcinca
+ */
 
 /* Website Elements */
 * {
@@ -14,12 +9,12 @@ and open the template in the editor.
 }
 body {
     color: #eeeeee;
-    background: #a0a088;
+    background: #7CAAD8;
     padding: 5px;
     margin: 5px;
 }
 h1 {
-    color: #900C3F;
+    color: #C41D49;
     font-size: 24pt;
     text-align: center;
 }
@@ -45,7 +40,7 @@ a:hover {
 
 /* Button Design */
 .button {
-    background-color: blue;
+    background-color: #4B0082;
     color: white;
     margin: 5px;
     border: 5px solid black;
@@ -67,7 +62,7 @@ table, th, td {
     padding: 5px;
     margin: 5px;
     text-align: left;
-    background-color: yellow;
+    background-color: #A0A5CF;
 }
 th {
     background-color: black;
@@ -89,7 +84,7 @@ td a:hover {
 }
 tfoot td{
     background-color: black;
-    color: red;
+    color: #E7D7A1;
     font-weight: bold;
 }
 
@@ -118,13 +113,13 @@ label{
 
 }
 input {
-  float: left;
+    float: left;
 }
 
 /*Menu navigation elements*/
 /* Menu Button */
 .dropbtn {
-    background-color: blue;
+    background-color: #4B0082;
     color: white;
     padding: 16px;
     font-size: 16px;
