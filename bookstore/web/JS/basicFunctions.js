@@ -69,3 +69,19 @@ function checkLoginSyntax(user, pw) {
     }
     return true;
 }
+
+function validatepassword() {
+    var user = document.forms["editAccount"]["username"].value;
+    var pw = document.forms["editAccount"]["password"].value;
+    var pw2 = document.forms["editAccount"]["password2"].value;
+    for (var i = 0; i < pw.length; i++) {
+        if (pw[i] != pw2[i]) {
+            window.alert("Error: Passwords do not match.");
+            return false;
+        }
+    }
+    if (checkLoginSyntax(user, pw) == false)
+        return false;
+
+    return true;
+}
