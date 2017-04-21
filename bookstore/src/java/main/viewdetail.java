@@ -205,7 +205,7 @@ public class viewdetail extends HttpServlet {
                             + "		<p>Password: " + password + "</p>"
                             + "		<p>Loyalty Points: " + loyalty + "</p>"
                             + "		<br>"
-                            //+ "		<a href='/Bookstore/editAccount.do' class='button'>Edit Account</a>"
+                            + "		<a href='/Bookstore/editAccount.do' class='button'>Edit Account</a>"
                             + "</fieldset>");
                 }
                 if (rs3 != null) {
