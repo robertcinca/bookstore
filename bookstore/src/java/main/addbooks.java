@@ -129,7 +129,7 @@ public class addbooks extends HttpServlet {
                         out.println("<p>Price: " + price + "</p>");
                         out.println("<p>Loyalty points: " + point + "</p>");
                         out.println("<p>Available Quantity: " + availableQuantity + "</p>");
-                        out.println("<img alt=\"Picture of a book\" src='"+image_url+"'>");
+                        out.println("<img alt=\"Picture of a book\" src='" + image_url + "'>");
                     } else {
                         out.println("<legend>ERROR: New record failed to create.</legend>");
                     }

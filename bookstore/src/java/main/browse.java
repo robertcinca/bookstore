@@ -142,13 +142,13 @@ public class browse extends HttpServlet {
                         int point = rs.getInt("loyalty");
                         int quantityAvailable = rs.getInt("stock");
                         String image_url = "/Bookstore/IMG/bookCover.png";
-                        if(rs.getString("image")!=null) {
+                        if (rs.getString("image") != null) {
                             image_url = rs.getString("image");
                         }
 
                         out.println("</tr>"
                                 + "		  <tr>"
-                                + "		    <td style=\"text-align: center; vertical-align: middle;\"><img alt=\"Picture of a book\" src='"+image_url+"'></td>"
+                                + "		    <td style=\"text-align: center; vertical-align: middle;\"><img alt=\"Picture of a book\" src='" + image_url + "'></td>"
                                 + "		    <td >"
                                 + "					<h3>" + name + "</h3>"
                                 + "					<p>by " + author + "</p>"
@@ -225,13 +225,13 @@ public class browse extends HttpServlet {
                         int price = rs.getInt("price");
                         int point = rs.getInt("loyalty");
                         String image_url = "/Bookstore/IMG/bookCover.png";
-                        if(rs.getString("image")!=null) {
+                        if (rs.getString("image") != null) {
                             image_url = rs.getString("image");
                         }
 
                         out.println("            		  </tr>"
                                 + "            		  <tr>"
-                                + "            		    <td style=\"text-align: center; vertical-align: middle;\"><img alt=\"Picture of a book\" src='"+image_url+"'></td>"
+                                + "            		    <td style=\"text-align: center; vertical-align: middle;\"><img alt=\"Picture of a book\" src='" + image_url + "'></td>"
                                 + "            		    <td >"
                                 + "            					<h3>" + name + "</h3>"
                                 + "            					<p>by " + author + "</p>"
@@ -551,7 +551,7 @@ public class browse extends HttpServlet {
                             out.println("<p>Price: " + price + "</p>");
                             out.println("<p>Loyalty: " + point + "</p>");
                             out.println("<p>Loyalty: " + availableQuantity + "</p>");
-                            out.println("<img alt=\"Picture of a book\" src='"+image_url+"'>");
+                            out.println("<img alt=\"Picture of a book\" src='" + image_url + "'>");
                         }
                     }
                     result = pstmt.getMoreResults();

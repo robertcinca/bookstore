@@ -23,8 +23,7 @@ window.onclick = function (event) {
     }
 }
 
-// Check user login (fake)
-localstorage = window.sessionStorage;
+// Check user login
 function validateLogin() {
     var user = document.forms["Form"]["j_username"].value;
     var pw = document.forms["Form"]["j_password"].value;
@@ -32,7 +31,7 @@ function validateLogin() {
         return false;
 }
 
-//Check user signup (fake)
+//Check user signup
 function validateSignUp() {
     var user = document.forms["Form2"]["uname"].value;
     var pw = document.forms["Form2"]["psw"].value;
@@ -45,9 +44,6 @@ function validateSignUp() {
     }
     if (checkLoginSyntax(user, pw) == false)
         return false;
-
-    //TODO: create user in DB
-    localstorage.setItem('user', user);
 
     return true;
 }
