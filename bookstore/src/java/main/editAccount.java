@@ -106,23 +106,13 @@ public class editAccount extends HttpServlet {
 
                     Boolean result = pstmt.execute();
 
-                    int count = 0;
-                    do {
-                        if (result) {
-                            count = pstmt.getUpdateCount();
-                            if (count >= 0) {
-                                out.println("<fieldset>\n");
-                                out.println("<legend>The record is sucessfully updated.</legend>");
+                    out.println("<fieldset>\n");
+                    out.println("<legend>The record is sucessfully updated.</legend>");
 
-                                out.println("<p>Username: " + username + "</p>");
-                                out.println("<p>Password: " + password + "</p>");
-                                out.println("</fieldset>\n");
-                            }
-                        } else {
-
-                        }
-                        result = pstmt.getMoreResults();
-                    } while (result || count != -1);
+                    out.println("<p>Username: " + username + "</p>");
+                    out.println("<p>Password: " + password + "</p>");
+                    out.println("</fieldset>\n");
+                    
 
                     if (pstmt != null) {
                         pstmt.close();
