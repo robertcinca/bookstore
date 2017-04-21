@@ -76,7 +76,7 @@ public class addbooks extends HttpServlet {
                     + "            </div>"
                     + "        </div>");
             // Begin Page
-            out.println("<h1>Page to browse books (Manager)</h1>"
+            out.println("<h1>Welcome! You can browse our books here!</h1>"
                     + "		<a href='/Bookstore/browse.do' class='button'>Back to Browse</a>"
                     + "		<br>"
                     + "		<fieldset>");
@@ -97,6 +97,7 @@ public class addbooks extends HttpServlet {
                 if (request.getParameter("availableQuantity") != null && !request.getParameter("availableQuantity").equalsIgnoreCase("")) {
                     availableQuantity = Integer.parseInt(request.getParameter("availableQuantity"));
                 }
+                String image_url = request.getParameter("image");
 
                 if (title != null && !title.equalsIgnoreCase("")
                         && author != null && !author.equalsIgnoreCase("")
@@ -110,12 +111,13 @@ public class addbooks extends HttpServlet {
                     Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
                     Connection con = DriverManager.getConnection(url, dbLoginId, dbPwd);
 
-                    PreparedStatement pstmt = con.prepareStatement("INSERT INTO [book] ([bookname], [author], [price], [loyalty], [stock]) VALUES (?, ?, ?, ?, ?)");
+                    PreparedStatement pstmt = con.prepareStatement("INSERT INTO [book] ([bookname], [author], [price], [loyalty], [stock], [image]) VALUES (?, ?, ?, ?, ?, ?)");
                     pstmt.setString(1, title);
                     pstmt.setString(2, author);
                     pstmt.setInt(3, price);
                     pstmt.setInt(4, point);
                     pstmt.setInt(5, availableQuantity);
+                    pstmt.setString(6, image_url);
 
                     int rows = pstmt.executeUpdate();
 
@@ -127,6 +129,7 @@ public class addbooks extends HttpServlet {
                         out.println("<p>Price: " + price + "</p>");
                         out.println("<p>Loyalty points: " + point + "</p>");
                         out.println("<p>Available Quantity: " + availableQuantity + "</p>");
+                        out.println("<img alt=\"Picture of a book\" src='"+image_url+"'>");
                     } else {
                         out.println("<legend>ERROR: New record failed to create.</legend>");
                     }
@@ -146,6 +149,8 @@ public class addbooks extends HttpServlet {
                             + "				<input type='number' name='point' >"
                             + "				<label for='point'>Quantity Available:</label>"
                             + "				<input type='number' name='availableQuantity' >"
+                            + "             <label for=\"image\">Image URL:</label>\n"
+                            + "				<input type=\"text\" name=\"image\" >\n"
                             + "				<input style='float:right;' type='submit' value='Add book'>"
                             + "			</form>");
                 }

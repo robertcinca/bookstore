@@ -7,6 +7,10 @@ package main;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -31,6 +35,7 @@ public class editAccount extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            try{
             //Begin Header
             out.println(" <!DOCTYPE html>"
                     + "<html lang='en'>"
@@ -47,6 +52,7 @@ public class editAccount extends HttpServlet {
                     + "        <link href='/Bookstore/CSS/theme.css' rel='stylesheet' type='text/css'/>"
                     + "        <link href='/Bookstore/CSS/browse.css' rel='stylesheet' type='text/css'/>"
                     // <!-- JS Pages -->"
+                    + "        <script src='/Bookstore/JS/basicFunctions.js' type='text/javascript'></script>"
                     + "    </head>"
                     + "    <body>"
                     + "        <header>"
@@ -71,25 +77,84 @@ public class editAccount extends HttpServlet {
                     + "            </div>"
                     + "        </div>");
             // Begin Page
-            out.println("       <h1>Account Detail</h1>"
-                    + "		<a href='/Bookstore/viewdetail.do' class='button'>View Detail</a>"
-                    + "		<br>"
-                    + "		<!--user detail-->"
-                    + "		<h2>Account Detail</h2>"
-                    + "<fieldset>"
-                    + "	<form>"
-                    + "		<h3>User Info</h3>"
-                    + "		<label for='username'>Username: </label>"
-                    + "		<input type='text' name='username' value ='" + request.getRemoteUser() + "' disabled>"
-                    + "		<label for='password'>Password:</label>"
-                    + "		<input type='text' name='password' >"
-                    + "		<label for='password2'>Confirm Password:</label>"
-                    + "		<input type='text' name='password2' >"
-                    + "		<h3><br></h3>"
-                    + "		<a href='/Bookstore/viewdetail.do' class='button'>Back to View Detail</a>"
-                    + "		<a href='/Bookstore/viewdetail.do' class='button'>Confirm</a>"
-                    + "	</form>"
-                    + "</fieldset>");
+                out.println("       <h1>Account Detail</h1>\n"
+                        + "		<a href=\"/Bookstore/viewdetail.do\" class=\"button\">View Detail</a>\n"
+                        + "		<br>\n"
+                        + "\n"
+                        + "		<!--user detail-->\n"
+                        + "\n"
+                        + "		<h2>Account Detail</h2>\n"
+                        + "\n");
+
+
+
+                String username = request.getRemoteUser();
+                String password = request.getParameter("password");
+
+                if(username != null && !username.equalsIgnoreCase("")
+                    && password != null && !password.equalsIgnoreCase("")) {
+
+                    // Register the JDBC driver, open a connection
+
+                    String url = "jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad034_db";
+                    String dbLoginId = "aiad034";
+                    String dbPwd = "aiad034";
+
+                    Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+                    Connection con = DriverManager.getConnection(url, dbLoginId, dbPwd);
+
+                    PreparedStatement pstmt = con.prepareStatement("UPDATE [tomcat_users] SET password = ? WHERE user_name = " + username);
+
+                    pstmt.setString(1, password);
+
+                    Boolean result = pstmt.execute();
+
+                    int count = 0;
+                    do {
+                        if (result) {
+                            count = pstmt.getUpdateCount();
+                            if (count >= 0) {
+                                out.println("<fieldset>\n");
+                                out.println("<legend>The record is sucessfully updated.</legend>");
+
+                                out.println("<p>Username: " + username + "</p>");
+                                out.println("<p>Password: " + password + "</p>");
+                                out.println("</fieldset>\n");
+                            }
+                        } else {
+
+                        }
+                        result = pstmt.getMoreResults();
+                    } while (result || count != -1);
+
+                    if (pstmt != null) {
+                        pstmt.close();
+                    }
+                    if (con != null) {
+                        con.close();
+                    }
+
+                }
+                else {
+                    out.println("<fieldset>\n"
+                    + "\n"
+                    + "	<form method='POST' id='editAccount' action='" + request.getRequestURI() + "' onsubmit='return validatepassword()' >\n"
+                    + "		<h3>User Info</h3>\n"
+                    + "		<label for=\"username\">Username: </label>\n"
+                    + "		<input type=\"text\" name=\"username\" value ='" + request.getRemoteUser() + "' disabled>\n"
+                    + "		<label for=\"password\">Password:</label>\n"
+                    + "		<input type=\"text\" name=\"password\" >\n"
+                    + "		<label for=\"password2\">Confirm Password:</label>\n"
+                    + "		<input type=\"text\" name=\"password2\" >\n"
+                    + "		<h3><br></h3>\n"
+                    + "\n"
+                    + "		<a href=\"/Bookstore/viewdetail.do\" class=\"button\">Back to View Detail</a>\n"
+                    + "		<input class=\"button\" type='submit' value='Confirm' />"
+                    + "\n"
+                    + "\n"
+                    + "	</form>\n"
+                    + "</fieldset>\n");
+                }
             //footer
             out.println("       <br>"
                     + "         <footer>"
@@ -102,7 +167,11 @@ public class editAccount extends HttpServlet {
                     + "         </footer>"
                     + "    </body>"
                     + "</html>");
-
+            }catch (ClassNotFoundException | SQLException e) {
+                out.println("<div style='color: red'>" + e.toString() + "</div>");
+            }finally {
+                    out.close();
+            }
         }
     }
 

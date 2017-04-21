@@ -141,10 +141,14 @@ public class browse extends HttpServlet {
                         int price = rs.getInt("price");
                         int point = rs.getInt("loyalty");
                         int quantityAvailable = rs.getInt("stock");
+                        String image_url = "/Bookstore/IMG/bookCover.png";
+                        if(rs.getString("image")!=null) {
+                            image_url = rs.getString("image");
+                        }
 
                         out.println("</tr>"
                                 + "		  <tr>"
-                                + "		    <td style='text-align: center; vertical-align: middle;'><img alt='Picture of a book' src='/Bookstore/IMG/bookCover.png'></td>"
+                                + "		    <td style=\"text-align: center; vertical-align: middle;\"><img alt=\"Picture of a book\" src='"+image_url+"'></td>"
                                 + "		    <td >"
                                 + "					<h3>" + name + "</h3>"
                                 + "					<p>by " + author + "</p>"
@@ -220,10 +224,14 @@ public class browse extends HttpServlet {
                         String author = rs.getString("author");
                         int price = rs.getInt("price");
                         int point = rs.getInt("loyalty");
+                        String image_url = "/Bookstore/IMG/bookCover.png";
+                        if(rs.getString("image")!=null) {
+                            image_url = rs.getString("image");
+                        }
 
                         out.println("            		  </tr>"
                                 + "            		  <tr>"
-                                + "            		    <td style='text-align: center; vertical-align: middle;'><img alt='Picture of a book' src='/Bookstore/IMG/bookCover.png'></td>"
+                                + "            		    <td style=\"text-align: center; vertical-align: middle;\"><img alt=\"Picture of a book\" src='"+image_url+"'></td>"
                                 + "            		    <td >"
                                 + "            					<h3>" + name + "</h3>"
                                 + "            					<p>by " + author + "</p>"
@@ -513,17 +521,19 @@ public class browse extends HttpServlet {
             if (request.getParameter("availableQuantity") != null && !request.getParameter("availableQuantity").equalsIgnoreCase("")) {
                 availableQuantity = Integer.parseInt(request.getParameter("availableQuantity"));
             }
+            String image_url = request.getParameter("image");
 
             if (title != null && !title.equalsIgnoreCase("")
                     && author != null && !author.equalsIgnoreCase("")
                     && price != 0 && point != 0 && availableQuantity != 0) {
 
-                PreparedStatement pstmt = con.prepareStatement("UPDATE [book] SET bookname = ?, author = ?, price = ?, loyalty = ?, stock = ? WHERE ID_book = " + bookid);
+                PreparedStatement pstmt = con.prepareStatement("UPDATE [book] SET bookname = ?, author = ?, price = ?, loyalty = ?, stock = ?, image = ? WHERE ID_book = " + bookid);
                 pstmt.setString(1, title);
                 pstmt.setString(2, author);
                 pstmt.setInt(3, price);
                 pstmt.setInt(4, point);
                 pstmt.setInt(5, availableQuantity);
+                pstmt.setString(6, image_url);
 
                 Boolean result = pstmt.execute();
 
@@ -541,6 +551,7 @@ public class browse extends HttpServlet {
                             out.println("<p>Price: " + price + "</p>");
                             out.println("<p>Loyalty: " + point + "</p>");
                             out.println("<p>Loyalty: " + availableQuantity + "</p>");
+                            out.println("<img alt=\"Picture of a book\" src='"+image_url+"'>");
                         }
                     }
                     result = pstmt.getMoreResults();
@@ -582,6 +593,8 @@ public class browse extends HttpServlet {
                     out.println("<input name='point' type='number' size='8' maxlength='8' value='" + point + "' /></p>");
                     out.println("<label for='point'>Quantity Available: </label>");
                     out.println("<input name='availableQuantity' type='number' size='8' maxlength='8' value='" + availableQuantity + "' /></p>");
+                    out.println("<label for='image'>Book Cover: </label>");
+                    out.println("<input name='image' type='text' size='25' maxlength='255' value='" + image_url + "' /></p>");
                     out.println("<input style='float:right;' type='submit' value='Update!' />");
                     out.println("</form>");
                     out.println("</fieldset>");
