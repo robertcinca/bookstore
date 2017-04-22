@@ -125,7 +125,7 @@ public class viewcart extends HttpServlet {
                 }
 
                 // Update quantity if changed
-                String updateQuantity = request.getParameter("bookquantity");
+                String updateQuantity = request.getParameter("quantity");
                 String updateBook = request.getParameter("bookname2");
                 if (updateQuantity != null) {
                     try (Connection con = DriverManager.getConnection(url, dbLoginId, dbPwd)) {
@@ -175,9 +175,9 @@ public class viewcart extends HttpServlet {
                                         + "<td>" + bookname + "</td>"
                                         + "<td>" + author + "</td>"
                                         + "<td>"
-                                        + "     <form method='POST'>"
+                                        + "     <form name='AddToCartForm' id='AddToCartForm' onsubmit='return validateAddToCart()' method='POST'>"
                                         + "     <input type='hidden' value='" + bookname + "' name='bookname2' id='bookname2'  />"
-                                        + "     <input type='number' name='bookquantity' id='bookquantity' value='" + quantity + "' min='1' max='" + quantityAvailable + "'/>"
+                                        + "     <input type='number' name='quantity' id='quantity' value='" + quantity + "' min='1' max='" + quantityAvailable + "'/>"
                                         + "     <input type='submit' value='Change Quantity'>"
                                         + "     </form>"
                                         + "</td>"
