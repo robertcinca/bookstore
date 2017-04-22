@@ -224,7 +224,7 @@ public class payment extends HttpServlet {
                             + "<input type='hidden' value='payPoints' name='payPoints' id='payPoints' />"
                             + "<input type='hidden' value=" + totalAmount + " name='totalAmount' id='totalAmount' />"
                             + "<input type='hidden' value=" + totalLoyalty + " name='totalLoyalty' id='totalLoyalty' />"
-                            + "<button type='submit' class='button'>Pay by Points: </button>"
+                            + "<button type='submit' class='button'>Pay by Points</button>"
                             + "</form>");
                 }
                 out.println("</fieldset>");

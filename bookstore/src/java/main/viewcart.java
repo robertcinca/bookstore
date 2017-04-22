@@ -162,8 +162,9 @@ public class viewcart extends HttpServlet {
                                 int price = rs2.getInt("price");
                                 int quantityAvailable = rs2.getInt("stock");
                                 int totalPrice = price * quantity;
+                                int totalPoints = loyalty * quantity;
                                 totalAmount += totalPrice;
-                                totalLoyalty += loyalty;
+                                totalLoyalty += totalPoints;
                                 out.println("</tr>"
                                         + "<td>"
                                         + "     <form method='POST'>"
@@ -182,7 +183,7 @@ public class viewcart extends HttpServlet {
                                         + "</td>"
                                         + "<td>" + loyalty + "</td>"
                                         + "<td>" + price + "</td>"
-                                        + "<td>" + totalPrice + "</td>"
+                                        + "<td>" + totalAmount + "</td>"
                                         + "</tr>"
                                 );
                             }

@@ -140,7 +140,7 @@ public class refund extends HttpServlet {
                         }
                         // Update user loyalty points if changed
                         PreparedStatement pstmt3 = con.prepareStatement("UPDATE tomcat_users_loyalty SET loyalty = loyalty - ? WHERE user_name = ?");
-                        pstmt3.setInt(1, purchase_loyalty);
+                        pstmt3.setInt(1, purchase_quantity * purchase_loyalty);
                         pstmt3.setString(2, purchase_username);
                         // execute the SQL statement
                         int rows2 = pstmt3.executeUpdate();

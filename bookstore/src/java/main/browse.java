@@ -409,9 +409,11 @@ public class browse extends HttpServlet {
 
                         out.println("<p>Book Name : " + name + "</p>");
                         out.println("<p>Author : " + author + "</p>");
-                        out.println("<p>Price : " + price + "</p>");
+                        out.println("<p>Unit Price: " + price + "</p>");
+                        out.println("<p>Unit Loyalty : " + point + "</p>");
                         out.println("<p>Quantity : " + quantity + "</p>");
-                        out.println("<p>Loyalty : " + point + "</p>");
+                        out.println("<p>Total Price: " + price * quantity + "</p>");
+                        out.println("<p>Total Loyalty : " + point * quantity + "</p>");
                         out.println("</fieldset>");
 
                         if (rs2 != null) {
