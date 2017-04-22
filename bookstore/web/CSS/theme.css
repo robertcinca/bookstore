@@ -10,8 +10,36 @@
 body {
     color: #eeeeee;
     background: #7CAAD8;
-    padding: 5px;
-    margin: 5px;
+    padding: 15px;
+    margin: 0px;
+    border-right-style: outset;
+    border-left-style: inset;
+    border-right-width: 80px;
+    border-left-width: 80px;
+    border-color: brown;
+}
+/*below certain width deal with constrained screen size*/
+@media (max-width: 730px) {
+    body {
+        border: none;
+        padding: 5px;
+        margin: 5px;
+    }
+}
+header {
+    border: 10px solid #CDCDCD;
+    padding: 2px;
+    margin: 2px;
+}
+header iframe {
+    width: 100%;
+}
+footer {
+    border: 10px solid #CDCDCD;
+    margin: 2px;
+}
+footer #disclaimer {
+    border-top: 10px solid #CDCDCD;
 }
 h1 {
     color: #C41D49;

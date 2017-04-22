@@ -51,7 +51,7 @@ public class login extends HttpServlet {
                     + "    </head>"
                     + "    <body>"
                     + "        <header>"
-                    + "            <iframe frameborder='0' scrolling='no' id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
+                    + "            <iframe frameborder='0' scrolling='no' id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp'>"
                     + "                [Your user agent does not support frames or is currently configured not to display frames.]"
                     + "            </iframe>"
                     + "        </header>"
@@ -71,11 +71,18 @@ public class login extends HttpServlet {
             out.println("  <h1>Welcome to our Online Bookstore!</h1>");
 
             //simple login form
-            out.println("<form name='Form' id='Form' action='j_security_check' onsubmit='return validateLogin()' method='POST'>");
-            out.println("  <p>User name: <input type='text' name='j_username' id='j_username' /></p>");
-            out.println("  <p>Password: <input type='password' name='j_password' id='j_password' /></p>");
-            out.println("  <p><button style='width:100%;font-size:18px' type='submit'>Login</button></p>");
-            out.println("</form>");
+            out.println("<form name='Form' id='Form' class='modal-content animate' action='j_security_check' onsubmit='return validateLogin()' method='POST'>"
+                    + "             <div class='imgcontainer'>"
+                    + "                 <img src='/Bookstore/IMG/welcome.png' alt='sign up' class='loginimg'>"
+                    + "             </div>"
+                    + "             <div class='container'>"
+                    + "                 <label><b>Your Username:</b></label>"
+                    + "                 <input type='text' placeholder='USERNAME' name='j_username' id='j_username' required>"
+                    + "                 <label><b>Your Password:</b></label>"
+                    + "                 <input type='password' placeholder='PASSWORD' name='j_password' id='j_password' required>"
+                    + "                 <button style='width:100%; font-size:18px' type='submit'>Login</button>"
+                    + "             </div>"
+                    + "</form>");
 
             //sign up page
             out.println("<a href='/Bookstore/signup' class='button' style='float:left;'>Sign Up!</a>");

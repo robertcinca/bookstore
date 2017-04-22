@@ -50,7 +50,7 @@ public class logout extends HttpServlet {
                     + "        <title>Welcome to our Online Bookstore!</title>"
                     // <!-- CSS Pages -->"
                     + "        <link href='/Bookstore/CSS/theme.css' rel='stylesheet' type='text/css'/>"
-                    + "        <link href='/Bookstore/CSS/login.css' rel='stylesheet' type='text/css'/>"
+                    + "        <link href='/Bookstore/CSS/logout.css' rel='stylesheet' type='text/css'/>"
                     // <!-- JS Pages -->"
                     + "        <script src='/Bookstore/JS/basicFunctions.js' type='text/javascript'></script>"
                     + "    </head>"
@@ -74,10 +74,10 @@ public class logout extends HttpServlet {
                     + "        </div>");
             // Begin Page
             out.println("<h1>Logout Page</h1>");
-            out.println("<div class='column-left'>");
+            out.println("<div class='column-left-logout'>");
             out.println("<p>You have successfully logged out!</p>");
             out.println("<p><a class='button' href='browse.do'>Return to Login Page</a></p>");
-            out.println("</div><div class='column-right'>");
+            out.println("</div><div class='column-right-logout'>");
             out.println("<img src='/Bookstore/IMG/logoutImage.gif' alt='Goodbye!' class='logoutimg'>");
             out.println("</div>");
 

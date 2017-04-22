@@ -17,7 +17,7 @@
 
         <!-- CSS Pages -->
         <link href="/Bookstore/CSS/theme.css" rel="stylesheet">
-        <link href="/Bookstore/CSS/Bookstore.css" rel="stylesheet">
+        <link href="/Bookstore/CSS/bookstore.css" rel="stylesheet">
 
         <!-- Open Links Outside iFrame -->
         <base target="_parent">
