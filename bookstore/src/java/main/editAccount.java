@@ -77,14 +77,9 @@ public class editAccount extends HttpServlet {
                         + "            </div>"
                         + "        </div>");
                 // Begin Page
-                out.println("       <h1>Account Detail</h1>\n"
-                        + "		<a href=\"/Bookstore/viewdetail.do\" class=\"button\">View Detail</a>\n"
-                        + "		<br>\n"
-                        + "\n"
-                        + "		<!--user detail-->\n"
-                        + "\n"
-                        + "		<h2>Account Detail</h2>\n"
-                        + "\n");
+                out.println("       <h1>Edit Account Details</h1>\n"
+                        + "		<a href='/Bookstore/viewdetail.do' class='button'>View Details</a>"
+                        + "		<br>");
 
                 String username = request.getRemoteUser();
                 String password = request.getParameter("password");
@@ -100,13 +95,12 @@ public class editAccount extends HttpServlet {
                     Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
                     Connection con = DriverManager.getConnection(url, dbLoginId, dbPwd);
 
-                    PreparedStatement pstmt = con.prepareStatement("UPDATE [tomcat_users] SET password = ? WHERE user_name = " + username);
-
+                    PreparedStatement pstmt = con.prepareStatement("UPDATE tomcat_users SET password = ? WHERE user_name = '" + username + "'");
                     pstmt.setString(1, password);
 
                     Boolean result = pstmt.execute();
 
-                    out.println("<fieldset>\n");
+                    out.println("<fieldset>");
                     out.println("<legend>The record is sucessfully updated.</legend>");
 
                     out.println("<p>Username: " + username + "</p>");
@@ -122,22 +116,18 @@ public class editAccount extends HttpServlet {
                     }
 
                 } else {
-                    out.println("<fieldset>\n"
-                            + "\n"
-                            + "	<form method='POST' id='editAccount' action='" + request.getRequestURI() + "' onsubmit='return validatepassword()' >\n"
+                    out.println("<fieldset>"
+                            + "	<form method='POST' id='editAccount' action='" + request.getRequestURI() + "' onsubmit='return validatepassword()' >"
                             + "		<h3>User Info</h3>\n"
-                            + "		<label for=\"username\">Username: </label>\n"
-                            + "		<input type=\"text\" name=\"username\" value ='" + request.getRemoteUser() + "' disabled>\n"
-                            + "		<label for=\"password\">Password:</label>\n"
+                            + "		<label for=\"username\">Username: </label>"
+                            + "		<input type=\"text\" name=\"username\" value ='" + request.getRemoteUser() + "' disabled>"
+                            + "		<label for=\"password\">Password:</label>"
                             + "		<input type=\"text\" name=\"password\" >\n"
                             + "		<label for=\"password2\">Confirm Password:</label>\n"
                             + "		<input type=\"text\" name=\"password2\" >\n"
-                            + "		<h3><br></h3>\n"
-                            + "\n"
-                            + "		<a href=\"/Bookstore/viewdetail.do\" class=\"button\">Back to View Detail</a>\n"
+                            + "		<h3><br></h3>"
+                            + "		<a href=\"/Bookstore/viewdetail.do\" class=\"button\">Back to View Details</a>\n"
                             + "		<input class=\"button\" type='submit' value='Confirm' />"
-                            + "\n"
-                            + "\n"
                             + "	</form>\n"
                             + "</fieldset>\n");
                 }
