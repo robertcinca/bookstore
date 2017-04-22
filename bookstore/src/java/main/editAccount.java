@@ -77,9 +77,9 @@ public class editAccount extends HttpServlet {
                         + "            </div>"
                         + "        </div>");
                 // Begin Page
-                out.println("       <h1>Edit Account Details</h1>\n"
+                out.println("       <h1>Edit Account Details</h1>"
                         + "		<a href='/Bookstore/viewdetail.do' class='button'>View Details</a>"
-                        + "		<br>");
+                        + "		<h3></h3>");
 
                 String username = request.getRemoteUser();
                 String password = request.getParameter("password");
@@ -105,8 +105,7 @@ public class editAccount extends HttpServlet {
 
                     out.println("<p>Username: " + username + "</p>");
                     out.println("<p>Password: " + password + "</p>");
-                    out.println("</fieldset>\n");
-                    
+                    out.println("</fieldset>");
 
                     if (pstmt != null) {
                         pstmt.close();
@@ -118,18 +117,18 @@ public class editAccount extends HttpServlet {
                 } else {
                     out.println("<fieldset>"
                             + "	<form method='POST' id='editAccount' action='" + request.getRequestURI() + "' onsubmit='return validatepassword()' >"
-                            + "		<h3>User Info</h3>\n"
-                            + "		<label for=\"username\">Username: </label>"
-                            + "		<input type=\"text\" name=\"username\" value ='" + request.getRemoteUser() + "' disabled>"
-                            + "		<label for=\"password\">Password:</label>"
-                            + "		<input type=\"text\" name=\"password\" >\n"
-                            + "		<label for=\"password2\">Confirm Password:</label>\n"
-                            + "		<input type=\"text\" name=\"password2\" >\n"
+                            + "		<h3>You can change your password here:</h3>"
+                            + "		<label for='username'>Username: </label>"
+                            + "		<input type='text' name='username' value ='" + request.getRemoteUser() + "' disabled>"
+                            + "		<label for='password'>Password:</label>"
+                            + "		<input type='password' name='password' >"
+                            + "		<label for='password2'>Confirm Password:</label>"
+                            + "		<input type='password' name='password2' >"
                             + "		<h3><br></h3>"
-                            + "		<a href=\"/Bookstore/viewdetail.do\" class=\"button\">Back to View Details</a>\n"
-                            + "		<input class=\"button\" type='submit' value='Confirm' />"
-                            + "	</form>\n"
-                            + "</fieldset>\n");
+                            + "		<a href='/Bookstore/viewdetail.do' class='button'>Back to View Details</a>"
+                            + "		<input class='button' type='submit' value='Confirm' />"
+                            + "	</form>"
+                            + "</fieldset>");
                 }
                 //footer
                 out.println("       <br>"

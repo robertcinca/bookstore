@@ -173,7 +173,7 @@ public class viewdetail extends HttpServlet {
                     }
                 }
                 //user detail
-                out.print("		</table>\n"
+                out.print("		</table>"
                         + "		<!--user detail-->"
                         + "		<h2>Account Details</h2>"
                         + "             <fieldset>"

@@ -71,7 +71,7 @@ function validatepassword() {
     var pw = document.forms["editAccount"]["password"].value;
     var pw2 = document.forms["editAccount"]["password2"].value;
 
-    if(pw.length!=pw2.length){
+    if (pw.length != pw2.length) {
         window.alert("Error: Passwords do not match.");
         return false;
     }

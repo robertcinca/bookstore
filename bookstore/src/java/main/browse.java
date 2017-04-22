@@ -104,7 +104,7 @@ public class browse extends HttpServlet {
             out.println("              </ul>"
                     + "            </div>"
                     + "        </div>"
-                    + "<h1>Welcome! You can browse our books here!</h1>");
+                    + "<h1>Welcome " + request.getRemoteUser() + "! You can browse our books here!</h1>");
             // Begin Page
             if (request.isUserInRole("sprole") || request.isUserInRole("guest")) {
                 //book list (customer)
@@ -148,7 +148,7 @@ public class browse extends HttpServlet {
 
                         out.println("</tr>"
                                 + "		  <tr>"
-                                + "		    <td style=\"text-align: center; vertical-align: middle;\"><img alt=\"Picture of a book\" src='" + image_url + "'></td>"
+                                + "		    <td style='text-align: center; vertical-align: middle;'><img alt='Picture of a book' src='" + image_url + "'></td>"
                                 + "		    <td >"
                                 + "					<h3>" + name + "</h3>"
                                 + "					<p>by " + author + "</p>"
@@ -232,7 +232,7 @@ public class browse extends HttpServlet {
 
                         out.println("            		  </tr>"
                                 + "            		  <tr>"
-                                + "            		    <td style=\"text-align: center; vertical-align: middle;\"><img alt=\"Picture of a book\" src='" + image_url + "'></td>"
+                                + "            		    <td style='text-align: center; vertical-align: middle;'><img alt='Picture of a book' src='" + image_url + "'></td>"
                                 + "            		    <td >"
                                 + "            					<h3>" + name + "</h3>"
                                 + "            					<p>by " + author + "</p>"
@@ -552,7 +552,7 @@ public class browse extends HttpServlet {
                             out.println("<p>Price: " + price + "</p>");
                             out.println("<p>Loyalty: " + point + "</p>");
                             out.println("<p>Loyalty: " + availableQuantity + "</p>");
-                            out.println("<img alt=\"Picture of a book\" src='" + image_url + "'>");
+                            out.println("<img alt='Picture of a book' src='" + image_url + "'>");
                         }
                     }
                     result = pstmt.getMoreResults();
