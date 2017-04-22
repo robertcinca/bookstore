@@ -51,9 +51,6 @@ h2 {
     font-size: 18pt;
     text-align: center;
 }
-p {
-    text-align: justify
-}
 /* Link hover feature */
 a {
     display: block;
