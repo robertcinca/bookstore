@@ -583,6 +583,9 @@ public class browse extends HttpServlet {
                     price = rs1.getInt("price");
                     point = rs1.getInt("loyalty");
                     availableQuantity = rs1.getInt("stock");
+                    if (rs1.getString("image") != null) {
+                            image_url = rs1.getString("image");
+                        }
 
                     out.println("<fieldset>");
                     out.println("<legend>Please fill in the form</legend>");
