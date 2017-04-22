@@ -48,7 +48,7 @@ public class viewdetail extends HttpServlet {
                         + "        <meta name='title' content='Online Bookstore'>"
                         + "        <meta name='description' content='An online marketplace for buying books.'>"
                         // <!-- Page Title -->"
-                        + "        <title>Welcome to our Online Bookstore!</title>"
+                        + "        <title>Your Account Details</title>"
                         // <!-- CSS Pages -->"
                         + "        <link href='/Bookstore/CSS/theme.css' rel='stylesheet' type='text/css'/>"
                         + "        <link href='/Bookstore/CSS/browse.css' rel='stylesheet' type='text/css'/>"

@@ -74,7 +74,7 @@ public class browse extends HttpServlet {
                     + "        <meta name='title' content='Online Bookstore'>"
                     + "        <meta name='description' content='An online marketplace for buying books.'>"
                     // <!-- Page Title -->"
-                    + "        <title>Welcome to our Online Bookstore!</title>"
+                    + "        <title>Browse our Books!</title>"
                     // <!-- CSS Pages -->"
                     + "        <link href='/Bookstore/CSS/theme.css' rel='stylesheet' type='text/css'/>"
                     + "        <link href='/Bookstore/CSS/browse.css' rel='stylesheet' type='text/css'/>"
@@ -151,10 +151,10 @@ public class browse extends HttpServlet {
                                 + "		  <tr>"
                                 + "		    <td style='text-align: center; vertical-align: middle;'><img alt='Picture of a book' src='" + image_url + "'></td>"
                                 + "		    <td >"
-                                + "					<h3>" + name + "</h3>"
-                                + "					<p>by " + author + "</p>"
+                                + "					<h3 style='color: #E7D7A1;'>" + name + "</h3>"
+                                + "					<p style='font-style: italic;'>by " + author + "</p>"
                                 + "					<p>Price: HKD " + price + "</p>"
-                                + "					<p>Loyalty Point: " + point + "</p>"
+                                + "					<p>Loyalty Points: " + point + "</p>"
                                 + "					<form method='POST' name='AddToCartForm' id='AddToCartForm' onsubmit='return validateAddToCart()' class='addToCart'>"
                                 + "                                             <input name='bookid' type='hidden' value='" + id + "' />"
                                 + "						<label for='Quantity'>Quantity:</label>"
@@ -235,10 +235,10 @@ public class browse extends HttpServlet {
                                 + "            		  <tr>"
                                 + "            		    <td style='text-align: center; vertical-align: middle;'><img alt='Picture of a book' src='" + image_url + "'></td>"
                                 + "            		    <td >"
-                                + "            					<h3>" + name + "</h3>"
-                                + "            					<p>by " + author + "</p>"
+                                + "					<h3 style='color: #E7D7A1;'>" + name + "</h3>"
+                                + "					<p style='font-style: italic;'>by " + author + "</p>"
                                 + "            					<p>Price: HKD " + price + "</p>"
-                                + "            					<p>Loyalty Point: " + point + "</p>"
+                                + "            					<p>Loyalty Points: " + point + "</p>"
                                 + "            					<form method='POST' class='manageButton'>"
                                 + "                                                     <input name='bookid' type='hidden' value='" + id + "' />"
                                 + "            						<input name='action' type='submit' value='Change'>"
@@ -598,7 +598,7 @@ public class browse extends HttpServlet {
                     out.println("<input name='author' type='text' size='25' maxlength='255' value='" + author + "' /></p>");
                     out.println("<label for='price'>Price: </label>");
                     out.println("<input name='price' type='number' size='8' maxlength='8' value='" + price + "' /></p>");
-                    out.println("<label for='point'>Loyalty Point: </label>");
+                    out.println("<label for='point'>Loyalty Points: </label>");
                     out.println("<input name='point' type='number' size='8' maxlength='8' value='" + point + "' /></p>");
                     out.println("<label for='point'>Quantity Available: </label>");
                     out.println("<input name='availableQuantity' type='number' size='8' maxlength='8' value='" + availableQuantity + "' /></p>");

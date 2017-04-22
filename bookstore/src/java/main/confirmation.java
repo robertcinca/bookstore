@@ -51,7 +51,7 @@ public class confirmation extends HttpServlet {
                     + "        <meta name='title' content='Online Bookstore'>"
                     + "        <meta name='description' content='An online marketplace for buying books.'>"
                     // <!-- Page Title -->"
-                    + "        <title>Welcome to our Online Bookstore!</title>"
+                    + "        <title>Book Purchase Confirmation</title>"
                     // <!-- CSS Pages -->"
                     + "        <link href='/Bookstore/CSS/theme.css' rel='stylesheet' type='text/css'/>"
                     // <!-- JS Pages -->"

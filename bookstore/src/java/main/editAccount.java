@@ -47,7 +47,7 @@ public class editAccount extends HttpServlet {
                         + "        <meta name='title' content='Online Bookstore'>"
                         + "        <meta name='description' content='An online marketplace for buying books.'>"
                         // <!-- Page Title -->"
-                        + "        <title>Welcome to our Online Bookstore!</title>"
+                        + "        <title>Edit Your Account</title>"
                         // <!-- CSS Pages -->"
                         + "        <link href='/Bookstore/CSS/theme.css' rel='stylesheet' type='text/css'/>"
                         + "        <link href='/Bookstore/CSS/browse.css' rel='stylesheet' type='text/css'/>"
