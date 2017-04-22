@@ -7,12 +7,24 @@
     width: 100px;
 }
 
-.addToCart{
+.addToCart {
     display: inline-block;
     float: right;
 }
 
-.addToCart label {
+.addToCart label{
     width: auto;
-    padding-right: 10px;
+    padding-top: 10px;
+}
+
+.addToCart input {
+    width: auto;
+    font-size: 20px;
+    color: blue;
+}
+
+.manageButton input {
+    width: auto;
+    font-size: 20px;
+    color: blue;
 }
