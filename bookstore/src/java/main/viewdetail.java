@@ -201,10 +201,13 @@ public class viewdetail extends HttpServlet {
                     String role = rs5.getString("role_name");
 
                     out.print("		<h3>User Info</h3>"
-                            + "		<p>Username: " + username + "</p>"
-                            + "		<p>Password: " + password + "</p>"
-                            + "		<p>Loyalty Points: " + loyalty + "</p>"
-                            + "		<br>"
+                            + "		<label for='username'>Username:</label>"
+                            + "		<input type='text' name='username' value='" + username + "' disabled>"
+                            + "		<label for='password'>Password:</label>"
+                            + "		<input type='password' name='password' value='" + password + "' disabled>"
+                            + "		<label for='loyalty'>Loyalty Points:</label>"
+                            + "		<input type='text' name='loyalty' value='" + loyalty + "' disabled>"
+                            + "		<br style='clear:both'>"
                             + "		<a href='/Bookstore/editAccount.do' class='button'>Edit Account</a>"
                             + "</fieldset>");
                 }

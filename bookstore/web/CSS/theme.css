@@ -158,8 +158,9 @@ input {
 }
 /* Positioning of Menu */
 .dropdown {
-    margin: 0;
+    margin: 5px;
     padding: 0;
+    float: left;
 }
 /* Dropdown Content (Hidden by Default) */
 .dropdown-content {
