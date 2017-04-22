@@ -74,8 +74,12 @@ public class logout extends HttpServlet {
                     + "        </div>");
             // Begin Page
             out.println("<h1>Logout Page</h1>");
+            out.println("<div class='column-left'>");
             out.println("<p>You have successfully logged out!</p>");
             out.println("<p><a class='button' href='browse.do'>Return to Login Page</a></p>");
+            out.println("</div><div class='column-right'>");
+            out.println("<img src='/Bookstore/IMG/logoutImage.gif' alt='Goodbye!' class='logoutimg'>");
+            out.println("</div>");
 
             // Delete all entries from cart
             // Register the JDBC driver, open a connection

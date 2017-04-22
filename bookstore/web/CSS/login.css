@@ -54,6 +54,24 @@ img.avatar {
     border-radius: 50%;
 }
 
+img.logoutimg {
+    width: 100%;
+    max-height: 300px;
+    border-radius: 20%;
+    float: right;
+}
+
+.column-left{ 
+    float: right; 
+    width: 45%; 
+    margin: 5%;
+}
+.column-right{ 
+    float: left; 
+    width: 40%; 
+    margin-bottom: 20pt;
+}
+
 .container {
     padding: 16px;
 }
