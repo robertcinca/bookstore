@@ -126,7 +126,7 @@ public class editAccount extends HttpServlet {
                             + "		<input type='password' name='password2' required>"
                             + "		<h3><br></h3>"
                             + "		<a href='/Bookstore/viewdetail.do' class='button'>Back to View Details</a>"
-                            + "		<input class='button' type='submit' value='Confirm' />"
+                            + "		<button class='button' style='float:left;' type='submit' value='Confirm'>Confirm</button>"
                             + "	</form>"
                             + "</fieldset>");
                 }

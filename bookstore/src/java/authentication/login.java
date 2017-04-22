@@ -70,7 +70,7 @@ public class login extends HttpServlet {
             // Begin Page
             out.println("  <h1>Welcome to our Online Bookstore!</h1>");
 
-            //simple login form
+            //login form
             out.println("<form name='Form' id='Form' class='modal-content animate' action='j_security_check' onsubmit='return validateLogin()' method='POST'>"
                     + "             <div class='imgcontainer'>"
                     + "                 <img src='/Bookstore/IMG/welcome.png' alt='sign up' class='loginimg'>"

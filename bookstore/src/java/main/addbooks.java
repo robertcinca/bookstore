@@ -51,6 +51,7 @@ public class addbooks extends HttpServlet {
                     // <!-- CSS Pages -->"
                     + "        <link href='/Bookstore/CSS/theme.css' rel='stylesheet' type='text/css'/>"
                     + "        <link href='/Bookstore/CSS/login.css' rel='stylesheet' type='text/css'/>"
+                    + "        <link href='/Bookstore/CSS/browse.css' rel='stylesheet' type='text/css'/>"
                     // <!-- JS Pages -->""
                     + "    </head>"
                     + "    <body>"
@@ -151,7 +152,7 @@ public class addbooks extends HttpServlet {
                             + "				<input type='number' name='availableQuantity' required>"
                             + "                         <label for='image'>Image URL:</label>"
                             + "				<input type='text' name='image' required>"
-                            + "				<input style='float:right;' type='submit' value='Add book'>"
+                            + "				<input style='float:right;font-size:32px;' type='submit' value='Add book'>"
                             + "			</form>");
                 }
 
