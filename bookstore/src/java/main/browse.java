@@ -195,6 +195,7 @@ public class browse extends HttpServlet {
                 //book list (manager)
                 out.println("            		<a href='/Bookstore/refund.do' class='button'>Refund Request</a>"
                         + "            		<a href='/Bookstore/addbooks.do' class='button'>Add Books</a>"
+                        + "            		<a href='/Bookstore/viewdetail.do' class='button'>View Admin Details</a>"
                         + "            		<br>"
                         + "            		<!-- Book List  -->"
                         + "            		<table class='bookList'>"

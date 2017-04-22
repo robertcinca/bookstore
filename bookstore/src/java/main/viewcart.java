@@ -84,131 +84,137 @@ public class viewcart extends HttpServlet {
             // Begin Page
             out.println("		<!-- View Cart Headings-->");
             String currentUser = request.getRemoteUser();
-            out.println("		<h1 style='text-align:left;float:left;'>Confirm Your Order, " + currentUser + "</h1>"
-                    + "		<hr style='clear:both;'/>"
-                    + "		<h2>Your Shopping Cart</h2>"
-                    + "		 <!-- Get Shopping Cart Information and Display It in a Table -->"
-                    + "	<table>"
-                    + "	<tr>"
-                    + " <th> Remove? </th>"
-                    + "	<th>Book Name</th>"
-                    + "	<th>Author</th>"
-                    + " <th>Quantity </th>"
-                    + " <th>Unit Points </th>"
-                    + " <th>Unit Price </th>"
-                    + " <th>Total Price </th>"
-                    + " </tr>");
+            if ("admin".equals(currentUser)) {
+                out.println("<h1>This page displays the user's cart in a table format.</h1>"
+                        + "		<a href='/Bookstore/browse.do' class='button'>Back to main admin page</a>"
+                        + "             <br>");
+            } else {
+                out.println("		<h1 style='text-align:left;float:left;'>Confirm Your Order, " + currentUser + "</h1>"
+                        + "		<hr style='clear:both;'/>"
+                        + "		<h2>Your Shopping Cart</h2>"
+                        + "		 <!-- Get Shopping Cart Information and Display It in a Table -->"
+                        + "	<table>"
+                        + "	<tr>"
+                        + " <th> Remove? </th>"
+                        + "	<th>Book Name</th>"
+                        + "	<th>Author</th>"
+                        + " <th>Quantity </th>"
+                        + " <th>Unit Points </th>"
+                        + " <th>Unit Price </th>"
+                        + " <th>Total Price </th>"
+                        + " </tr>");
 
-            // make connection to db and retrieve data from the table
-            String url = "jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad034_db";
-            String dbLoginId = "aiad034";
-            String dbPwd = "aiad034";
+                // make connection to db and retrieve data from the table
+                String url = "jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad034_db";
+                String dbLoginId = "aiad034";
+                String dbPwd = "aiad034";
 
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+                Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 
-            // Delete the book if action called
-            String deleteBook = request.getParameter("bookname");
-            if (deleteBook != null) {
-                try (Connection con = DriverManager.getConnection(url, dbLoginId, dbPwd)) {
-                    PreparedStatement pstmt = con.prepareStatement("DELETE FROM purchased WHERE user_name = ? AND status = ? AND bookname = ?");
-                    pstmt.setString(1, currentUser);
-                    pstmt.setString(2, "pending");
-                    pstmt.setString(3, deleteBook);
-                    // execute the SQL statement
-                    int rows = pstmt.executeUpdate();
-                }
-            }
-
-            // Update quantity if changed
-            String updateQuantity = request.getParameter("bookquantity");
-            String updateBook = request.getParameter("bookname2");
-            if (updateQuantity != null) {
-                try (Connection con = DriverManager.getConnection(url, dbLoginId, dbPwd)) {
-                    PreparedStatement pstmt2 = con.prepareStatement("UPDATE purchased SET quantity = ? WHERE user_name = ? AND status = ? AND bookname = ?");
-                    pstmt2.setString(1, updateQuantity);
-                    pstmt2.setString(2, currentUser);
-                    pstmt2.setString(3, "pending");
-                    pstmt2.setString(4, updateBook);
-                    // execute the SQL statement
-                    int rows = pstmt2.executeUpdate();
-                }
-            }
-
-            //Create view cart table
-            int totalAmount;
-            int totalLoyalty;
-            try (Connection con = DriverManager.getConnection(url, dbLoginId, dbPwd); PreparedStatement stmt = con.prepareStatement("SELECT * FROM purchased WHERE user_name = ? AND status = ?")) {
-                stmt.setString(1, currentUser);
-                stmt.setString(2, "pending");
-                ResultSet rs = stmt.executeQuery();
-                totalAmount = 0;
-                totalLoyalty = 0;
-                while (rs != null && rs.next() != false) {
-                    String bookname = rs.getString("bookname");
-                    int quantity = rs.getInt("quantity");
-                    try (PreparedStatement stmt2 = con.prepareStatement("SELECT * FROM book WHERE bookname = ?")) {
-                        stmt2.setString(1, bookname);
-                        ResultSet rs2 = stmt2.executeQuery();
-
-                        while (rs2 != null && rs2.next() != false) {
-
-                            String author = rs2.getString("author");
-                            int loyalty = rs2.getInt("loyalty");
-                            int price = rs2.getInt("price");
-                            int quantityAvailable = rs2.getInt("stock");
-                            int totalPrice = price * quantity;
-                            totalAmount += totalPrice;
-                            totalLoyalty += loyalty;
-                            out.println("</tr>"
-                                    + "<td>"
-                                    + "     <form method='POST'>"
-                                    + "     <input type='hidden' value='" + bookname + "' name='bookname' id='bookname'  />"
-                                    + "     <input type='submit' value='Delete'/>"
-                                    + "     </form>"
-                                    + "</td>"
-                                    + "<td>" + bookname + "</td>"
-                                    + "<td>" + author + "</td>"
-                                    + "<td>"
-                                    + "     <form method='POST'>"
-                                    + "     <input type='hidden' value='" + bookname + "' name='bookname2' id='bookname2'  />"
-                                    + "     <input type='number' name='bookquantity' id='bookquantity' value='" + quantity + "' min='1' max='" + quantityAvailable + "'/>"
-                                    + "     <input type='submit' value='Change Quantity'>"
-                                    + "     </form>"
-                                    + "</td>"
-                                    + "<td>" + loyalty + "</td>"
-                                    + "<td>" + price + "</td>"
-                                    + "<td>" + totalPrice + "</td>"
-                                    + "</tr>"
-                            );
-                        }
+                // Delete the book if action called
+                String deleteBook = request.getParameter("bookname");
+                if (deleteBook != null) {
+                    try (Connection con = DriverManager.getConnection(url, dbLoginId, dbPwd)) {
+                        PreparedStatement pstmt = con.prepareStatement("DELETE FROM purchased WHERE user_name = ? AND status = ? AND bookname = ?");
+                        pstmt.setString(1, currentUser);
+                        pstmt.setString(2, "pending");
+                        pstmt.setString(3, deleteBook);
+                        // execute the SQL statement
+                        int rows = pstmt.executeUpdate();
                     }
+                }
 
+                // Update quantity if changed
+                String updateQuantity = request.getParameter("bookquantity");
+                String updateBook = request.getParameter("bookname2");
+                if (updateQuantity != null) {
+                    try (Connection con = DriverManager.getConnection(url, dbLoginId, dbPwd)) {
+                        PreparedStatement pstmt2 = con.prepareStatement("UPDATE purchased SET quantity = ? WHERE user_name = ? AND status = ? AND bookname = ?");
+                        pstmt2.setString(1, updateQuantity);
+                        pstmt2.setString(2, currentUser);
+                        pstmt2.setString(3, "pending");
+                        pstmt2.setString(4, updateBook);
+                        // execute the SQL statement
+                        int rows = pstmt2.executeUpdate();
+                    }
                 }
-                if (rs != null) {
-                    rs.close();
+
+                //Create view cart table
+                int totalAmount;
+                int totalLoyalty;
+                try (Connection con = DriverManager.getConnection(url, dbLoginId, dbPwd); PreparedStatement stmt = con.prepareStatement("SELECT * FROM purchased WHERE user_name = ? AND status = ?")) {
+                    stmt.setString(1, currentUser);
+                    stmt.setString(2, "pending");
+                    ResultSet rs = stmt.executeQuery();
+                    totalAmount = 0;
+                    totalLoyalty = 0;
+                    while (rs != null && rs.next() != false) {
+                        String bookname = rs.getString("bookname");
+                        int quantity = rs.getInt("quantity");
+                        try (PreparedStatement stmt2 = con.prepareStatement("SELECT * FROM book WHERE bookname = ?")) {
+                            stmt2.setString(1, bookname);
+                            ResultSet rs2 = stmt2.executeQuery();
+
+                            while (rs2 != null && rs2.next() != false) {
+
+                                String author = rs2.getString("author");
+                                int loyalty = rs2.getInt("loyalty");
+                                int price = rs2.getInt("price");
+                                int quantityAvailable = rs2.getInt("stock");
+                                int totalPrice = price * quantity;
+                                totalAmount += totalPrice;
+                                totalLoyalty += loyalty;
+                                out.println("</tr>"
+                                        + "<td>"
+                                        + "     <form method='POST'>"
+                                        + "     <input type='hidden' value='" + bookname + "' name='bookname' id='bookname'  />"
+                                        + "     <input type='submit' value='Delete'/>"
+                                        + "     </form>"
+                                        + "</td>"
+                                        + "<td>" + bookname + "</td>"
+                                        + "<td>" + author + "</td>"
+                                        + "<td>"
+                                        + "     <form method='POST'>"
+                                        + "     <input type='hidden' value='" + bookname + "' name='bookname2' id='bookname2'  />"
+                                        + "     <input type='number' name='bookquantity' id='bookquantity' value='" + quantity + "' min='1' max='" + quantityAvailable + "'/>"
+                                        + "     <input type='submit' value='Change Quantity'>"
+                                        + "     </form>"
+                                        + "</td>"
+                                        + "<td>" + loyalty + "</td>"
+                                        + "<td>" + price + "</td>"
+                                        + "<td>" + totalPrice + "</td>"
+                                        + "</tr>"
+                                );
+                            }
+                        }
+
+                    }
+                    if (rs != null) {
+                        rs.close();
+                    }
                 }
+
+                out.println("<tfoot>"
+                        + " <tr>"
+                        + "	<td></td>"
+                        + "	<td></td>"
+                        + "	<td></td>"
+                        + " <td></td>"
+                        + " <td></td>"
+                        + " <td>Total Price (HKD):</td>"
+                        + " <td>" + totalAmount + ".00</td>"
+                        + " </tr>"
+                        + "  </tfoot>");
+                out.println("</table>");
+
+                out.println("        <br>"
+                        + "<form name='Form3' action='/Bookstore/payment.do' onsubmit='return checkSpend()' method='POST'>"
+                        + "<input name='totalAmount' type='hidden' value=" + totalAmount + ">"
+                        + "<input name='totalLoyalty' type='hidden' value=" + totalLoyalty + ">"
+                        + "<button class='button' style='float:left;' name='proceedPayment' value='proceedPayment' type='submit'>Pay Now</button>"
+                        + "</form>"
+                        + "		<a href='/Bookstore/browse.do' class='button'>Browse Books</a>");
             }
-
-            out.println("<tfoot>"
-                    + " <tr>"
-                    + "	<td></td>"
-                    + "	<td></td>"
-                    + "	<td></td>"
-                    + " <td></td>"
-                    + " <td></td>"
-                    + " <td>Total Price (HKD):</td>"
-                    + " <td>" + totalAmount + ".00</td>"
-                    + " </tr>"
-                    + "  </tfoot>");
-            out.println("</table>");
-
-            out.println("        <br>"
-                    + "<form name='Form3' action='/Bookstore/payment.do' onsubmit='return checkSpend()' method='POST'>"
-                    + "<input name='totalAmount' type='hidden' value=" + totalAmount + ">"
-                    + "<input name='totalLoyalty' type='hidden' value=" + totalLoyalty + ">"
-                    + "<button class='button' style='float:left;' name='proceedPayment' value='proceedPayment' type='submit'>Pay Now</button>"
-                    + "</form>"
-                    + "		<a href='/Bookstore/browse.do' class='button'>Browse Books</a>");
             //footer
             out.println("       <br>"
                     + "         <footer>"

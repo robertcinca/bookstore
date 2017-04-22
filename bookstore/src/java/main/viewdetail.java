@@ -88,7 +88,7 @@ public class viewdetail extends HttpServlet {
 
                 Connection con = DriverManager.getConnection(url, dbLoginId, dbPwd);
 
-                out.println("           <h1>Account Detail</h1>"
+                out.println("           <h1>Account Details</h1>"
                         + "		<a href='/Bookstore/browse.do' class='button'>Back to Browse</a>");
                 if (!request.isUserInRole("admin")) {
                     out.println("       <a href='/Bookstore/viewcart.do' class='button'>View Cart</a>");
@@ -175,7 +175,7 @@ public class viewdetail extends HttpServlet {
                 //user detail
                 out.print("		</table>\n"
                         + "		<!--user detail-->"
-                        + "		<h2>Account Detail</h2>"
+                        + "		<h2>Account Details</h2>"
                         + "             <fieldset>"
                 );
 
