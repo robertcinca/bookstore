@@ -22,3 +22,9 @@ p {
     box-sizing: border-box;
     text-align: center;
 }
+.fb-like {
+    float: right;
+}
+.column-center {
+    font-style: italic;
+}

@@ -31,7 +31,7 @@
                     return;
                 js = d.createElement(s);
                 js.id = id;
-                js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8";
+                js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.9";
                 fjs.parentNode.insertBefore(js, fjs);
             }(document, 'script', 'facebook-jssdk'));</script>
         <div class="bookstoreContainer">
@@ -46,7 +46,7 @@
                 <p>©Copyright 2017 Bookstore.</p>
             </div>
             <div class="column-right">
-                <div class="fb-like" data-href="https://www.facebook.com/Amazon/" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
+                <div class="fb-like" data-href="https://www.facebook.com/Amazon/" data-layout="box_count" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
             </div>
         </div>
     </body>
