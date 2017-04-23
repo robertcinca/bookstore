@@ -135,7 +135,6 @@ public class payment extends HttpServlet {
                 if (userLoyalty >= submitValue4 * 10) {
                     out.println("		<form action='/Bookstore/confirmation.do' class='modal-content animate' method='post'>"
                             + "             <div class='imgcontainer'>"
-                            + "                 <span onClick='window.open('/Bookstore/viewcart.do','_self');' class='close'>&times;</span>"
                             + "                 <img src='/Bookstore/IMG/paynow.jpg' alt='sign up' class='signupimg'>"
                             + "             </div>"
                             + "             <div class='container'>"
@@ -187,7 +186,6 @@ public class payment extends HttpServlet {
             } else if (submitValue2 != null && !submitValue2.equalsIgnoreCase("")) {
                 out.println("		<form action='/Bookstore/confirmation.do' class='modal-content animate' method='post'>"
                         + "             <div class='imgcontainer'>"
-                        + "                 <span onClick='window.open('/Bookstore/viewcart.do','_self');' class='close'>&times;</span>"
                         + "                 <img src='/Bookstore/IMG/paynow.jpg' alt='sign up' class='signupimg'>"
                         + "             </div>"
                         + "             <div class='container'>"

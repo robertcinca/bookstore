@@ -104,7 +104,7 @@ public class browse extends HttpServlet {
             }
             out.println("                  <li><a href='/Bookstore/iframes/contact.jsp'>Contact Us</a></li>"
                     + "              </ul>"
-                    + "            </div>"  
+                    + "            </div>"
                     + "        </div>");
             if (!request.isUserInRole("guest")) {
                 out.println("<h1>Welcome " + request.getRemoteUser() + "! You can browse our books here!</h1>");
