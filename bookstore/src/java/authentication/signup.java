@@ -122,13 +122,18 @@ public class signup extends HttpServlet {
                     PreparedStatement pstmt3 = con.prepareStatement("INSERT INTO [tomcat_users_loyalty] ([user_name], [loyalty]) VALUES (?, ?)");
                     pstmt3.setString(1, user_name);
                     pstmt3.setString(2, loyalty);
+                    
+                    PreparedStatement pstmt4 = con.prepareStatement("INSERT INTO [tomcat_users_address] ([user_name]) VALUES (?)");
+                    pstmt4.setString(1, user_name);
+
 
                     // execute the SQL statement
                     int rows = pstmt.executeUpdate();
                     int rows2 = pstmt2.executeUpdate();
                     int rows3 = pstmt3.executeUpdate();
+                    int rows4 = pstmt4.executeUpdate();
 
-                    if (rows > 0 && rows2 > 0 && rows3 > 0) {
+                    if (rows > 0 && rows2 > 0 && rows3 > 0 && rows4 > 0) {
                         out.println("<legend>New Username is sucessfully created.</legend>");
                         try ( // display the information of the record just added including UID
                                 Statement stmt = con.createStatement()) {

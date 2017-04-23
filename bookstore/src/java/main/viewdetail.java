@@ -207,9 +207,7 @@ public class viewdetail extends HttpServlet {
                             + "		<input type='password' name='password' value='" + password + "' disabled>"
                             + "		<label for='loyalty'>Loyalty Points:</label>"
                             + "		<input type='text' name='loyalty' value='" + loyalty + "' disabled>"
-                            + "		<br style='clear:both'>"
-                            + "		<a href='/Bookstore/editAccount.do' class='button'>Edit Account</a>"
-                            + "</fieldset>");
+                            + "		<br style='clear:both'>");
                 }
                 if (rs3 != null) {
                     rs3.close();
@@ -220,7 +218,41 @@ public class viewdetail extends HttpServlet {
                 if (rs5 != null) {
                     rs5.close();
                 }
-
+                PreparedStatement stmt6 = con.prepareStatement("SELECT * FROM [tomcat_users_address] WHERE user_name = ?");
+                stmt6.setString(1, currentuser);
+                ResultSet rs6 = stmt6.executeQuery();
+                
+                while (rs6 != null && rs6.next() != false) {
+                    
+                    String address_1 = rs6.getString("address_1");
+                    String address_2 = rs6.getString("address_2");
+                    String city = rs6.getString("city");
+                    String country = rs6.getString("country");
+                    String post_code = rs6.getString("post_code");
+                    
+                    if(address_1 !=null && address_2 !=null && city !=null && country !=null) {
+                    out.print("         <h3>Address Info</h3>"
+                            + "                <label>Address Line 1:</label>"
+                            + "				<input type='name' name='addr1' placeholder='Address Line 1' value='"+address_1+"' disabled>"
+                            + "                <label>Address Line 2:</label>"
+                            + "                             <input type='name' name='addr2' placeholder='Address Line 2' value='"+address_2+"' disabled>"
+                            + "                <label>City:</label>"
+                            + "				<input type='name' name='city' placeholder='City' value='"+city+"' disabled>"
+                            + "                <label>Country:</label>"
+                            + "                             <input type='name' name='country' placeholder='Country' value='"+country+"' disabled>");
+                    }
+                    if(post_code!=null) {
+                        out.println("                <label>Post Code (if any):</label>"
+                        + "                             <input type='name' name='postcode' placeholder='Post Code' value='"+post_code+"' disabled>");
+                    }
+                }
+                if (rs6 != null) {
+                    rs6.close();
+                }
+                
+                out.println("</fieldset>"
+                            + "		<a href='/Bookstore/editAccount.do' class='button'>Edit Account</a>");
+                
                 //footer
                 out.println("       <br>"
                         + "         <footer>"
