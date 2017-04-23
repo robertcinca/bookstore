@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -49,7 +50,7 @@ public class guestLogin extends HttpServlet {
                     + "        <meta name='robots' content='noindex, nofollow'>"
                     + "        <meta name='title' content='Online Bookstore'>"
                     + "        <meta name='description' content='An online marketplace for buying books.'>"
-                    + "    </head>");
+                    + "    </head><body>");
             // Begin Page
             //login as guest, create random id
             // Register the JDBC driver, open a connection
@@ -61,8 +62,10 @@ public class guestLogin extends HttpServlet {
             String user_name;
             //Creating the user
             try (Connection con = DriverManager.getConnection(url, dbLoginId, dbPwd)) {
-                //Creating the user
-                user_name = "guest"; //random user
+                //Creating the user with random number
+                Random rand = new Random();
+                int n = rand.nextInt(99999999) + 10000000;
+                user_name = "guest" + n; //random user
                 // Create a preparedstatement to set the SQL statement
                 PreparedStatement pstmt = con.prepareStatement("INSERT INTO [tomcat_users] ([user_name], [password]) VALUES (?, ?)");
                 pstmt.setString(1, user_name);

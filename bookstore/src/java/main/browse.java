@@ -104,8 +104,12 @@ public class browse extends HttpServlet {
             }
             out.println("              </ul>"
                     + "            </div>"
-                    + "        </div>"
-                    + "<h1>Welcome " + request.getRemoteUser() + "! You can browse our books here!</h1>");
+                    + "        </div>");
+            if (!request.isUserInRole("guest")) {
+                out.println("<h1>Welcome " + request.getRemoteUser() + "! You can browse our books here!</h1>");
+            } else {
+                out.println("<h1>Welcome guest! You can browse our books here!</h1>");
+            }
             // Begin Page
             if (request.isUserInRole("sprole") || request.isUserInRole("guest")) {
                 //book list (customer)
@@ -329,7 +333,7 @@ public class browse extends HttpServlet {
             // Begin Page
             if (request.isUserInRole("sprole") || request.isUserInRole("guest")) {
                 //book list (customer)
-                out.println("<h1>Page to browse books (Customer)</h1>"
+                out.println("<h1>Book added to cart!</h1>"
                         + "		<a href='/Bookstore/viewcart.do' class='button'>View Cart</a>"
                         + "		<a href='/Bookstore/browse.do' class='button'>Back to Browse</a>");
                 if (!request.isUserInRole("guest")) {
@@ -365,8 +369,13 @@ public class browse extends HttpServlet {
                         String author = rs.getString("author");
                         int price = rs.getInt("price");
                         int point = rs.getInt("loyalty");
+                        String image_url = "/Bookstore/IMG/bookCover.png";
+                        if (rs.getString("image") != null) {
+                            image_url = rs.getString("image");
+                        }
 
                         out.println("<fieldset>");
+                        out.println("<img style='float: left; margin: 10px; height: 300px; width: 200px;' alt='Picture of a book' src='" + image_url + "'>");
 
                         //check if book is already in cart
                         int exists = 0;
@@ -408,7 +417,6 @@ public class browse extends HttpServlet {
                                 pstmt2.close();
                             }
                         }
-
                         out.println("<p>Book Name : " + name + "</p>");
                         out.println("<p>Author : " + author + "</p>");
                         out.println("<p>Unit Price: " + price + "</p>");
@@ -502,7 +510,7 @@ public class browse extends HttpServlet {
                     + "            </div>"
                     + "        </div>");
             // Begin Page
-            out.println("<br/><a class='button' href='" + request.getRequestURI() + "'>Back to Browse</a>");
+            out.println("<a class='button' href='" + request.getRequestURI() + "'>Back to Browse</a>");
             // Register the JDBC driver, open a connection
 
             String url = "jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad034_db";
@@ -604,7 +612,7 @@ public class browse extends HttpServlet {
                     out.println("<input name='availableQuantity' type='number' size='8' maxlength='8' value='" + availableQuantity + "' /></p>");
                     out.println("<label for='image'>Book Cover: </label>");
                     out.println("<input name='image' type='text' size='25' maxlength='255' value='" + image_url + "' /></p>");
-                    out.println("<input style='float:right;' type='submit' value='Update!' />");
+                    out.println("<input style='float:right;font-size:24px;' type='submit' value='Update!' />");
                     out.println("</form>");
                     out.println("</fieldset>");
                     rs1.close();

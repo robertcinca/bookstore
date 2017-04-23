@@ -122,10 +122,9 @@ public class signup extends HttpServlet {
                     PreparedStatement pstmt3 = con.prepareStatement("INSERT INTO [tomcat_users_loyalty] ([user_name], [loyalty]) VALUES (?, ?)");
                     pstmt3.setString(1, user_name);
                     pstmt3.setString(2, loyalty);
-                    
+
                     PreparedStatement pstmt4 = con.prepareStatement("INSERT INTO [tomcat_users_address] ([user_name]) VALUES (?)");
                     pstmt4.setString(1, user_name);
-
 
                     // execute the SQL statement
                     int rows = pstmt.executeUpdate();

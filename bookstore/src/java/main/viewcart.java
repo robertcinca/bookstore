@@ -90,8 +90,12 @@ public class viewcart extends HttpServlet {
                         + "		<a href='/Bookstore/browse.do' class='button'>Back to main admin page</a>"
                         + "             <br>");
             } else {
-                out.println("		<h1>Confirm Your Order, " + currentUser + "</h1>"
-                        + "		<h2>Your Shopping Cart</h2>"
+                if (!request.isUserInRole("guest")) {
+                    out.println("<h1>Confirm Your Order, " + currentUser + "</h1>");
+                } else {
+                    out.println("<h1>Confirm Your Order, guest</h1>");
+                }
+                out.println("		<h2>Your Shopping Cart</h2>"
                         + "		 <!-- Get Shopping Cart Information and Display It in a Table -->"
                         + "	<table>"
                         + "	<tr>"

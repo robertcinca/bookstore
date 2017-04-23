@@ -95,7 +95,6 @@ public class payment extends HttpServlet {
             String country = "";
             String post_code = "";
 
-            
             // make connection to db and retrieve data from the table
             String url = "jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad034_db";
             String dbLoginId = "aiad034";
@@ -108,7 +107,6 @@ public class payment extends HttpServlet {
             stmt2.setString(1, currentUser);
             ResultSet rs2 = stmt2.executeQuery();
 
-
             while (rs2 != null && rs2.next() != false) {
                 address_1 = rs2.getString("address_1");
                 address_2 = rs2.getString("address_2");
@@ -119,10 +117,10 @@ public class payment extends HttpServlet {
             if (rs2 != null) {
                 rs2.close();
             }
-            
+
             if (submitValue != null && !submitValue.equalsIgnoreCase("")) {
                 int userLoyalty = 0;
-                PreparedStatement stmt = con.prepareStatement("SELECT * FROM tomcat_users_loyalty WHERE user_name = ?"); 
+                PreparedStatement stmt = con.prepareStatement("SELECT * FROM tomcat_users_loyalty WHERE user_name = ?");
                 stmt.setString(1, currentUser);
                 ResultSet rs = stmt.executeQuery();
 
@@ -132,9 +130,6 @@ public class payment extends HttpServlet {
                 if (rs != null) {
                     rs.close();
                 }
-                    
-
-                
 
                 if (userLoyalty >= submitValue4 * 10) {
                     out.println("		<form action='/Bookstore/confirmation.do' class='modal-content animate' method='post'>"
@@ -149,15 +144,15 @@ public class payment extends HttpServlet {
                             + "                 <p style='color: green'>You will also not be able to refund your purchase.</p>"
                             + "                <h3 style='color: blue'>Enter delivery address</h3>"
                             + "                <label>Address Line 1:</label>"
-                            + "				<input type='name' name='addr1' placeholder='Address Line 1' value='"+address_1+"' required>"
+                            + "				<input type='name' name='addr1' placeholder='Address Line 1' value='" + address_1 + "' required>"
                             + "                <label>Address Line 2:</label>"
-                            + "                             <input type='name' name='addr2' placeholder='Address Line 2' value='"+address_2+"' required>"
+                            + "                             <input type='name' name='addr2' placeholder='Address Line 2' value='" + address_2 + "' required>"
                             + "                <label>City:</label>"
-                            + "				<input type='name' name='city' placeholder='City' value='"+city+"' required>"
+                            + "				<input type='name' name='city' placeholder='City' value='" + city + "' required>"
                             + "                <label>Country:</label>"
-                            + "                             <input type='name' name='country' placeholder='Country' value='"+country+"' required>"
+                            + "                             <input type='name' name='country' placeholder='Country' value='" + country + "' required>"
                             + "                <label>Post Code (if any):</label>"
-                            + "                             <input type='name' name='postcode' placeholder='Post Code' value='"+post_code+"' >"
+                            + "                             <input type='name' name='postcode' placeholder='Post Code' value='" + post_code + "' >"
                             + "                 <input type='hidden' value='paidPoints' name='paidPoints' id='paidPoints' />"
                             + "                 <input type='hidden' value=" + submitValue3 + " name='totalAmount' id='totalAmount' />"
                             + "                 <input type='hidden' value=" + submitValue4 + " name='totalLoyalty' id='totalLoyalty' />"
@@ -196,7 +191,7 @@ public class payment extends HttpServlet {
                         + "             </div>"
                         + "             <div class='container'>"
                         + "                <h2 style='color: green'> Pay by Card: This transaction will cost HKD" + submitValue3 + ".00</h2>");
-                if (!"guest".equals(currentUser)) {
+                if (!request.isUserInRole("guest")) {
                     out.println("          <h2 style='color: green'> You will gain " + submitValue4 + " points during this transaction.</h2>");
                 }
                 out.println("              <h3 style='color: blue'>Enter your card details</h3>"
@@ -209,16 +204,16 @@ public class payment extends HttpServlet {
                         + "                <label>Security Code:</label>"
                         + "                             <input type='name' name='securityCode' placeholder='Security Code' required>"
                         + "                <h3 style='color: blue'>Enter delivery address</h3>"
-                            + "                <label>Address Line 1:</label>"
-                            + "				<input type='name' name='addr1' placeholder='Address Line 1' value='"+address_1+"' required>"
-                            + "                <label>Address Line 2:</label>"
-                            + "                             <input type='name' name='addr2' placeholder='Address Line 2' value='"+address_2+"' required>"
-                            + "                <label>City:</label>"
-                            + "				<input type='name' name='city' placeholder='City' value='"+city+"' required>"
-                            + "                <label>Country:</label>"
-                            + "                             <input type='name' name='country' placeholder='Country' value='"+country+"' required>"
-                            + "                <label>Post Code (if any):</label>"
-                            + "                             <input type='name' name='postcode' placeholder='Post Code' value='"+post_code+"' >"
+                        + "                <label>Address Line 1:</label>"
+                        + "				<input type='name' name='addr1' placeholder='Address Line 1' value='" + address_1 + "' required>"
+                        + "                <label>Address Line 2:</label>"
+                        + "                             <input type='name' name='addr2' placeholder='Address Line 2' value='" + address_2 + "' required>"
+                        + "                <label>City:</label>"
+                        + "				<input type='name' name='city' placeholder='City' value='" + city + "' required>"
+                        + "                <label>Country:</label>"
+                        + "                             <input type='name' name='country' placeholder='Country' value='" + country + "' required>"
+                        + "                <label>Post Code (if any):</label>"
+                        + "                             <input type='name' name='postcode' placeholder='Post Code' value='" + post_code + "' >"
                         + "                 <input type='hidden' value='paidCard' name='paidCard' id='paidCard' />"
                         + "                 <input type='hidden' value=" + submitValue3 + " name='totalAmount' id='totalAmount' />"
                         + "                 <input type='hidden' value=" + submitValue4 + " name='totalLoyalty' id='totalLoyalty' />"
@@ -228,7 +223,7 @@ public class payment extends HttpServlet {
                         + "                <a href='/Bookstore/viewcart.do' class='cancelbtn' style='width:12%;'>Return to Cart</a>"
                         + "             </div>"
                         + "        </form>");
-                if (!"guest".equals(currentUser)) {
+                if (!request.isUserInRole("guest")) {
                     out.println("<fieldset> Other Options:"
                             + "<form method='POST'>"
                             + "<input type='hidden' value='payPoints' name='payPoints' id='payPoints' />"
@@ -243,7 +238,7 @@ public class payment extends HttpServlet {
                 int totalAmount = Integer.parseInt(request.getParameter("totalAmount"));
                 int totalLoyalty = Integer.parseInt(request.getParameter("totalLoyalty"));
                 out.println("<h2> The total amount to pay is: HKD " + totalAmount + ".00</h2>");
-                if (!"guest".equals(currentUser)) {
+                if (!request.isUserInRole("guest")) {
                     out.println("<h2> The total loyalty points you will gain: " + totalLoyalty + " points</h2>"
                             + "<h2>Alternatively, the total amount to pay using loyalty points: " + totalLoyalty * 10 + "</h2>");
                 }
@@ -255,7 +250,7 @@ public class payment extends HttpServlet {
                         + "<input type='hidden' value=" + totalLoyalty + " name='totalLoyalty' id='totalLoyalty' />"
                         + "<button type='submit' class='button' style='float:left;'>Pay by Card</button>"
                         + "</form>");
-                if (!"guest".equals(currentUser)) {
+                if (!request.isUserInRole("guest")) {
                     out.println("<form method='POST'>"
                             + "<input type='hidden' value='payPoints' name='payPoints' id='payPoints' />"
                             + "<input type='hidden' value=" + totalAmount + " name='totalAmount' id='totalAmount' />"

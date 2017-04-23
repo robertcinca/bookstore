@@ -130,7 +130,7 @@ public class confirmation extends HttpServlet {
                     } else {
                         out.println("<h2> You paid by card</h2>");
                         out.println("<h2> The following amount has been deducted from your card: HKD" + totalAmount + ".00</h2>");
-                        if (!"guest".equals(currentUser)) {
+                        if (!request.isUserInRole("guest")) {
                             out.println("<h2> The following loyalty points have been added to your account: " + totalLoyalty + " points</h2>");
                             out.println("<h2> Your new total loyalty points: " + userLoyalty + " points</h2>");
                         }
@@ -161,7 +161,7 @@ public class confirmation extends HttpServlet {
                             pstmt2.setString(4, "pending");
 
                             Boolean result2 = pstmt2.execute();
-                            if (!"guest".equals(currentUser)) {
+                            if (!request.isUserInRole("guest")) {
                                 try (PreparedStatement pstmt = con.prepareStatement("UPDATE tomcat_users_loyalty SET loyalty = ? WHERE user_name = ?")) {
                                     pstmt.setInt(1, userLoyalty);
                                     pstmt.setString(2, currentUser);
