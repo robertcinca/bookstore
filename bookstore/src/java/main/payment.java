@@ -89,27 +89,52 @@ public class payment extends HttpServlet {
             int submitValue3 = Integer.parseInt(request.getParameter("totalAmount"));
             int submitValue4 = Integer.parseInt(request.getParameter("totalLoyalty"));
             String currentUser = request.getRemoteUser();
+            String address_1 = "";
+            String address_2 = "";
+            String city = "";
+            String country = "";
+            String post_code = "";
 
+            
+            // make connection to db and retrieve data from the table
+            String url = "jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad034_db";
+            String dbLoginId = "aiad034";
+            String dbPwd = "aiad034";
+
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Connection con = DriverManager.getConnection(url, dbLoginId, dbPwd);
+
+            PreparedStatement stmt2 = con.prepareStatement("SELECT * FROM tomcat_users_address WHERE user_name = ?");
+            stmt2.setString(1, currentUser);
+            ResultSet rs2 = stmt2.executeQuery();
+
+
+            while (rs2 != null && rs2.next() != false) {
+                address_1 = rs2.getString("address_1");
+                address_2 = rs2.getString("address_2");
+                city = rs2.getString("city");
+                country = rs2.getString("country");
+                post_code = rs2.getString("post_code");
+            }
+            if (rs2 != null) {
+                rs2.close();
+            }
+            
             if (submitValue != null && !submitValue.equalsIgnoreCase("")) {
                 int userLoyalty = 0;
-                // make connection to db and retrieve data from the table
-                String url = "jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad034_db";
-                String dbLoginId = "aiad034";
-                String dbPwd = "aiad034";
+                PreparedStatement stmt = con.prepareStatement("SELECT * FROM tomcat_users_loyalty WHERE user_name = ?"); 
+                stmt.setString(1, currentUser);
+                ResultSet rs = stmt.executeQuery();
 
-                Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-                try (Connection con = DriverManager.getConnection(url, dbLoginId, dbPwd); PreparedStatement stmt = con.prepareStatement("SELECT * FROM tomcat_users_loyalty WHERE user_name = ?")) {
-                    stmt.setString(1, currentUser);
-                    ResultSet rs = stmt.executeQuery();
-
-                    while (rs != null && rs.next() != false) {
-                        userLoyalty = Integer.parseInt(rs.getString("loyalty"));
-                    }
-                    if (rs != null) {
-                        rs.close();
-                    }
-
+                while (rs != null && rs.next() != false) {
+                    userLoyalty = Integer.parseInt(rs.getString("loyalty"));
                 }
+                if (rs != null) {
+                    rs.close();
+                }
+                    
+
+                
 
                 if (userLoyalty >= submitValue4 * 10) {
                     out.println("		<form action='/Bookstore/confirmation.do' class='modal-content animate' method='post'>"
@@ -124,15 +149,15 @@ public class payment extends HttpServlet {
                             + "                 <p style='color: green'>You will also not be able to refund your purchase.</p>"
                             + "                <h3 style='color: blue'>Enter delivery address</h3>"
                             + "                <label>Address Line 1:</label>"
-                            + "				<input type='name' name='addr1' placeholder='Address Line 1' required>"
+                            + "				<input type='name' name='addr1' placeholder='Address Line 1' value='"+address_1+"' required>"
                             + "                <label>Address Line 2:</label>"
-                            + "                             <input type='name' name='addr2' placeholder='Address Line 2' required>"
+                            + "                             <input type='name' name='addr2' placeholder='Address Line 2' value='"+address_2+"' required>"
                             + "                <label>City:</label>"
-                            + "				<input type='name' name='city' placeholder='City' required>"
+                            + "				<input type='name' name='city' placeholder='City' value='"+city+"' required>"
                             + "                <label>Country:</label>"
-                            + "                             <input type='name' name='country' placeholder='Country' required>"
+                            + "                             <input type='name' name='country' placeholder='Country' value='"+country+"' required>"
                             + "                <label>Post Code (if any):</label>"
-                            + "                             <input type='name' name='postcode' placeholder='Post Code'>"
+                            + "                             <input type='name' name='postcode' placeholder='Post Code' value='"+post_code+"' >"
                             + "                 <input type='hidden' value='paidPoints' name='paidPoints' id='paidPoints' />"
                             + "                 <input type='hidden' value=" + submitValue3 + " name='totalAmount' id='totalAmount' />"
                             + "                 <input type='hidden' value=" + submitValue4 + " name='totalLoyalty' id='totalLoyalty' />"
@@ -184,16 +209,16 @@ public class payment extends HttpServlet {
                         + "                <label>Security Code:</label>"
                         + "                             <input type='name' name='securityCode' placeholder='Security Code' required>"
                         + "                <h3 style='color: blue'>Enter delivery address</h3>"
-                        + "                <label>Address Line 1:</label>"
-                        + "				<input type='name' name='addr1' placeholder='Address Line 1' required>"
-                        + "                <label>Address Line 2:</label>"
-                        + "                             <input type='name' name='addr2' placeholder='Address Line 2' required>"
-                        + "                <label>City:</label>"
-                        + "				<input type='name' name='city' placeholder='City' required>"
-                        + "                <label>Country:</label>"
-                        + "                             <input type='name' name='country' placeholder='Country' required>"
-                        + "                <label>Post Code (if any):</label>"
-                        + "                             <input type='name' name='postcode' placeholder='Post Code'>"
+                            + "                <label>Address Line 1:</label>"
+                            + "				<input type='name' name='addr1' placeholder='Address Line 1' value='"+address_1+"' required>"
+                            + "                <label>Address Line 2:</label>"
+                            + "                             <input type='name' name='addr2' placeholder='Address Line 2' value='"+address_2+"' required>"
+                            + "                <label>City:</label>"
+                            + "				<input type='name' name='city' placeholder='City' value='"+city+"' required>"
+                            + "                <label>Country:</label>"
+                            + "                             <input type='name' name='country' placeholder='Country' value='"+country+"' required>"
+                            + "                <label>Post Code (if any):</label>"
+                            + "                             <input type='name' name='postcode' placeholder='Post Code' value='"+post_code+"' >"
                         + "                 <input type='hidden' value='paidCard' name='paidCard' id='paidCard' />"
                         + "                 <input type='hidden' value=" + submitValue3 + " name='totalAmount' id='totalAmount' />"
                         + "                 <input type='hidden' value=" + submitValue4 + " name='totalLoyalty' id='totalLoyalty' />"

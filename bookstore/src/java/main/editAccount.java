@@ -10,6 +10,7 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -83,7 +84,13 @@ public class editAccount extends HttpServlet {
 
                 String username = request.getRemoteUser();
                 String password = request.getParameter("password");
+                String address_1 = request.getParameter("address_1");
+                String address_2 = request.getParameter("address_2");
+                String city = request.getParameter("city");
+                String country = request.getParameter("country");
+                String post_code = request.getParameter("post_code");
 
+                //update password
                 if (username != null && !username.equalsIgnoreCase("")
                         && password != null && !password.equalsIgnoreCase("")) {
 
@@ -101,7 +108,7 @@ public class editAccount extends HttpServlet {
                     Boolean result = pstmt.execute();
 
                     out.println("<fieldset>");
-                    out.println("<legend>The record is sucessfully updated.</legend>");
+                    out.println("<legend>The password is sucessfully updated.</legend>");
 
                     out.println("<p>Username: " + username + "</p>");
                     out.println("<p>Password: " + password + "</p>");
@@ -110,25 +117,105 @@ public class editAccount extends HttpServlet {
                     if (pstmt != null) {
                         pstmt.close();
                     }
+                    if(request.isUserInRole("sprole")) {
+                        PreparedStatement pstmt2 = con.prepareStatement("UPDATE tomcat_users_address SET address_1 = ?, address_2 = ?, city = ?, country = ?, post_code = ? WHERE user_name = '" + username + "'");
+                        pstmt2.setString(1, address_1);
+                        pstmt2.setString(2, address_2);
+                        pstmt2.setString(3, city);
+                        pstmt2.setString(4, country);
+                        pstmt2.setString(5, post_code);
+
+                        Boolean result2 = pstmt2.execute();
+
+                        out.println("<fieldset>");
+                        out.println("<legend>The address is sucessfully updated.</legend>");
+
+                        out.println("<p>Address Line 1: " + address_1 + "</p>");
+                        out.println("<p>Address Line 2: " + address_2 + "</p>");
+                        out.println("<p>City: " + city + "</p>");
+                        out.println("<p>Country: " + country + "</p>");
+                        if(post_code!=null){
+                            out.println("<p>Post Code: " + post_code + "</p>");
+                        }
+
+                        out.println("</fieldset>");
+
+                        if (pstmt2 != null) {
+                            pstmt2.close();
+                        }
+                    }
                     if (con != null) {
                         con.close();
                     }
+   
+                }
+                else {
+                    
+                    if(request.isUserInRole("sprole")) {
+                        // Register the JDBC driver, open a connection
+                        String url = "jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad034_db";
+                        String dbLoginId = "aiad034";
+                        String dbPwd = "aiad034";
 
-                } else {
-                    out.println("<fieldset>"
-                            + "	<form method='POST' id='editAccount' action='" + request.getRequestURI() + "' onsubmit='return validatepassword()' >"
-                            + "		<h3>You can change your password here:</h3>"
-                            + "		<label for='username'>Username: </label>"
-                            + "		<input type='text' name='username' value ='" + request.getRemoteUser() + "' disabled>"
-                            + "		<label for='password'>Password:</label>"
-                            + "		<input type='password' name='password' required>"
-                            + "		<label for='password2'>Confirm Password:</label>"
-                            + "		<input type='password' name='password2' required>"
-                            + "		<h3><br></h3>"
-                            + "		<a href='/Bookstore/viewdetail.do' class='button'>Back to View Details</a>"
-                            + "		<button class='button' style='float:left;' type='submit' value='Confirm'>Confirm</button>"
-                            + "	</form>"
-                            + "</fieldset>");
+                        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+                        Connection con = DriverManager.getConnection(url, dbLoginId, dbPwd);
+
+                        PreparedStatement stmt = con.prepareStatement("SELECT * FROM [tomcat_users_address] WHERE user_name = ?");
+                        stmt.setString(1, request.getRemoteUser());
+                        ResultSet rs6 = stmt.executeQuery();
+
+                        while (rs6 != null && rs6.next() != false) {
+                            address_1 = rs6.getString("address_1");
+                            address_2 = rs6.getString("address_2");
+                            city = rs6.getString("city");
+                            country = rs6.getString("country");
+                            post_code = rs6.getString("post_code");
+
+                            if(rs6.getString("address_1")==null){
+                                address_1 = "";
+                            }
+                            if(rs6.getString("address_2")==null){
+                                address_2 = "";
+                            }
+                            if(rs6.getString("city")==null){
+                                city = "";
+                            }
+                            if(rs6.getString("country")==null){
+                                country = "";
+                            }
+                            if(rs6.getString("post_code")==null){
+                                post_code = "";
+                            }
+                        }
+                    }
+                        out.println("<fieldset>"
+                                + "	<form method='POST' id='editAccount' action='" + request.getRequestURI() + "' onsubmit='return validatepassword()' >"
+                                + "		<h3>You can change your password here:</h3>"
+                                + "		<label for='username'>Username: </label>"
+                                + "		<input type='text' name='username' value ='" + request.getRemoteUser() + "' disabled>"
+                                + "		<label for='password'>Password:</label>"
+                                + "		<input type='password' name='password' required>"
+                                + "		<label for='password2'>Confirm Password:</label>"
+                                + "		<input type='password' name='password2' required>"
+                                + "		<h3><br></h3>");
+                        if(request.isUserInRole("sprole")) {
+                                out.println("<h3>Edit delivery address</h3>"
+                                + "                <label>Address Line 1:</label>"
+                                + "				<input type='name' name='address_1' placeholder='Address Line 1' value='"+address_1+"'>"
+                                + "                <label>Address Line 2:</label>"
+                                + "                             <input type='name' name='address_2' placeholder='Address Line 2' value='"+address_2+"'>"
+                                + "                <label>City:</label>"
+                                + "				<input type='name' name='city' placeholder='City' value='"+city+"'>"
+                                + "                <label>Country:</label>"
+                                + "                             <input type='name' name='country' placeholder='Country' value='"+country+"'>"
+                                + "                <label>Post Code (if any):</label>"
+                                + "                             <input type='name' name='post_code' placeholder='Post Code' value='"+post_code+"' >");
+                        }
+                                out.println("		<h3><br></h3>"
+                                + "		<button class='button' style='float:left;' type='submit' value='Confirm'>Confirm</button>"
+                                + "	</form>"
+                                + "</fieldset>");
+
                 }
                 //footer
                 out.println("       <br>"

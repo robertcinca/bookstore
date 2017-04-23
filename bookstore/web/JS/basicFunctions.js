@@ -45,6 +45,10 @@ function validateSignUp() {
     var user = document.forms["Form2"]["uname"].value;
     var pw = document.forms["Form2"]["psw"].value;
     var pw2 = document.forms["Form2"]["psw2"].value;
+    if (pw.length !== pw2.length) {
+        window.alert("Error: Passwords do not match.");
+        return false;
+    }
     for (var i = 0; i < pw.length; i++) {
         if (pw[i] !== pw2[i]) {
             window.alert("Error: Passwords do not match.");
