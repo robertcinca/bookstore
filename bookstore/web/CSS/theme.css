@@ -8,7 +8,7 @@
     font-family: Helvetica;
 }
 body {
-    color: #eeeeee;
+    color: #4B0082;
     background: #CEE5D5;
     padding: 15px;
     margin: 0px;
@@ -48,7 +48,7 @@ h1 {
     display: absolute;
 }
 h2 {
-    color: white;
+    color: #4B0082;
     font-size: 18pt;
     text-align: center;
 }
