@@ -9,7 +9,7 @@
 }
 body {
     color: #eeeeee;
-    background: #7CAAD8;
+    background: #CEE5D5;
     padding: 15px;
     margin: 0px;
     border-right-style: outset;
@@ -45,6 +45,7 @@ h1 {
     color: #C41D49;
     font-size: 24pt;
     text-align: center;
+    display: absolute;
 }
 h2 {
     color: white;
