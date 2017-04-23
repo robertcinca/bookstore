@@ -77,7 +77,8 @@ public class confirmation extends HttpServlet {
             if (!request.isUserInRole("guest")) {
                 out.println("              <li><a href='/Bookstore/viewdetail.do'>Account Details</a></li>");
             }
-            out.println("              </ul>"
+            out.println("                  <li><a href='/Bookstore/iframes/contact.jsp'>Contact Us</a></li>"
+                    + "              </ul>"
                     + "            </div>"
                     + "        </div>");
             // Begin Page

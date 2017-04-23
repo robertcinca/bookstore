@@ -69,6 +69,7 @@ public class logout extends HttpServlet {
                     + "                    <li><a href='/Bookstore/browse.do'>Browse</a></li>"
                     + "                    <li><a href='/Bookstore/viewcart.do'>View Cart</a></li>"
                     + "                    <li><a href='/Bookstore/viewdetail.do'>Account Details</a></li>"
+                    + "                    <li><a href='/Bookstore/iframes/contact.jsp'>Contact Us</a></li>"
                     + "                </ul>"
                     + "            </div>"
                     + "        </div>");
