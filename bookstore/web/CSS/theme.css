@@ -8,23 +8,49 @@
     font-family: Helvetica;
 }
 body {
-    color: #eeeeee;
-    background: #7CAAD8;
-    padding: 5px;
-    margin: 5px;
+    color: #4B0082;
+    background: #CEE5D5;
+    padding: 15px;
+    margin: 0px;
+    border-right-style: outset;
+    border-left-style: inset;
+    border-right-width: 80px;
+    border-left-width: 80px;
+    border-color: brown;
+}
+/*below certain width deal with constrained screen size*/
+@media (max-width: 730px) {
+    body {
+        border: none;
+        padding: 5px;
+        margin: 5px;
+    }
+}
+header {
+    border: 10px solid #CDCDCD;
+    padding: 2px;
+    margin: 2px;
+}
+header iframe {
+    width: 100%;
+}
+footer {
+    border: 10px solid #CDCDCD;
+    margin: 2px;
+}
+footer #disclaimer {
+    border-top: 10px solid #CDCDCD;
 }
 h1 {
     color: #C41D49;
     font-size: 24pt;
     text-align: center;
+    display: absolute;
 }
 h2 {
-    color: white;
+    color: #4B0082;
     font-size: 18pt;
     text-align: center;
-}
-p {
-    text-align: justify
 }
 /* Link hover feature */
 a {
@@ -42,7 +68,7 @@ a:hover {
 .button {
     background-color: #4B0082;
     color: white;
-    margin: 5px;
+    margin: 10px;
     border: 5px solid black;
     padding: 16px 33px;
     text-align: center;
@@ -130,8 +156,9 @@ input {
 }
 /* Positioning of Menu */
 .dropdown {
-    margin: 0;
+    margin: 5px;
     padding: 0;
+    float: left;
 }
 /* Dropdown Content (Hidden by Default) */
 .dropdown-content {

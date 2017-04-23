@@ -48,7 +48,7 @@ public class viewdetail extends HttpServlet {
                         + "        <meta name='title' content='Online Bookstore'>"
                         + "        <meta name='description' content='An online marketplace for buying books.'>"
                         // <!-- Page Title -->"
-                        + "        <title>Welcome to our Online Bookstore!</title>"
+                        + "        <title>Your Account Details</title>"
                         // <!-- CSS Pages -->"
                         + "        <link href='/Bookstore/CSS/theme.css' rel='stylesheet' type='text/css'/>"
                         + "        <link href='/Bookstore/CSS/browse.css' rel='stylesheet' type='text/css'/>"
@@ -56,7 +56,7 @@ public class viewdetail extends HttpServlet {
                         + "    </head>"
                         + "    <body>"
                         + "        <header>"
-                        + "            <iframe  scrolling='no' id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
+                        + "            <iframe frameborder='0' scrolling='no' id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
                         + "                [Your user agent does not support frames or is currently configured not to display frames.]"
                         + "            </iframe>"
                         + "        </header>"
@@ -88,14 +88,14 @@ public class viewdetail extends HttpServlet {
 
                 Connection con = DriverManager.getConnection(url, dbLoginId, dbPwd);
 
-                out.println("           <h1>Account Detail</h1>"
+                out.println("           <h1>Account Details for " + currentUser + "</h1>"
                         + "		<a href='/Bookstore/browse.do' class='button'>Back to Browse</a>");
                 if (!request.isUserInRole("admin")) {
                     out.println("       <a href='/Bookstore/viewcart.do' class='button'>View Cart</a>");
 
                     out.println("	<br>"
                             + "		<!--Purchased book-->"
-                            + "		<h2>Purchased book</h2>"
+                            + "		<h2>Purchased books</h2>"
                             + "		<table class='purchasedBook'>"
                             + "			<col width='40%'>"
                             + "  		<col width='10%'>"
@@ -173,9 +173,9 @@ public class viewdetail extends HttpServlet {
                     }
                 }
                 //user detail
-                out.print("		</table>\n"
+                out.print("		</table>"
                         + "		<!--user detail-->"
-                        + "		<h2>Account Detail</h2>"
+                        + "		<h2>Account Details</h2>"
                         + "             <fieldset>"
                 );
 
@@ -201,10 +201,13 @@ public class viewdetail extends HttpServlet {
                     String role = rs5.getString("role_name");
 
                     out.print("		<h3>User Info</h3>"
-                            + "		<p>Username: " + username + "</p>"
-                            + "		<p>Password: " + password + "</p>"
-                            + "		<p>Loyalty Points: " + loyalty + "</p>"
-                            + "		<br>"
+                            + "		<label for='username'>Username:</label>"
+                            + "		<input type='text' name='username' value='" + username + "' disabled>"
+                            + "		<label for='password'>Password:</label>"
+                            + "		<input type='password' name='password' value='" + password + "' disabled>"
+                            + "		<label for='loyalty'>Loyalty Points:</label>"
+                            + "		<input type='text' name='loyalty' value='" + loyalty + "' disabled>"
+                            + "		<br style='clear:both'>"
                             + "		<a href='/Bookstore/editAccount.do' class='button'>Edit Account</a>"
                             + "</fieldset>");
                 }
@@ -221,10 +224,10 @@ public class viewdetail extends HttpServlet {
                 //footer
                 out.println("       <br>"
                         + "         <footer>"
-                        + "             <iframe  scrolling='no' id='bookstorefooter' name='bookstorefooter' src='/Bookstore/iframes/bookstorefooter.jsp' width='100%' height='100px'>"
+                        + "             <iframe frameborder='0' scrolling='no' id='bookstorefooter' name='bookstorefooter' src='/Bookstore/iframes/bookstorefooter.jsp' width='100%' height='100px'>"
                         + "                 [Your user agent does not support frames or is currently configured not to display frames.]"
                         + "             </iframe>"
-                        + "             <iframe  scrolling='no' id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
+                        + "             <iframe frameborder='0' scrolling='no' id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
                         + "                 [Your user agent does not support frames or is currently configured not to display frames.]"
                         + "             </iframe>"
                         + "         </footer>"

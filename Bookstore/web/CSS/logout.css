@@ -1,0 +1,20 @@
+/* 
+    Created on : 23-Apr-2017, 01:52:12
+    Author     : robertcinca
+*/
+img.logoutimg {
+    max-width: 100%;
+    height: auto;
+    border-radius: 20%;
+}
+
+.column-left-logout{ 
+    width: 40%;
+    margin-top: 5%;
+    float: right;
+}
+.column-right-logout{ 
+    width: 40%; 
+    margin-bottom: 5pt;
+}
+

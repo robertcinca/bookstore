@@ -3,9 +3,7 @@
  * @author robertcinca
  */
 body {
-    border: 10px solid #CDCDCD;
-    padding: 2px;
-    margin: 2px;
+    border: none;
 }
 p {
     color: black;

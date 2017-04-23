@@ -47,15 +47,16 @@ public class addbooks extends HttpServlet {
                     + "        <meta name='title' content='Online Bookstore'>"
                     + "        <meta name='description' content='An online marketplace for buying books.'>"
                     // <!-- Page Title -->"
-                    + "        <title>Welcome to our Online Bookstore!</title>"
+                    + "        <title>Add Book</title>"
                     // <!-- CSS Pages -->"
                     + "        <link href='/Bookstore/CSS/theme.css' rel='stylesheet' type='text/css'/>"
                     + "        <link href='/Bookstore/CSS/login.css' rel='stylesheet' type='text/css'/>"
+                    + "        <link href='/Bookstore/CSS/browse.css' rel='stylesheet' type='text/css'/>"
                     // <!-- JS Pages -->""
                     + "    </head>"
                     + "    <body>"
                     + "        <header>"
-                    + "            <iframe  scrolling='no' id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
+                    + "            <iframe frameborder='0' scrolling='no' id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
                     + "                [Your user agent does not support frames or is currently configured not to display frames.]"
                     + "            </iframe>"
                     + "        </header>"
@@ -129,7 +130,7 @@ public class addbooks extends HttpServlet {
                         out.println("<p>Price: " + price + "</p>");
                         out.println("<p>Loyalty points: " + point + "</p>");
                         out.println("<p>Available Quantity: " + availableQuantity + "</p>");
-                        out.println("<img alt=\"Picture of a book\" src='" + image_url + "'>");
+                        out.println("<img alt='Picture of a book' src='" + image_url + "'>");
                     } else {
                         out.println("<legend>ERROR: New record failed to create.</legend>");
                     }
@@ -140,18 +141,18 @@ public class addbooks extends HttpServlet {
                             + "			<h3>Fill in book detail</h3>"
                             + "			<form method='POST' class='addBooks'>"
                             + "				<label for='title'>Book Title:</label>"
-                            + "				<input type='text' name='title' >"
+                            + "				<input type='text' name='title' required>"
                             + "				<label for='author'>Author:</label>"
-                            + "				<input type='text' name='author' >"
+                            + "				<input type='text' name='author' required>"
                             + "				<label for='price'>Price:</label>"
-                            + "				<input type='number' name='price' >"
+                            + "				<input type='number' name='price' required>"
                             + "				<label for='point'>Loyalty Points:</label>"
-                            + "				<input type='number' name='point' >"
+                            + "				<input type='number' name='point' required>"
                             + "				<label for='point'>Quantity Available:</label>"
-                            + "				<input type='number' name='availableQuantity' >"
-                            + "             <label for=\"image\">Image URL:</label>\n"
-                            + "				<input type=\"text\" name=\"image\" >\n"
-                            + "				<input style='float:right;' type='submit' value='Add book'>"
+                            + "				<input type='number' name='availableQuantity' required>"
+                            + "                         <label for='image'>Image URL:</label>"
+                            + "				<input type='text' name='image' required>"
+                            + "				<input style='float:right;font-size:32px;' type='submit' value='Add book'>"
                             + "			</form>");
                 }
 
@@ -159,10 +160,10 @@ public class addbooks extends HttpServlet {
                 //footer
                 out.println("       <br>"
                         + "         <footer>"
-                        + "             <iframe  scrolling='no' id='bookstorefooter' name='bookstorefooter' src='/Bookstore/iframes/bookstorefooter.jsp' width='100%' height='100px'>"
+                        + "             <iframe frameborder='0' scrolling='no' id='bookstorefooter' name='bookstorefooter' src='/Bookstore/iframes/bookstorefooter.jsp' width='100%' height='100px'>"
                         + "                 [Your user agent does not support frames or is currently configured not to display frames.]"
                         + "             </iframe>"
-                        + "             <iframe  scrolling='no' id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
+                        + "             <iframe frameborder='0' scrolling='no' id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
                         + "                 [Your user agent does not support frames or is currently configured not to display frames.]"
                         + "             </iframe>"
                         + "         </footer>"

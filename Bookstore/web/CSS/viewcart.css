@@ -1,0 +1,18 @@
+/* 
+    Created on : 23-Apr-2017, 03:36:57
+    Author     : robertcinca
+*/
+input[type="submit"] {
+    border: 1px solid #999;
+    background-color: black;
+    color: white;
+}
+
+input[type="submit"]:hover {
+    background-color: white;
+    color: black;
+    -webkit-transform: scale(1.5);
+    -ms-transform: scale(1.5);
+    transform: scale(1.5);
+    cursor: copy;
+}

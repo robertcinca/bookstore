@@ -48,14 +48,14 @@ public class refund extends HttpServlet {
                         + "        <meta name='title' content='Online Bookstore'>"
                         + "        <meta name='description' content='An online marketplace for buying books.'>"
                         // <!-- Page Title -->"
-                        + "        <title>Welcome to our Online Bookstore!</title>"
+                        + "        <title>Refund Users</title>"
                         // <!-- CSS Pages -->"
                         + "        <link href='/Bookstore/CSS/theme.css' rel='stylesheet' type='text/css'/>"
                         // <!-- JS Pages -->"
                         + "    </head>"
                         + "    <body>"
                         + "        <header>"
-                        + "            <iframe  scrolling='no' id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
+                        + "            <iframe frameborder='0' scrolling='no' id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
                         + "                [Your user agent does not support frames or is currently configured not to display frames.]"
                         + "            </iframe>"
                         + "        </header>"
@@ -140,7 +140,7 @@ public class refund extends HttpServlet {
                         }
                         // Update user loyalty points if changed
                         PreparedStatement pstmt3 = con.prepareStatement("UPDATE tomcat_users_loyalty SET loyalty = loyalty - ? WHERE user_name = ?");
-                        pstmt3.setInt(1, purchase_loyalty);
+                        pstmt3.setInt(1, purchase_quantity * purchase_loyalty);
                         pstmt3.setString(2, purchase_username);
                         // execute the SQL statement
                         int rows2 = pstmt3.executeUpdate();
@@ -189,10 +189,10 @@ public class refund extends HttpServlet {
                 //footer
                 out.println("       <br>"
                         + "         <footer>"
-                        + "             <iframe  scrolling='no' id='bookstorefooter' name='bookstorefooter' src='/Bookstore/iframes/bookstorefooter.jsp' width='100%' height='100px'>"
+                        + "             <iframe frameborder='0' scrolling='no' id='bookstorefooter' name='bookstorefooter' src='/Bookstore/iframes/bookstorefooter.jsp' width='100%' height='100px'>"
                         + "                 [Your user agent does not support frames or is currently configured not to display frames.]"
                         + "             </iframe>"
-                        + "             <iframe  scrolling='no' id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
+                        + "             <iframe frameborder='0' scrolling='no' id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
                         + "                 [Your user agent does not support frames or is currently configured not to display frames.]"
                         + "             </iframe>"
                         + "         </footer>"

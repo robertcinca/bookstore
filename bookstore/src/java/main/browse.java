@@ -74,15 +74,16 @@ public class browse extends HttpServlet {
                     + "        <meta name='title' content='Online Bookstore'>"
                     + "        <meta name='description' content='An online marketplace for buying books.'>"
                     // <!-- Page Title -->"
-                    + "        <title>Welcome to our Online Bookstore!</title>"
+                    + "        <title>Browse our Books!</title>"
                     // <!-- CSS Pages -->"
                     + "        <link href='/Bookstore/CSS/theme.css' rel='stylesheet' type='text/css'/>"
                     + "        <link href='/Bookstore/CSS/browse.css' rel='stylesheet' type='text/css'/>"
                     // <!-- JS Pages -->"
+                    + "        <script src='/Bookstore/JS/basicFunctions.js' type='text/javascript'></script>"
                     + "    </head>"
                     + "    <body>"
                     + "        <header>"
-                    + "            <iframe  scrolling='no' id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
+                    + "            <iframe frameborder='0' scrolling='no' id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
                     + "                [Your user agent does not support frames or is currently configured not to display frames.]"
                     + "            </iframe>"
                     + "        </header>"
@@ -104,7 +105,7 @@ public class browse extends HttpServlet {
             out.println("              </ul>"
                     + "            </div>"
                     + "        </div>"
-                    + "<h1>Welcome! You can browse our books here!</h1>");
+                    + "<h1>Welcome " + request.getRemoteUser() + "! You can browse our books here!</h1>");
             // Begin Page
             if (request.isUserInRole("sprole") || request.isUserInRole("guest")) {
                 //book list (customer)
@@ -148,16 +149,16 @@ public class browse extends HttpServlet {
 
                         out.println("</tr>"
                                 + "		  <tr>"
-                                + "		    <td style=\"text-align: center; vertical-align: middle;\"><img alt=\"Picture of a book\" src='" + image_url + "'></td>"
+                                + "		    <td style='text-align: center; vertical-align: middle;'><img alt='Picture of a book' src='" + image_url + "'></td>"
                                 + "		    <td >"
-                                + "					<h3>" + name + "</h3>"
-                                + "					<p>by " + author + "</p>"
+                                + "					<h3 style='color: #E7D7A1;'>" + name + "</h3>"
+                                + "					<p style='font-style: italic;'>by " + author + "</p>"
                                 + "					<p>Price: HKD " + price + "</p>"
-                                + "					<p>Loyalty Point: " + point + "</p>"
-                                + "					<form method='POST' class='addToCart'>"
+                                + "					<p>Loyalty Points: " + point + "</p>"
+                                + "					<form method='POST' name='AddToCartForm' id='AddToCartForm' onsubmit='return validateAddToCart()' class='addToCart'>"
                                 + "                                             <input name='bookid' type='hidden' value='" + id + "' />"
                                 + "						<label for='Quantity'>Quantity:</label>"
-                                + "						<input type='number' name='quantity' value='1' size='5' min='1' max='" + quantityAvailable + "'>"
+                                + "						<input type='number' name='quantity' id='quantity' step='1' value='1' size='5' min='1' max='" + quantityAvailable + "'>"
                                 + "						<input name='action' type='submit' value='Add to Cart'>"
                                 + "					</form>"
                                 + "				</td>"
@@ -177,10 +178,10 @@ public class browse extends HttpServlet {
                     //footer
                     out.println("       <br>"
                             + "         <footer>"
-                            + "             <iframe  scrolling='no' id='bookstorefooter' name='bookstorefooter' src='/Bookstore/iframes/bookstorefooter.jsp' width='100%' height='100px'>"
+                            + "             <iframe frameborder='0' scrolling='no' id='bookstorefooter' name='bookstorefooter' src='/Bookstore/iframes/bookstorefooter.jsp' width='100%' height='100px'>"
                             + "                 [Your user agent does not support frames or is currently configured not to display frames.]"
                             + "             </iframe>"
-                            + "             <iframe  scrolling='no' id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
+                            + "             <iframe frameborder='0' scrolling='no' id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
                             + "                 [Your user agent does not support frames or is currently configured not to display frames.]"
                             + "             </iframe>"
                             + "         </footer>"
@@ -195,6 +196,7 @@ public class browse extends HttpServlet {
                 //book list (manager)
                 out.println("            		<a href='/Bookstore/refund.do' class='button'>Refund Request</a>"
                         + "            		<a href='/Bookstore/addbooks.do' class='button'>Add Books</a>"
+                        + "            		<a href='/Bookstore/viewdetail.do' class='button'>View Admin Details</a>"
                         + "            		<br>"
                         + "            		<!-- Book List  -->"
                         + "            		<table class='bookList'>"
@@ -231,12 +233,12 @@ public class browse extends HttpServlet {
 
                         out.println("            		  </tr>"
                                 + "            		  <tr>"
-                                + "            		    <td style=\"text-align: center; vertical-align: middle;\"><img alt=\"Picture of a book\" src='" + image_url + "'></td>"
+                                + "            		    <td style='text-align: center; vertical-align: middle;'><img alt='Picture of a book' src='" + image_url + "'></td>"
                                 + "            		    <td >"
-                                + "            					<h3>" + name + "</h3>"
-                                + "            					<p>by " + author + "</p>"
+                                + "					<h3 style='color: #E7D7A1;'>" + name + "</h3>"
+                                + "					<p style='font-style: italic;'>by " + author + "</p>"
                                 + "            					<p>Price: HKD " + price + "</p>"
-                                + "            					<p>Loyalty Point: " + point + "</p>"
+                                + "            					<p>Loyalty Points: " + point + "</p>"
                                 + "            					<form method='POST' class='manageButton'>"
                                 + "                                                     <input name='bookid' type='hidden' value='" + id + "' />"
                                 + "            						<input name='action' type='submit' value='Change'>"
@@ -259,10 +261,10 @@ public class browse extends HttpServlet {
                     //footer
                     out.println("       <br>"
                             + "         <footer>"
-                            + "             <iframe  scrolling='no' id='bookstorefooter' name='bookstorefooter' src='/Bookstore/iframes/bookstorefooter.jsp' width='100%' height='100px'>"
+                            + "             <iframe frameborder='0' scrolling='no' id='bookstorefooter' name='bookstorefooter' src='/Bookstore/iframes/bookstorefooter.jsp' width='100%' height='100px'>"
                             + "                 [Your user agent does not support frames or is currently configured not to display frames.]"
                             + "             </iframe>"
-                            + "             <iframe  scrolling='no' id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
+                            + "             <iframe frameborder='0' scrolling='no' id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
                             + "                 [Your user agent does not support frames or is currently configured not to display frames.]"
                             + "             </iframe>"
                             + "         </footer>"
@@ -298,10 +300,11 @@ public class browse extends HttpServlet {
                     + "        <link href='/Bookstore/CSS/theme.css' rel='stylesheet' type='text/css'/>"
                     + "        <link href='/Bookstore/CSS/browse.css' rel='stylesheet' type='text/css'/>"
                     // <!-- JS Pages -->"
+                    + "        <script src='/Bookstore/JS/basicFunctions.js' type='text/javascript'></script>"
                     + "    </head>"
                     + "    <body>"
                     + "        <header>"
-                    + "            <iframe  scrolling='no' id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
+                    + "            <iframe frameborder='0' scrolling='no' id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
                     + "                [Your user agent does not support frames or is currently configured not to display frames.]"
                     + "            </iframe>"
                     + "        </header>"
@@ -408,9 +411,11 @@ public class browse extends HttpServlet {
 
                         out.println("<p>Book Name : " + name + "</p>");
                         out.println("<p>Author : " + author + "</p>");
-                        out.println("<p>Price : " + price + "</p>");
+                        out.println("<p>Unit Price: " + price + "</p>");
+                        out.println("<p>Unit Loyalty : " + point + "</p>");
                         out.println("<p>Quantity : " + quantity + "</p>");
-                        out.println("<p>Loyalty : " + point + "</p>");
+                        out.println("<p>Total Price: " + price * quantity + "</p>");
+                        out.println("<p>Total Loyalty : " + point * quantity + "</p>");
                         out.println("</fieldset>");
 
                         if (rs2 != null) {
@@ -434,10 +439,10 @@ public class browse extends HttpServlet {
                 //footer
                 out.println("       <br>"
                         + "         <footer>"
-                        + "             <iframe  scrolling='no' id='bookstorefooter' name='bookstorefooter' src='/Bookstore/iframes/bookstorefooter.jsp' width='100%' height='100px'>"
+                        + "             <iframe frameborder='0' scrolling='no' id='bookstorefooter' name='bookstorefooter' src='/Bookstore/iframes/bookstorefooter.jsp' width='100%' height='100px'>"
                         + "                 [Your user agent does not support frames or is currently configured not to display frames.]"
                         + "             </iframe>"
-                        + "             <iframe  scrolling='no' id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
+                        + "             <iframe frameborder='0' scrolling='no' id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
                         + "                 [Your user agent does not support frames or is currently configured not to display frames.]"
                         + "             </iframe>"
                         + "         </footer>"
@@ -470,10 +475,11 @@ public class browse extends HttpServlet {
                     + "        <link href='/Bookstore/CSS/theme.css' rel='stylesheet' type='text/css'/>"
                     + "        <link href='/Bookstore/CSS/browse.css' rel='stylesheet' type='text/css'/>"
                     // <!-- JS Pages -->"
+                    + "        <script src='/Bookstore/JS/basicFunctions.js' type='text/javascript'></script>"
                     + "    </head>"
                     + "    <body>"
                     + "        <header>"
-                    + "            <iframe  scrolling='no' id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
+                    + "            <iframe frameborder='0' scrolling='no' id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
                     + "                [Your user agent does not support frames or is currently configured not to display frames.]"
                     + "            </iframe>"
                     + "        </header>"
@@ -551,7 +557,7 @@ public class browse extends HttpServlet {
                             out.println("<p>Price: " + price + "</p>");
                             out.println("<p>Loyalty: " + point + "</p>");
                             out.println("<p>Loyalty: " + availableQuantity + "</p>");
-                            out.println("<img alt=\"Picture of a book\" src='" + image_url + "'>");
+                            out.println("<img alt='Picture of a book' src='" + image_url + "'>");
                         }
                     }
                     result = pstmt.getMoreResults();
@@ -577,6 +583,9 @@ public class browse extends HttpServlet {
                     price = rs1.getInt("price");
                     point = rs1.getInt("loyalty");
                     availableQuantity = rs1.getInt("stock");
+                    if (rs1.getString("image") != null) {
+                        image_url = rs1.getString("image");
+                    }
 
                     out.println("<fieldset>");
                     out.println("<legend>Please fill in the form</legend>");
@@ -589,7 +598,7 @@ public class browse extends HttpServlet {
                     out.println("<input name='author' type='text' size='25' maxlength='255' value='" + author + "' /></p>");
                     out.println("<label for='price'>Price: </label>");
                     out.println("<input name='price' type='number' size='8' maxlength='8' value='" + price + "' /></p>");
-                    out.println("<label for='point'>Loyalty Point: </label>");
+                    out.println("<label for='point'>Loyalty Points: </label>");
                     out.println("<input name='point' type='number' size='8' maxlength='8' value='" + point + "' /></p>");
                     out.println("<label for='point'>Quantity Available: </label>");
                     out.println("<input name='availableQuantity' type='number' size='8' maxlength='8' value='" + availableQuantity + "' /></p>");
@@ -609,10 +618,10 @@ public class browse extends HttpServlet {
             //footer
             out.println("       <br>"
                     + "         <footer>"
-                    + "             <iframe  scrolling='no' id='bookstorefooter' name='bookstorefooter' src='/Bookstore/iframes/bookstorefooter.jsp' width='100%' height='100px'>"
+                    + "             <iframe frameborder='0' scrolling='no' id='bookstorefooter' name='bookstorefooter' src='/Bookstore/iframes/bookstorefooter.jsp' width='100%' height='100px'>"
                     + "                 [Your user agent does not support frames or is currently configured not to display frames.]"
                     + "             </iframe>"
-                    + "             <iframe  scrolling='no' id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
+                    + "             <iframe frameborder='0' scrolling='no' id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
                     + "                 [Your user agent does not support frames or is currently configured not to display frames.]"
                     + "             </iframe>"
                     + "         </footer>"
@@ -644,10 +653,11 @@ public class browse extends HttpServlet {
                     + "        <link href='/Bookstore/CSS/theme.css' rel='stylesheet' type='text/css'/>"
                     + "        <link href='/Bookstore/CSS/browse.css' rel='stylesheet' type='text/css'/>"
                     // <!-- JS Pages -->"
+                    + "        <script src='/Bookstore/JS/basicFunctions.js' type='text/javascript'></script>"
                     + "    </head>"
                     + "    <body>"
                     + "        <header>"
-                    + "            <iframe  scrolling='no' id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
+                    + "            <iframe frameborder='0' scrolling='no' id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
                     + "                [Your user agent does not support frames or is currently configured not to display frames.]"
                     + "            </iframe>"
                     + "        </header>"
@@ -709,10 +719,10 @@ public class browse extends HttpServlet {
             //footer
             out.println("       <br>"
                     + "         <footer>"
-                    + "             <iframe  scrolling='no' id='bookstorefooter' name='bookstorefooter' src='/Bookstore/iframes/bookstorefooter.jsp' width='100%' height='100px'>"
+                    + "             <iframe frameborder='0' scrolling='no' id='bookstorefooter' name='bookstorefooter' src='/Bookstore/iframes/bookstorefooter.jsp' width='100%' height='100px'>"
                     + "                 [Your user agent does not support frames or is currently configured not to display frames.]"
                     + "             </iframe>"
-                    + "             <iframe  scrolling='no' id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
+                    + "             <iframe frameborder='0' scrolling='no' id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
                     + "                 [Your user agent does not support frames or is currently configured not to display frames.]"
                     + "             </iframe>"
                     + "         </footer>"

@@ -3,9 +3,7 @@
  * @author robertcinca
  */
 body {
-    border: 8px solid #CDCDCD;
-    padding: 6px;
-    margin: 2px;
+    border: none;
 }
 p {
     color: black;
@@ -13,18 +11,6 @@ p {
     font-size: 16pt;
     text-align: center;
 }
-/*.column-left{ 
-    float: left; 
-    width: 33%; 
-}
-.column-right{ 
-    float: right; 
-    width: 33%; 
-}
-.column-center{ 
-    display: inline-block; 
-    width: 33%; 
-}*/
 .bookstoreContainer {
     font-size: 0; /*fix white space*/
 }
@@ -36,9 +22,9 @@ p {
     box-sizing: border-box;
     text-align: center;
 }
-@media (max-width: 575px) { /*breakpoint*/
-    .bookstoreContainer > div {
-        display: block;
-        width: 100%;
-    }
+.fb-like {
+    float: right;
+}
+.column-center {
+    font-style: italic;
 }

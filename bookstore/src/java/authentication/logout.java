@@ -47,16 +47,16 @@ public class logout extends HttpServlet {
                     + "        <meta name='title' content='Online Bookstore'>"
                     + "        <meta name='description' content='An online marketplace for buying books.'>"
                     // <!-- Page Title -->"
-                    + "        <title>Welcome to our Online Bookstore!</title>"
+                    + "        <title>Thank you for Visiting</title>"
                     // <!-- CSS Pages -->"
                     + "        <link href='/Bookstore/CSS/theme.css' rel='stylesheet' type='text/css'/>"
-                    + "        <link href='/Bookstore/CSS/login.css' rel='stylesheet' type='text/css'/>"
+                    + "        <link href='/Bookstore/CSS/logout.css' rel='stylesheet' type='text/css'/>"
                     // <!-- JS Pages -->"
                     + "        <script src='/Bookstore/JS/basicFunctions.js' type='text/javascript'></script>"
                     + "    </head>"
                     + "    <body>"
                     + "        <header>"
-                    + "            <iframe  scrolling='no' id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
+                    + "            <iframe frameborder='0' scrolling='no' id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
                     + "                [Your user agent does not support frames or is currently configured not to display frames.]"
                     + "            </iframe>"
                     + "        </header>"
@@ -74,8 +74,12 @@ public class logout extends HttpServlet {
                     + "        </div>");
             // Begin Page
             out.println("<h1>Logout Page</h1>");
+            out.println("<div class='column-left-logout'>");
             out.println("<p>You have successfully logged out!</p>");
             out.println("<p><a class='button' href='browse.do'>Return to Login Page</a></p>");
+            out.println("</div><div class='column-right-logout'>");
+            out.println("<img src='/Bookstore/IMG/logoutImage.gif' alt='Goodbye!' class='logoutimg'>");
+            out.println("</div>");
 
             // Delete all entries from cart
             // Register the JDBC driver, open a connection
@@ -96,10 +100,10 @@ public class logout extends HttpServlet {
             //footer
             out.println("       <br>"
                     + "         <footer>"
-                    + "             <iframe  scrolling='no' id='bookstorefooter' name='bookstorefooter' src='/Bookstore/iframes/bookstorefooter.jsp' width='100%' height='100px'>"
+                    + "             <iframe frameborder='0' scrolling='no' id='bookstorefooter' name='bookstorefooter' src='/Bookstore/iframes/bookstorefooter.jsp' width='100%' height='100px'>"
                     + "                 [Your user agent does not support frames or is currently configured not to display frames.]"
                     + "             </iframe>"
-                    + "             <iframe  scrolling='no' id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
+                    + "             <iframe frameborder='0' scrolling='no' id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
                     + "                 [Your user agent does not support frames or is currently configured not to display frames.]"
                     + "             </iframe>"
                     + "         </footer>"

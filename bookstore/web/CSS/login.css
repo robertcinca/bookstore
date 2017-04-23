@@ -23,6 +23,10 @@ button {
     width: 100%;
 }
 
+label {
+    color: #4B0082;
+}
+
 button:hover {
     opacity: 0.8;
 }
@@ -48,10 +52,15 @@ button:hover {
     position: relative;
 }
 
-img.avatar {
+img.loginimg {
     width: 40%;
     max-height: 200px;
     border-radius: 50%;
+}
+img.signupimg {
+    width: 40%;
+    max-height: 200px;
+    border-radius: 20%;
 }
 
 .container {

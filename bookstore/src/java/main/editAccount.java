@@ -47,7 +47,7 @@ public class editAccount extends HttpServlet {
                         + "        <meta name='title' content='Online Bookstore'>"
                         + "        <meta name='description' content='An online marketplace for buying books.'>"
                         // <!-- Page Title -->"
-                        + "        <title>Welcome to our Online Bookstore!</title>"
+                        + "        <title>Edit Your Account</title>"
                         // <!-- CSS Pages -->"
                         + "        <link href='/Bookstore/CSS/theme.css' rel='stylesheet' type='text/css'/>"
                         + "        <link href='/Bookstore/CSS/browse.css' rel='stylesheet' type='text/css'/>"
@@ -56,7 +56,7 @@ public class editAccount extends HttpServlet {
                         + "    </head>"
                         + "    <body>"
                         + "        <header>"
-                        + "            <iframe  scrolling='no' id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
+                        + "            <iframe frameborder='0' scrolling='no' id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
                         + "                [Your user agent does not support frames or is currently configured not to display frames.]"
                         + "            </iframe>"
                         + "        </header>"
@@ -77,14 +77,9 @@ public class editAccount extends HttpServlet {
                         + "            </div>"
                         + "        </div>");
                 // Begin Page
-                out.println("       <h1>Account Detail</h1>\n"
-                        + "		<a href=\"/Bookstore/viewdetail.do\" class=\"button\">View Detail</a>\n"
-                        + "		<br>\n"
-                        + "\n"
-                        + "		<!--user detail-->\n"
-                        + "\n"
-                        + "		<h2>Account Detail</h2>\n"
-                        + "\n");
+                out.println("       <h1>Edit Account Details</h1>"
+                        + "		<a href='/Bookstore/viewdetail.do' class='button'>View Details</a>"
+                        + "		<h3></h3>");
 
                 String username = request.getRemoteUser();
                 String password = request.getParameter("password");
@@ -100,19 +95,17 @@ public class editAccount extends HttpServlet {
                     Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
                     Connection con = DriverManager.getConnection(url, dbLoginId, dbPwd);
 
-                    PreparedStatement pstmt = con.prepareStatement("UPDATE [tomcat_users] SET password = ? WHERE user_name = " + username);
-
+                    PreparedStatement pstmt = con.prepareStatement("UPDATE tomcat_users SET password = ? WHERE user_name = '" + username + "'");
                     pstmt.setString(1, password);
 
                     Boolean result = pstmt.execute();
 
-                    out.println("<fieldset>\n");
+                    out.println("<fieldset>");
                     out.println("<legend>The record is sucessfully updated.</legend>");
 
                     out.println("<p>Username: " + username + "</p>");
                     out.println("<p>Password: " + password + "</p>");
-                    out.println("</fieldset>\n");
-                    
+                    out.println("</fieldset>");
 
                     if (pstmt != null) {
                         pstmt.close();
@@ -122,32 +115,28 @@ public class editAccount extends HttpServlet {
                     }
 
                 } else {
-                    out.println("<fieldset>\n"
-                            + "\n"
-                            + "	<form method='POST' id='editAccount' action='" + request.getRequestURI() + "' onsubmit='return validatepassword()' >\n"
-                            + "		<h3>User Info</h3>\n"
-                            + "		<label for=\"username\">Username: </label>\n"
-                            + "		<input type=\"text\" name=\"username\" value ='" + request.getRemoteUser() + "' disabled>\n"
-                            + "		<label for=\"password\">Password:</label>\n"
-                            + "		<input type=\"text\" name=\"password\" >\n"
-                            + "		<label for=\"password2\">Confirm Password:</label>\n"
-                            + "		<input type=\"text\" name=\"password2\" >\n"
-                            + "		<h3><br></h3>\n"
-                            + "\n"
-                            + "		<a href=\"/Bookstore/viewdetail.do\" class=\"button\">Back to View Detail</a>\n"
-                            + "		<input class=\"button\" type='submit' value='Confirm' />"
-                            + "\n"
-                            + "\n"
-                            + "	</form>\n"
-                            + "</fieldset>\n");
+                    out.println("<fieldset>"
+                            + "	<form method='POST' id='editAccount' action='" + request.getRequestURI() + "' onsubmit='return validatepassword()' >"
+                            + "		<h3>You can change your password here:</h3>"
+                            + "		<label for='username'>Username: </label>"
+                            + "		<input type='text' name='username' value ='" + request.getRemoteUser() + "' disabled>"
+                            + "		<label for='password'>Password:</label>"
+                            + "		<input type='password' name='password' required>"
+                            + "		<label for='password2'>Confirm Password:</label>"
+                            + "		<input type='password' name='password2' required>"
+                            + "		<h3><br></h3>"
+                            + "		<a href='/Bookstore/viewdetail.do' class='button'>Back to View Details</a>"
+                            + "		<button class='button' style='float:left;' type='submit' value='Confirm'>Confirm</button>"
+                            + "	</form>"
+                            + "</fieldset>");
                 }
                 //footer
                 out.println("       <br>"
                         + "         <footer>"
-                        + "             <iframe  scrolling='no' id='bookstorefooter' name='bookstorefooter' src='/Bookstore/iframes/bookstorefooter.jsp' width='100%' height='100px'>"
+                        + "             <iframe frameborder='0' scrolling='no' id='bookstorefooter' name='bookstorefooter' src='/Bookstore/iframes/bookstorefooter.jsp' width='100%' height='100px'>"
                         + "                 [Your user agent does not support frames or is currently configured not to display frames.]"
                         + "             </iframe>"
-                        + "             <iframe  scrolling='no' id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
+                        + "             <iframe frameborder='0' scrolling='no' id='disclaimer' name='disclaimer' src='/Bookstore/iframes/disclaimer.jsp' width='100%'>"
                         + "                 [Your user agent does not support frames or is currently configured not to display frames.]"
                         + "             </iframe>"
                         + "         </footer>"
