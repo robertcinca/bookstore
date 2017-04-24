@@ -86,7 +86,7 @@ function checkLoginSyntax(user, pw) {
 
 function checkAddressSyntax(a, a, a, a, a) {
     var regex = /^[a-zA-Z0-9]+$/; //numbers must be 0-9, no funny inputs (e.g. 1e0, 1.00)
-    if (!a.match(regex)) {
+    if (!a.match(regex) && !a.equals(null)) {
         alert("Please only use characters a-z, A-Z, 0-9. No special characters.");
         return false;
     }
