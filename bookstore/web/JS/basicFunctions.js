@@ -84,10 +84,25 @@ function checkLoginSyntax(user, pw) {
     return true;
 }
 
+function checkAddressSyntax(a, a, a, a, a) {
+    var regex = /^[a-zA-Z0-9]+$/; //numbers must be 0-9, no funny inputs (e.g. 1e0, 1.00)
+    if (!a.match(regex)) {
+        alert("Please only use characters a-z, A-Z, 0-9. No special characters.");
+        return false;
+    }
+}
+
 function validatepassword() {
     var user = document.forms["editAccount"]["username"].value;
     var pw = document.forms["editAccount"]["password"].value;
     var pw2 = document.forms["editAccount"]["password2"].value;
+
+    //Check address syntax
+    var add1 = document.forms["editAccount"]["address_1"].value;
+    var add2 = document.forms["editAccount"]["address_2"].value;
+    var city = document.forms["editAccount"]["city"].value;
+    var country = document.forms["editAccount"]["country"].value;
+    var post = document.forms["editAccount"]["post_code"].value;
 
     if (pw.length !== pw2.length) {
         window.alert("Error: Passwords do not match.");
@@ -100,6 +115,9 @@ function validatepassword() {
         }
     }
     if (checkLoginSyntax(user, pw) === false)
+        return false;
+
+    if (checkAddressSyntax(add1, add2, city, country, post) === false)
         return false;
 
     return true;
