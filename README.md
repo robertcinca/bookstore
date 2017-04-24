@@ -1,3 +1,3 @@
 # bookstore
 
-Open new version with an IDE, in this case we are using Netbeans
+Internet-based Bookstore Application for CS4280 Group Assignment.
